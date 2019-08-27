@@ -1,0 +1,7 @@
+#ifndef GWSTRTESTS_H_INCLUDED
+#define GWSTRTESTS_H_INCLUDED
+
+void TestAllStrUtils();
+
+
+#endif // GWSTRTESTS_H_INCLUDED

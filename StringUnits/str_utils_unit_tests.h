@@ -1,0 +1,7 @@
+#ifndef STR_UTILS_UNIT_TESTS_H_INCLUDED
+#define STR_UTILS_UNIT_TESTS_H_INCLUDED
+
+void TestSplitIntoWords();
+
+
+#endif // STR_UTILS_UNIT_TESTS_H_INCLUDED

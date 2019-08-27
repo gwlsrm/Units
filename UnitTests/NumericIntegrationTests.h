@@ -1,0 +1,8 @@
+#ifndef NUMERICINTEGRATIONTESTS_H_INCLUDED
+#define NUMERICINTEGRATIONTESTS_H_INCLUDED
+
+void TestAllNumericIntegration();
+
+void TestAveIntegration();
+
+#endif // NUMERICINTEGRATIONTESTS_H_INCLUDED

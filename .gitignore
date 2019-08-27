@@ -1,32 +1,47 @@
-# Prerequisites
-*.d
+# dirs
+.svn/
+bin/
+obj/
+info/
+Lib/
+new_2_cmp/
+_MC_description/
+nuclei/
 
-# Compiled Object files
+# IDE files and binary
+*.[oa]
+*.def
+*.depend
+*.dll
+*.so
+*.exe
+*.il?
+*.layout
+*.lib
+*.obj
+AddComment*.py
+RemoveComment*.py
+*.res
+*.save
+*.svn
+*.tds
 *.slo
 *.lo
-*.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
+# other files
+*.7z
+*.cnf
+*.din
+*.efr
+*.git*
+*.in
+*.ini
+*.jpg
+*.log
 *.out
-*.app
+*.spe
+*.txt
+*.udl
+
+# Prerequisites
+*.d
