@@ -32,6 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../Math/gw_solid_matrix.cpp" />
+		<Unit filename="../../Math/gw_solid_matrix.h" />
+		<Unit filename="../../Math/gw_triangle_matrix.cpp" />
+		<Unit filename="../../Math/gw_triangle_matrix.h" />
 		<Unit filename="../../Math/gwmatrix.cpp" />
 		<Unit filename="../../Math/gwmatrix.h" />
 		<Unit filename="main.cpp" />
