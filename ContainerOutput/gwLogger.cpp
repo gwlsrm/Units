@@ -19,6 +19,13 @@ Logger& Logger::getLogger(const std::string& filename)
   return *logger_instance;
 }
 
+void Logger::deleteLogger()
+{
+    if (!logger_instance) {
+        logger_instance = nullptr;
+    }
+}
+
 Logger::Logger()
   : out_(cout)
 {

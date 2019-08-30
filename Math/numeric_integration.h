@@ -7,7 +7,7 @@
 template <typename FuncType>
 double aveIntegration(FuncType f, double a, double b, double EPS = 1e-6) {
     /**
-        numeric interagal calulation int{from a, to b} {f(double)} using average value on grid
+        numeric integral calculation int{from a, to b} {f(double)} using average value on grid
         R = h^2/24 |b - a| == EPS
         Int = h * Sum(f((xh+1 - xh) /2))
     */

@@ -9,10 +9,11 @@ class Logger { // singleton
 public:
     // get instance of Logger (singleton)
     static Logger& getLogger(const std::string& filename = "stdout");
+    static void deleteLogger();
 
     // public log methods
     template <typename T>
-    friend Logger& operator<<(Logger& l, T value) {
+    friend Logger& operator<<(Logger& l, const T& value) {
         l.out_ << value;
         return l;
     }
