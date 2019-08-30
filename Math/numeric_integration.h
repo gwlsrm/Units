@@ -3,9 +3,24 @@
 
 #include <cmath>
 #include <utility>
+#include <functional>
+
+/// main fucntional type for numeric integration functions
+using FuncTyped2d = std::function<double(double)>;
+
+/// rectangle integration in center of rectangle
+double aveIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
+double aveIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
+/// trapezoid integration
+//double trapIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
+double trapIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
+/// trapezoid adaptive midpoint (variable step)
+double trapIntegrationAdaptive(const FuncTyped2d& f, double a, double b, int num_intervals, double eps = 1e-6);
+
+
 
 template <typename FuncType>
-double aveIntegration(FuncType f, double a, double b, double EPS = 1e-6) {
+double aveIntegration2(FuncType f, double a, double b, double EPS = 1e-6) {
     /**
         numeric integral calculation int{from a, to b} {f(double)} using average value on grid
         R = h^2/24 |b - a| == EPS
