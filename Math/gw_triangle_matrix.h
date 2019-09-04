@@ -3,6 +3,9 @@
 
 #include <vector>
 
+/**
+    \brief Work with symetric (triangle) matrix. It can save 50% of memory
+*/
 class TriangleMatrix { // only square can be
 public:
   // ctror and dtor

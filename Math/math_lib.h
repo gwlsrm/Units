@@ -9,47 +9,69 @@
 constexpr int MAX_LOG_DOUBLE = 300;
 
 // mathematic
+/// sqr(x) -- the same as x^2, x**2
 inline double sqr(double value) { return pow(value, 2); }
+/// factorial of n (n!)
 double factorial(double n);
-double roundTo(double f, int n);    // rounds to 10^n, can be negative: n=-2 => to 0.01
+/// rounds to 10^n, can be negative: n=-2 => to 0.01
+double roundTo(double f, int n);    
+/// returns true if number is odd
 inline bool odd(int n) {return static_cast<bool>(n % 2);}
+/// return square sum of vector elements: sqrt(v[0]^2 + v[1]^2 + ...) 
 double sqrAdd(const std::vector<double>& vals);
-int gcd (int a, int b); // greatest common divisor
-int squareEquationSolver(double a, double b, double c, double& x1, double& x2); // solves square equation and returns number of roots
-// calculates polynomial value: 1) coeffs: 0, 1, .. n, 2) coeffs: n, n-1, ..., 1, 0 (reverse)
+/// greatest common divisor
+int gcd (int a, int b); 
+/// solves square equation and returns number of roots
+int squareEquationSolver(double a, double b, double c, double& x1, double& x2); 
+/// calculates polynomial value for x, coeffs: 0, 1, .. n
 double poly(double x, const std::vector<double>& coeffs);
+/// calculates polynomial value for x, coeffs: n, n-1, ..., 1, 0 (reverse)
 double poly_reverse(double x, const std::vector<double>& coeffs);
-// return true, if difference between a and b is less than absEpsilon or relEpsilon
+/// return true, if difference between a and b is less than absEpsilon or relEpsilon
 bool approximatelyEqual(double a, double b, double absEpsilon = 1e-16, double relEpsilon = 1e-8);
+/// return true if value is approximately zero
 inline bool isDblZero(double a, double absEpsilon = 1e-16) {return fabs(a) <= absEpsilon;}
+/// return true if value is in range [amin, amax]
 inline bool inRange(double value, double amin, double amax) {return value >= amin && value <= amax;}
-// min and max
+/// builds parabola and finds minimum (x-value)
 bool minParabola(double x1, double x2, double x3, double y1, double y2, double y3,
                  double& x0);
+/// builds parabola and returns its coeffs
 bool minParabola(double x1, double x2, double x3, double y1, double y2, double y3,
                  double& a, double& b, double& c);
+/// finds minimum chi in array: {x, chi} using parabola approximation
 bool local_min(const std::vector<double>& x_arr, const std::vector<double>& chi, double& x);
 // statistic
+/// return average value for x and y
 double average(double x, double y);
+/// return average value for vector
 double average(const std::vector<double>& vals);
+/// return average value and standard deviation for vector
 void average(const std::vector<double>& vals, double& mean, double& err);
+/// return weighted average value and standard deviation for vector of values and its uncertainties
 void weightedMean(const std::vector<double>& vals, const std::vector<double>& errors,
                   double &wMean, double &wError);
+/// return weighted average value and standard deviation for vector of values and its weights
 void weightedMeanWeights(const std::vector<double>& vals, const std::vector<double>& weights,
                   double &wMean, double &wError);
+/// weight calculation from uncertainty                  
 inline double weightCalculation(double err) {return isDblZero(err) ? 0 : 1 / sqr(err);}
+/// weight calculation from vector of uncertainties
 std::vector<double> weightsCalculation(const std::vector<double>& err_arr);
+/// linear interpolation
 inline double linear_interpol(double x1, double x2, double y1, double y2, double x) {
     double w = (x - x1) / (x2 - x1);
     return (1 - w) * y1 + w * y2;
 }
 
 // errors
-double errorFromPropValue(double a, double da, double b); // if b = k*a; rel. errors are equal: db = da / a * b (returns db)
+/// if b = k*a; rel. errors are equal: db = da / a * b (returns db)
+double errorFromPropValue(double a, double da, double b); 
+/// calculates relative uncertainties from abs
 inline double relErrorFromAbs(double a, double da) {return isDblZero(a) ? 1.0 : da / a;}
 
 // histogram
-std::vector<double> recalc_histo(const std::vector<double> &init_histo, int newChNum);
+//std::vector<double> recalc_histo(const std::vector<double> &init_histo, int newChNum);
 
 template<class T>
 void getWeighted(T b_it, T e_it) {
@@ -62,6 +84,7 @@ void getWeighted(T b_it, T e_it) {
     }
 }
 
+/// Calculates probabilities distribution function
 template <typename Container>
 double calculate_pdf(Container& cont) {
 /**
@@ -92,7 +115,7 @@ inline double get_random_for_range(T rand_value, T max_rnd_value, U upper_b, U s
     return static_cast<double>(upper_b) * rand_value / max_rnd_value + shift;
 }
 
-// convolution
+/// convolution of data with gaussian with variable sigma
 template <typename Func> // Func = double (*sigma_func)(int)
 void convolution_with_gauss(std::vector<double>& data, Func sigma_func) {
   constexpr int NSIGMA = 3;

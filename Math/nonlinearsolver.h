@@ -3,13 +3,15 @@
 
 #include <cmath>
 
+/** \brief Newton method of solving non-linear equaton.
+
+    Newton method of solving non-linear equaton.
+    You must set function double f(double) and derivative function double f'(double)
+    EPS -- absolute epsilon f(x) < EPS and if root == 0: x < EPS
+    REL_EPS -- relative epsilon: |x - root| < REL_EPS * x
+*/
 template <typename FuncType1, typename FuncType2>
 double getRootNewton(FuncType1 f, FuncType2 fdiff, double x0, double EPS = 1e-6, double REL_EPS = 0.001) {
-    /** Newton method of solving non-linear equaton.
-        You must set function double f(double) and derivative function double f'(double)
-        EPS -- absolute epsilon f(x) < EPS and if root == 0: x < EPS
-        REL_EPS -- relative epsilon: |x - root| < REL_EPS * x
-    */
     // find 3 iteration for epsilon calculation
     if (f(x0) == 0) {return x0;}
     double xm2 = x0;
@@ -38,9 +40,15 @@ double getRootNewton(FuncType1 f, FuncType2 fdiff, double x0, double EPS = 1e-6,
     return x;
 }
 
+/** \brief Newton method of solving non-linear equaton.
+
+    Newton method of solving non-linear equaton. maybe faster about 10-30%
+    You must set function double f(double) and derivative function double f'(double)
+    EPS -- absolute epsilon f(x) < EPS and if root == 0: x < EPS
+    REL_EPS -- relative epsilon: |x - root| < REL_EPS * x
+*/
 template <typename FuncType1, typename FuncType2>
 double getRootNewtonSimple(FuncType1 f, FuncType2 fdiff, double x0, double EPS = 1e-6) {
-    /* maybe faster about 10-30%*/
     double x(x0);
     while (fabs(f(x)) > EPS) {
         x -= f(x) / fdiff(x);
