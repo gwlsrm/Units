@@ -3,6 +3,10 @@
 
 #include <cmath>
 
+/**@file
+    @brief Newton methods of solving non-linear equaton
+*/
+
 /** \brief Newton method of solving non-linear equaton.
 
     Newton method of solving non-linear equaton.

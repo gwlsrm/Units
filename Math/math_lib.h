@@ -6,6 +6,10 @@
 #include <algorithm>
 #include <cfloat>
 
+/**@file
+    @brief Some mathematical tools: check double for zero, approximately compare, statistic functions etc
+*/
+
 constexpr int MAX_LOG_DOUBLE = 300;
 
 // mathematic

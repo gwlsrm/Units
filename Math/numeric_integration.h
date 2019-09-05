@@ -5,14 +5,18 @@
 #include <utility>
 #include <functional>
 
+/**@file
+    @brief Numeric integration functions
+*/
+
 /// main fucntional type for numeric integration functions
 using FuncTyped2d = std::function<double(double)>;
 
 /// rectangle integration in center of rectangle
 double aveIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
 double aveIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
-/// trapezoid integration
 //double trapIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
+/// trapezoid integration
 double trapIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
 /// trapezoid adaptive midpoint (variable step)
 double trapIntegrationAdaptive(const FuncTyped2d& f, double a, double b, int num_intervals, double eps = 1e-6);

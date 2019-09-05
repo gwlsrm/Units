@@ -64,6 +64,7 @@
 //  return TestRunnerPrivate::PrintMap(os, m);
 //}
 
+
 template<class T, class U>
 void AssertEqual(const T& t, const U& u, const std::string& hint = {}) {
   if (!(t == u)) {
@@ -80,6 +81,15 @@ inline void Assert(bool b, const std::string& hint) {
   AssertEqual(b, true, hint);
 }
 
+/**
+    @brief Simple unit test framework
+    
+    Unit test framework. It runs tests with functions as void(void) and catch exceptions
+    How to use:
+    - create TestRunner obj;
+    - run tests with macro: **RUN_TEST**(obj, test_func)
+    - creates test functions void(void) where compare received values with expected with macro: **ASSERT_EQUAL**(rv, ev), **ASSERT**(bool) -- like as simple assert        
+*/
 class TestRunner {
 public:
   template <class TestFunc>

@@ -8,6 +8,10 @@
 #include <windows.h>
 #endif // __linux
 
+/**\file
+\brief Class for work with serial (COM) port
+*/
+
 namespace SerialOnWinapi {
 
 /**

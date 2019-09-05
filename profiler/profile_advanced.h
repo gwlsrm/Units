@@ -3,6 +3,7 @@
 #include <chrono>
 #include <string>
 
+/// Counter for AddDuration
 struct TotalDuration {
   std::string message;
   std::chrono::steady_clock::duration value;
@@ -11,6 +12,15 @@ struct TotalDuration {
   ~TotalDuration();
 };
 
+/**
+    @brief advanced profiler (compared with LogDuration in profle.h). It uses TotalDuration as counter 
+    
+    This profiler can measure timing of single operation in cycle
+    How to use:
+    - create TotalDuration counter("msg") (it will count time for all cycles)
+    - use macro **ADD_DURATION**(TotalDuration counter) for scope. Each start will add timing to counter
+    - when counter destroys it will output message and time to cerr
+*/
 class AddDuration {
 public:
   explicit AddDuration(std::chrono::steady_clock::duration& dest);

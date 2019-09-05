@@ -5,6 +5,10 @@
 #include <iostream>
 #include <initializer_list>
 
+/**@file 
+    @brief contains class with double matrix
+*/
+
 /**
   \brief matrix class, that can store doubles
 

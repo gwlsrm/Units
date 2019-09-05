@@ -11,22 +11,35 @@
 #include <string_view>
 
 // remove spaces, compare
+/// remove spaces from begin and end
 std::string trim(const std::string& s);
+/// remove spaces from the end
 std::string trim_right(const std::string& s);
+/// trim_rigth for c-string: it removes blanks from the end
 void removeblanks(char* str);
 [[deprecated]] std::string toLower(std::string s);
+/// converts string to lower: can be used with move for parameter
 std::string str_tolower(std::string s);
+/// converts string to upper
 std::string str_toupper(std::string s);
+/// returns true if string starts with signature (C-strings)
 bool startWith(const char* source, const char* signature);
+/// returns true if string starts with signature (std::strings)
 bool startWith(const std::string& source, const std::string& signature);
+/// case insensitive compare
 bool same_text(const std::string& s1, const std::string& s2);
+/// add spaces to the end of string to new length
 void addSpacesToString(std::string& str, std::size_t new_length);
 
 // convert from and to string
 // from string
+/// from string to integer with default. don't throw exceptions
 int strToIntDef(const std::string& str, int defValue);
+/// from string to double with default. don't throw exceptions
 double strToFloatDef(const std::string& str, double defValue);
+/// converts from string to integer value (parameter). If success returns true. Don't throw exceptions
 bool tryStrToInt(const std::string& str, int& value);
+/// converts from string to double value (parameter). If success returns true. Don't throw exceptions
 bool tryStrToFloat(const std::string& str, double& value);
 struct bad_from_string : std::bad_cast  // class for transform error
 {
@@ -69,8 +82,9 @@ template<class T> std::string toStringF(const T& value, TFloatFormat float_forma
     return os.str();
 }
 
-// split words from string
+/// split words from string using separator
 std::vector<std::string> split_into_words(const std::string& str, char sep = ' ', bool is_grouped = false);
+/// reads next token from string and returns rest part of string as string_view
 std::string_view readToken(std::string_view& s, std::string_view delimiter = " ");
 //int word_count(const std::string& s, const std::set<char>& delimeters);
 //std::string extract_word(int wordNum, const std::string& s,
@@ -78,6 +92,7 @@ std::string_view readToken(std::string_view& s, std::string_view delimiter = " "
 //std::string extract_word(int wordNum, const std::string& s,
 //                         const std::string& delimeters);
 
+/// join string to the one big string (seems to be more effective than '+')
 std::string join_strings(const std::vector<std::string>& strings, char sep = ' ');
 
 // print some strings

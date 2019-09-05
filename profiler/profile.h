@@ -5,6 +5,14 @@
 #include <iostream>
 #include <sstream>
 
+/**
+    @brief Simple profiler (header only)
+    
+    Simple profiler. 
+    It starts measurement when it constructs and stops on destroy
+    When stoped it outputs time and message to cerr
+    Simple use is to call macro **LOG_DURATION**("message") in some scope {}
+*/
 class LogDuration {
 public:
   explicit LogDuration(const std::string& msg = "")

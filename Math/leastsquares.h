@@ -3,6 +3,10 @@
 
 #include <vector>
 
+/**@file
+    @brief least squares method
+*/
+
 /// Least squares method for straight proportion: y = a * x
 void ols_StraightLineProp(const std::vector<double>& xi, const std::vector<double>& yi, 
                           double& a, double& da);

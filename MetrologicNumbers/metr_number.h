@@ -3,8 +3,15 @@
 
 #include <string>
 
+/**
+    @brief class metrologic numbers: value and uncertainty
+    
+    Metrological numbers class: value and uncertainty. 
+    Arithmetic operations for such numbers are realized
+*/
 class MetrNumber {
 public:
+    /// default constructor value = 0, unc = 0
     MetrNumber() = default;
     MetrNumber(double aValue, double aUnc = 0);
     // getters and setters

@@ -3,6 +3,10 @@
 
 #include <vector>
 
+/** @file
+    @brief polynomial interpolation functions
+*/
+
 /// interpolation modes
 enum class LogState {
     lsNone,     ///< all scales are linear

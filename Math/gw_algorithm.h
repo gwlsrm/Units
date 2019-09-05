@@ -3,10 +3,9 @@
 
 #include <vector>
 
-/**
-    \file additional algorithms
+/**\file 
+    @brief additional algorithms like search in vector with tolerance and range
 */
-
 
 /// finds value in vector<double> with tolerance
 int find_dbl_vector(const std::vector<double>& vctr, double value, double tolerance = 0.001);

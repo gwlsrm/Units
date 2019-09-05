@@ -118,7 +118,7 @@ std::vector<std::string> loadListFromFile(const std::string& filename) {
     return res;
 }
 
-void saveStrListToFile(const std::vector<std::string>& str_list, std::string& filename) {
+void saveStrListToFile(const std::vector<std::string>& str_list, const std::string& filename) {
     ofstream out;
     if (!out) {
         throw invalid_argument("Can't create file " + filename);
