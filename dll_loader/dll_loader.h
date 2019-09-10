@@ -9,9 +9,15 @@
 #endif // _WIN32
 #include <string>
 
+/**
+    \brief Wrapper class to work with dll
+    
+    RAII-wrapper class to work with dll. Can operate in windows and linux
+*/
 class DllLoader {
 public:
     // ctors and dtor
+    /// open (load) dll by name and throws invalid_argument if fails
     explicit DllLoader(const std::string& dll_name);
     DllLoader(const DllLoader&) = delete;
     DllLoader(DllLoader&& other) {

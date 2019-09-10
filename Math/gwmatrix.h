@@ -5,6 +5,16 @@
 #include <iostream>
 #include <initializer_list>
 
+/**@file 
+    @brief contains class with double matrix
+*/
+
+/**
+  \brief matrix class, that can store doubles
+
+  DoubleMatrix is realized with vector of vector of double.
+  It can chage its size, get rows, columns and cells
+*/
 class DoubleMatrix
 {
 public:

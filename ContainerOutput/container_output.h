@@ -9,6 +9,11 @@
 #include <string>
 #include <set>
 
+/**
+    \file can ouput to ostream different types of containers as:
+        vector, set, pair, map, unordered_map
+*/
+
 namespace ContainerOutputTypes {
 
 template <typename Collection>

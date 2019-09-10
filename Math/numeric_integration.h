@@ -5,6 +5,10 @@
 #include <utility>
 #include <functional>
 
+/**@file
+    @brief Numeric integration functions
+*/
+
 /// main fucntional type for numeric integration functions
 using FuncTyped2d = std::function<double(double)>;
 
@@ -14,12 +18,17 @@ double aveIntegration(const FuncTyped2d& f, double a, double b, int num_interval
 /// trapezoid integration
 //double trapIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
 double trapIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
+//double trapIntegration(const FuncTyped2d& f, double a, double b, double EPS = 1e-6);
+/// trapezoid integration
+double trapIntegration(const FuncTyped2d& f, double a, double b, int num_intervals);
+/// trapezoid adaptive midpoint (variable step)
+double trapIntegrationAdaptive(const FuncTyped2d& f, double a, double b, int num_intervals, double eps = 1e-6);
 
 
 template <typename FuncType>
 double aveIntegration2(FuncType f, double a, double b, double EPS = 1e-6) {
     /**
-        numeric integral calulation int{from a, to b} {f(double)} using average value on grid
+        numeric integral calculation int{from a, to b} {f(double)} using average value on grid
         R = h^2/24 |b - a| == EPS
         Int = h * Sum(f((xh+1 - xh) /2))
     */

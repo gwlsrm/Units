@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory=".." />
 		</Compiler>
 		<Unit filename="../../Math/math_lib.cpp" />
 		<Unit filename="../../Math/math_lib.h" />

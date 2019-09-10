@@ -26,8 +26,10 @@ void TestAveIntegration() {
         auto f = [](double x){return 1.0 / sqrt(x);}; // 1 / sqrt(x) => I = 2 * sqrt(x)
         double res1 = aveIntegration(f, 1, 9, 20);    // Int from 1 to 9: 2 * (sqrt(9) - sqrt(1)) = 4
         double res2 = trapIntegration(f, 1, 9, 20);
+        double res3 = trapIntegrationAdaptive(f, 1, 9, 20);
         cerr << "AveInt  = " << res1 << ", true res = 4, diff = " << res1 - 4.0 << " rel.diff = " << (res1/4.0 - 1)*100 << " %" << endl;
         cerr << "TrapInt = " << res2 << ", true res = 4, diff = " << res2 - 4.0 << " rel.diff = " << (res2/4.0 - 1)*100 << " %" << endl;
+        cerr << "AdTrInt = " << res3 << ", true res = 4, diff = " << res3 - 4.0 << " rel.diff = " << (res3/4.0 - 1)*100 << " %" << endl;
     }
 }
 
