@@ -71,3 +71,16 @@ std::ostream& operator << (std::ostream& os, const std::unordered_map<K, V>& m) 
   return ContainerOutputTypes::PrintMap(os, m);
 }
 
+template <typename T>
+std::ostream& print_carray(std::ostream& out, const T* ai, std::size_t sze) {
+    bool first = true;
+    out <<  '[';
+    for (size_t i = 0; i < sze; ++i) {
+      if (!first) {
+        out << ',';
+      }
+      first = false;
+      out << ai[i];
+    }
+    return out << ']';
+}

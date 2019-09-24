@@ -6,7 +6,6 @@
 #include <vector>
 #ifndef __linux
 #include <windows.h>
-#endif // __linux
 
 /**\file
 \brief Class for work with serial (COM) port
@@ -16,9 +15,9 @@ namespace SerialOnWinapi {
 
 /**
     \brief wrapper for winapi functions to work with serial (COM) port
-    
+
     Class can connect to serial port, read and write data
-    It can obtain availiable serial port list 
+    It can obtain availiable serial port list
 */
 class SerialPort {
 public:
@@ -45,7 +44,7 @@ public:
 
     /// write vector of bytes to serial port
     void write(const std::vector<unsigned char>& data);
-    /// write array of bytes to serial port 
+    /// write array of bytes to serial port
     void write(const unsigned char* data, std::size_t sze);
     /// read bytes to vector of byte. vector must have needed size
     bool read(std::vector<unsigned char>& data);
@@ -73,3 +72,5 @@ private:
 }
 
 #endif // SERIAL_PORT_WINAPI_H_INCLUDED
+
+#endif // __linux

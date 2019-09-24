@@ -3,7 +3,8 @@
 #include <list>
 #include <chrono>
 // for serial port
-//#define __linux
+#define __linux
+#include "container_output.h"
 #ifdef __linux
 #include <fcntl.h>
 #include <termios.h>
@@ -133,6 +134,19 @@ void SerialPort::write(const std::vector<unsigned char>& data)
     write(&data[0], data.size());
 }
 
+std::ostream& print_int_carray(std::ostream& out, const unsigned char* ai, std::size_t sze) {
+    bool first = true;
+    out <<  '[';
+    for (size_t i = 0; i < sze; ++i) {
+      if (!first) {
+        out << ',';
+      }
+      first = false;
+      out << int(ai[i]);
+    }
+    return out << ']';
+}
+
 bool SerialPort::read(unsigned char* buf, std::size_t len)
 {
     using namespace std::chrono;
@@ -169,8 +183,9 @@ bool SerialPort::read(unsigned char* buf, std::size_t len)
             return false;
         }
         last -= readed;
-//        cerr << readed << " of " << len << " last= " << last << ". First byte = "
-//             << hex << int(buf[0]) << dec << endl;
+//        cerr << readed << " of " << len << " last= " << last << ". readed_data = "
+//             << hex;
+//         print_int_carray(cerr, buf, readed) << dec << endl;
         buf += readed;
     }
     return (last <= 0);
