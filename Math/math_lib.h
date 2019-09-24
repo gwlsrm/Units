@@ -18,15 +18,15 @@ inline double sqr(double value) { return pow(value, 2); }
 /// factorial of n (n!)
 double factorial(double n);
 /// rounds to 10^n, can be negative: n=-2 => to 0.01
-double roundTo(double f, int n);    
+double roundTo(double f, int n);
 /// returns true if number is odd
 inline bool odd(int n) {return static_cast<bool>(n % 2);}
-/// return square sum of vector elements: sqrt(v[0]^2 + v[1]^2 + ...) 
+/// return square sum of vector elements: sqrt(v[0]^2 + v[1]^2 + ...)
 double sqrAdd(const std::vector<double>& vals);
 /// greatest common divisor
-int gcd (int a, int b); 
+int gcd (int a, int b);
 /// solves square equation and returns number of roots
-int squareEquationSolver(double a, double b, double c, double& x1, double& x2); 
+int squareEquationSolver(double a, double b, double c, double& x1, double& x2);
 /// calculates polynomial value for x, coeffs: 0, 1, .. n
 double poly(double x, const std::vector<double>& coeffs);
 /// calculates polynomial value for x, coeffs: n, n-1, ..., 1, 0 (reverse)
@@ -58,7 +58,7 @@ void weightedMean(const std::vector<double>& vals, const std::vector<double>& er
 /// return weighted average value and standard deviation for vector of values and its weights
 void weightedMeanWeights(const std::vector<double>& vals, const std::vector<double>& weights,
                   double &wMean, double &wError);
-/// weight calculation from uncertainty                  
+/// weight calculation from uncertainty
 inline double weightCalculation(double err) {return isDblZero(err) ? 0 : 1 / sqr(err);}
 /// weight calculation from vector of uncertainties
 std::vector<double> weightsCalculation(const std::vector<double>& err_arr);
@@ -70,7 +70,7 @@ inline double linear_interpol(double x1, double x2, double y1, double y2, double
 
 // errors
 /// if b = k*a; rel. errors are equal: db = da / a * b (returns db)
-double errorFromPropValue(double a, double da, double b); 
+double errorFromPropValue(double a, double da, double b);
 /// calculates relative uncertainties from abs
 inline double relErrorFromAbs(double a, double da) {return isDblZero(a) ? 1.0 : da / a;}
 
@@ -89,13 +89,13 @@ void getWeighted(T b_it, T e_it) {
 }
 
 /// Calculates probabilities distribution function
-template <typename Container>
-double calculate_pdf(Container& cont) {
 /**
     Calculates probabilities distribution on array (container) Sum = 1, next num will be not less than previous.
     Integral of PDF (en.wikipedia.org/wiki/Probability_density_function)
     cont -- container of double like vector or std::array
 */
+template <typename Container>
+double calculate_pdf(Container& cont) {
     // extreme cases
     if (cont.empty()) return 0;
 
@@ -107,6 +107,33 @@ double calculate_pdf(Container& cont) {
     // normalize probabilities
     if (sum < 1e-16) return sum;
     std::for_each(std::begin(cont), std::end(cont), [sum](auto& v){return v /= sum;});
+//    for (auto& num : cont) {
+//        num /= sum;
+//    }
+    return sum;
+}
+
+/// Calculates probabilities distribution function
+/**
+    Calculates probabilities distribution on array (container) Sum = 1, next num will be not less than previous.
+    Integral of PDF (en.wikipedia.org/wiki/Probability_density_function)
+    cont -- container of double like vector or std::array
+    p -- predicate p(c[i]) must return probability
+*/
+template <typename Container, typename P>
+double calculate_pdf(Container& cont, P p, std::vector<double>& pdf) {
+    // extreme cases
+    if (cont.empty()) return 0;
+
+    pdf.resize(cont.size());
+    // calculate non-normilized probabilities
+    for (std::size_t i = 1; i < cont.size(); ++i) {
+        pdf[i] = pdf[i-1] + p(cont[i]);
+    }
+    double sum = pdf.back();
+    // normalize probabilities
+    if (sum < 1e-16) return sum;
+    std::for_each(std::begin(pdf), std::end(pdf), [sum](auto& v){return v /= sum;});
 //    for (auto& num : cont) {
 //        num /= sum;
 //    }

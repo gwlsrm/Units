@@ -268,4 +268,3 @@ double errorFromPropValue(double a, double da, double b) {
         return 0;
     }
 }
-

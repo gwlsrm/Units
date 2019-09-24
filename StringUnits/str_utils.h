@@ -96,4 +96,19 @@ std::string_view readToken(std::string_view& s, std::string_view delimiter = " "
 std::string join_strings(const std::vector<std::string>& strings, char sep = ' ');
 
 // print some strings
-void print_strings(std::ostream& out, const std::vector<std::string>& strings, char sep = '\t', char end_symbol = '\n');
+template <typename T>
+void print_vector(std::ostream& out, const std::vector<T>& values,
+                  char sep = '\t', char end_symbol = '\n') {
+    bool is_first = true;
+    for (const auto& v : values) {
+        if (is_first) {
+            is_first = false;
+        } else {
+            out << sep;
+        }
+        out << v;
+    }
+    out << end_symbol;
+}
+
+[[deprecated]]void print_strings(std::ostream& out, const std::vector<std::string>& strings, char sep = '\t', char end_symbol = '\n');
