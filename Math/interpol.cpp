@@ -9,12 +9,6 @@
 #include "gwmatrix.h"
 #include "sle.h"
 
-#define DEBUG_GW
-#ifdef DEBUG_GW
-#include "container_output.h"
-#include <iostream>
-#endif
-
 using namespace std;
 
 inline double get_x_log_state(double x, LogState x_or_y_log) {

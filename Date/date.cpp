@@ -39,11 +39,9 @@ int Date::dayInMonth(int aMonth, int aYear) {
     return days[aMonth-1];
 }
 
-std::string asString(char sep) const {
+std::string Date::asString(char sep) const {
     stringstream stream;
-    stream << setw(4) << setfill('0') << date.getYear() <<
-        sep << setw(2) << setfill('0') << date.getMonth() <<
-        sep << setw(2) << setfill('0') << date.getDay();
+    stream << *this;
     return stream.str();
 }
 

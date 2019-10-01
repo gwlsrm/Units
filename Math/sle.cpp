@@ -5,7 +5,6 @@
 #include <cmath>
 #include <stdexcept>
 
-#include "container_output.h"
 #include "math_lib.h"
 
 using namespace std;

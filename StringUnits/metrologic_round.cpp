@@ -2,7 +2,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "metrologic_round.h"
 #include "math_lib.h"
-#include "UStrUtils_gw.h"
+#include "str_utils.h"
 
 using namespace std;
 

@@ -7,6 +7,8 @@ Lib/
 new_2_cmp/
 _MC_description/
 nuclei/
+debug/
+release/
 
 # IDE files and binary
 *.[oa]
@@ -41,6 +43,7 @@ RemoveComment*.py
 *.out
 *.spe
 *.txt
+!CMakeLists.txt
 *.udl
 
 # Prerequisites
