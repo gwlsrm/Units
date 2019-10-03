@@ -10,14 +10,13 @@
 using namespace std;
 
 std::string getApplicationName(int argc, char* argv[]) {
-#ifdef _WIN32
+#ifndef __linux__
     char newPath[MAX_PATH];
     GetModuleFileNameA(0, newPath, MAX_PATH);
     return newPath;
 #else
     return argv[0];
 #endif
-
 }
 
 std::string extractFilePath(const std::string &fname)
@@ -81,7 +80,7 @@ std::string addSlash(std::string path) {
     if (path.empty() || path.back() == '\\' || path.back() == '/') {
         return path;
     }
-#ifdef _WIN32
+#ifndef __linux__
     return path + '\\';
 #else
     return path + '/';
