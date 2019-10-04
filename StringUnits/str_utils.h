@@ -83,7 +83,7 @@ template<class T> std::string toStringF(const T& value, TFloatFormat float_forma
 }
 
 /// split words from string using separator
-std::vector<std::string> split_into_words(const std::string& str, char sep = ' ', bool is_grouped = false);
+std::vector<std::string> split_into_words(const std::string& str, char sep = ' '/*, bool is_grouped = false -- unrealized now*/);
 /// reads next token from string and returns rest part of string as string_view
 std::string_view readToken(std::string_view& s, std::string_view delimiter = " ");
 //int word_count(const std::string& s, const std::set<char>& delimeters);

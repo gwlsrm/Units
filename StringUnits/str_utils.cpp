@@ -57,7 +57,7 @@ std::string trim_right(const std::string& s) {
 
 void removeblanks(char* str)
 {
-  int n = strlen(str) - 1;
+  int n = int(strlen(str)) - 1;
   for(int i = n; i >= 0; --i)
     if(str[i] != ' ') {
       str[i+1] = 0;
@@ -91,7 +91,8 @@ std::string str_toupper(std::string s) {
 
 bool startWith(const char* source, const char* signature)
 {
-  int n = strlen(signature), i;
+  int n = int(strlen(signature));
+  int i = 0;
   for(i = 0; i < n; i++)
     if(source[i] != signature[i]) break;
   return i == n ? true : false;
@@ -106,7 +107,7 @@ int strToIntDef(const std::string& str, int defValue){
     try {
         int res = stol(str);
         return res;
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument&) {
         return defValue;
     }
 }
@@ -115,7 +116,7 @@ double strToFloatDef(const std::string& str, double defValue) {
     try {
         double res = stod(str);
         return res;
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument&) {
         return defValue;
     }
 }
@@ -124,7 +125,7 @@ bool tryStrToInt(const std::string& str, int& value) {
     try {
         value = stol(str);
         return true;
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument&) {
         return false;
     }
 }
@@ -133,7 +134,7 @@ bool tryStrToFloat(const std::string& str, double& value) {
     try {
         value = stod(str);
         return true;
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument&) {
         return false;
     }
 }
@@ -153,7 +154,7 @@ void addSpacesToString(std::string& str, size_t new_length) {
   }
 }
 
-std::vector<std::string> split_into_words(const std::string& str, char sep, bool is_grouped) {
+std::vector<std::string> split_into_words(const std::string& str, char sep/*, bool is_grouped*/) {
     vector<string> result;
     string s = trim(str);
     auto str_begin = begin(s);

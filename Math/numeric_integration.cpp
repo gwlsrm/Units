@@ -11,7 +11,7 @@ double aveIntegration(const FuncTyped2d& f, double a, double b, double EPS) {
         Int = h * Sum(f((xh+1 - xh) /2))
     */
     //constexpr int N = 4618;
-    int N = (b - a) / sqrt(24.0 * EPS / (b - a)); // incorrect estimation (need f'(b) - f'(a))
+    int N = static_cast<int>((b - a) / sqrt(24.0 * EPS / (b - a))); // incorrect estimation (need f'(b) - f'(a))
     return aveIntegration(f, a, b, N);
 }
 

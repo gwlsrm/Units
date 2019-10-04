@@ -3,13 +3,13 @@
 #include "fileutils.h"
 
 #include <fstream>
-#ifdef __WIN32
+#ifndef __linux__
 #include <windows.h>
 #endif
 
 using namespace std;
 
-std::string getApplicationName(int argc, char* argv[]) {
+std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char* argv[]) {
 #ifndef __linux__
     char newPath[MAX_PATH];
     GetModuleFileNameA(0, newPath, MAX_PATH);

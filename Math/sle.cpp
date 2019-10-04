@@ -55,7 +55,7 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     // direct movement
     /*x[i] = 1/a[i,i]*(b[i] - Sum(a[i,j]*x[j]))*/
     vector<double> x(m);
-    for (int i = m-1; i >= 0; --i) {
+    for (int i = static_cast<int>(m)-1; i >= 0; --i) {
         x[i] = b[i];
         for (size_t j = i+1; j < m; ++j) {
             x[i] -= c[i][j] * x[j];

@@ -90,8 +90,9 @@ double average(double x, double y)
 
 double poly(double x, const std::vector<double>& coeffs) {
     /** Horner's method of calculating polynomial*/
+    if (coeffs.empty()) {throw runtime_error("Coeffs array must not be empty");}
     double res = coeffs.back();
-    for (int i = coeffs.size()-2; i >=0; --i) {
+    for (int i = static_cast<int>(coeffs.size())-2; i >=0; --i) {
         res = res * x + coeffs[i];
     }
     return res;
