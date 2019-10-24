@@ -15,7 +15,7 @@
 std::string trim(const std::string& s);
 /// remove spaces from the end
 std::string trim_right(const std::string& s);
-/// trim_rigth for c-string: it removes blanks from the end
+/// trim_right for c-string: it removes blanks from the end
 void removeblanks(char* str);
 [[deprecated]] std::string toLower(std::string s);
 /// converts string to lower: can be used with move for parameter
