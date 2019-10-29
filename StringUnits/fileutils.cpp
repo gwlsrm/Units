@@ -62,9 +62,14 @@ std::string goOneLevelUp(const std::string& path) {
         return path;
     }
     // only one /
-    if (path.find('\\')+1 == path.size() || path.find('/')+1 == path.size()) {
+    size_t slash_pos = path.find('\\');
+    if (slash_pos == string::npos) {
+        slash_pos = path.find('/');
+    }
+    if (slash_pos + 1 == path.size()) {
         return path;
     }
+
     // remove last /
     string res(path);
     if (res.back() == '\\' || res.back() == '/') {
@@ -72,7 +77,13 @@ std::string goOneLevelUp(const std::string& path) {
     }
 
     // remove last level
-    res = res.substr(0, res.rfind('\\') + 1);
+    slash_pos = res.rfind('\\');
+    if (slash_pos == string::npos) {
+        slash_pos = res.rfind('/');
+    }
+    if (slash_pos != string::npos) {
+        res = res.substr(0, res.rfind('\\') + 1);
+    }
     return res;
 }
 
@@ -95,7 +106,9 @@ std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::
     }
     string res_path = addSlash(baseDir);
     // expand ..
-    if (fileName.size() >= 3 && fileName.compare(0, 3, "..\\") == 0) {
+    if (fileName.size() >= 3 &&
+        (fileName.compare(0, 3, "..\\") == 0  ||
+        fileName.compare(0, 3, "../") == 0 )) {
         res_path = goOneLevelUp(res_path);
         res_path += fileName.substr(3);
     } else {

@@ -20,7 +20,7 @@ std::string goOneLevelUp(const std::string& path);
 std::string addSlash(std::string path);
 /// add slash for windows and linux
 inline char getSlash() {
-#ifdef __linux__
+#ifndef __linux__
     return '\\';
 #else
     return '/';
