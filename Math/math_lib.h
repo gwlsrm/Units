@@ -105,7 +105,7 @@ double calculate_pdf(Container& cont) {
     }
     double sum = cont.back();
     // normalize probabilities
-    if (sum < 1e-16) return sum;
+    if (isDblZero(sum)) return sum;
     std::for_each(std::begin(cont), std::end(cont), [sum](auto& v){return v /= sum;});
 //    for (auto& num : cont) {
 //        num /= sum;
