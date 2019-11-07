@@ -121,18 +121,19 @@ double calculate_pdf(Container& cont) {
     p -- predicate p(c[i]) must return probability
 */
 template <typename Container, typename P>
-double calculate_pdf(Container& cont, P p, std::vector<double>& pdf) {
+double calculate_pdf(const Container& cont, P p, std::vector<double>& pdf) {
     // extreme cases
     if (cont.empty()) return 0;
 
     pdf.resize(cont.size());
+    pdf[0] = p(cont[0]);
     // calculate non-normilized probabilities
     for (std::size_t i = 1; i < cont.size(); ++i) {
         pdf[i] = pdf[i-1] + p(cont[i]);
     }
     double sum = pdf.back();
     // normalize probabilities
-    if (sum < 1e-16) return sum;
+    if (isDblZero(sum)) return sum;
     std::for_each(std::begin(pdf), std::end(pdf), [sum](auto& v){return v /= sum;});
 //    for (auto& num : cont) {
 //        num /= sum;
