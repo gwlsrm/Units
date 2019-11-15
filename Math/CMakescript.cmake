@@ -9,15 +9,18 @@ set(LIB_NAME math_lib)
 add_library(${LIB_NAME} STATIC ${SRC_MATH_UNITS})
 
 # tests
+if (USE_TEST)
 set(TEST_NAME test_math_lib)
 add_executable(${TEST_NAME} ${MATH_UNITS}/tests/test_math_lib.cpp)
 
 # boost dependensies
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+endif()
 
 # set library properties    
 set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 
+if (USE_TEST)
 # set tests properties
 set_target_properties(${TEST_NAME} PROPERTIES 
     CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
@@ -37,3 +40,4 @@ target_link_libraries(${TEST_NAME}
 # tests
 enable_testing()
 add_test(math_tests ${TEST_NAME})
+endif()
