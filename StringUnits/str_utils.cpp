@@ -55,6 +55,16 @@ std::string trim_right(const std::string& s) {
     return string(b_it, e_it);
 }
 
+std::string_view strip(std::string_view line) {
+    while (!line.empty() && isspace(line.front())) {
+        line.remove_prefix(1);
+    }
+    while (!line.empty() && isspace(line.back())) {
+        line.remove_suffix(1);
+    }
+    return line;
+}
+
 void removeblanks(char* str)
 {
   int n = int(strlen(str)) - 1;

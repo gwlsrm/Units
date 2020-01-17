@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mutex>
-using namespace std;
+#include <utility>
 
 /**
     @brief Synchronized is wrapper for synchronized access to value
@@ -19,23 +19,23 @@ template <typename T>
 class Synchronized {
 public:
   explicit Synchronized(T initial = T())
-    : value(move(initial))
-  {
-  }
+    : value(std::move(initial)) {}
 
+  template <typename U>
   struct Access {
-    T& ref_to_value;
-    lock_guard<mutex> guard;
+    U& ref_to_value;
+    std::lock_guard<std::mutex> guard;
   };
 
-  Access getAccess() {
-    return {value, lock_guard(m)};
+  Access<T> getAccess() {
+    return {value, std::lock_guard(m)};
+  }
+  
+  Access<const T> getAccess() const {
+    return {value, std::lock_guard(m)};
   }
 
 private:
   T value;
-  mutex m;
+  mutable std::mutex m;
 };
-
-
-
