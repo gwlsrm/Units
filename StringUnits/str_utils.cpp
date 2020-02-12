@@ -105,7 +105,7 @@ bool startWith(const char* source, const char* signature)
   int i = 0;
   for(i = 0; i < n; i++)
     if(source[i] != signature[i]) break;
-  return i == n ? true : false;
+  return i == n;
 }
 
 bool startWith(const std::string& source, const std::string& signature) {
@@ -149,11 +149,19 @@ bool tryStrToFloat(const std::string& str, double& value) {
     }
 }
 
-std::string intToStringF(int number, int digits) {
+std::string intToStringF_need_to_test(int number, int digits) {
     stringstream ss;
     ss << setfill('0') << setw(digits);
     ss << number;
     return ss.str();
+}
+
+std::string intToStringF(int i, int width) {
+    string res = to_string(i);
+    if ((int)res.size() < width) {
+        res = string(width - res.size(), '0') + res;
+    }
+    return res;
 }
 
 bool same_text(const std::string& s1, const std::string& s2)
@@ -244,14 +252,6 @@ void print_strings(std::ostream& out, const std::vector<std::string>& strings, c
         out << s;
     }
     out << end_symbol;
-}
-
-std::string intToStringF(int i, int width) {
-    string res = to_string(i);
-    if ((int)res.size() < width) {
-        res = string(width - res.size(), '0') + res;
-    }
-    return res;
 }
 
 //int word_count(const string& s, const set<char>& delimeters)
