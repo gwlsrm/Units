@@ -98,6 +98,16 @@ double poly(double x, const std::vector<double>& coeffs) {
     return res;
 }
 
+double poly(double x, const double* coeffs, int coeffs_sze) {
+    /** Horner's method of calculating polynomial*/
+    if (coeffs_sze <= 0) {throw runtime_error("Coeffs array must not be empty");}
+    double res = coeffs[coeffs_sze-1];
+    for (int i = coeffs_sze-2; i >=0; --i) {
+        res = res * x + coeffs[i];
+    }
+    return res;
+}
+
 double poly_reverse(double x, const std::vector<double>& coeffs) {
     if (coeffs.empty()) {throw runtime_error("Coeffs array must not be empty");}
     double res = coeffs.front();

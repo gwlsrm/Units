@@ -15,8 +15,12 @@ public:
         return last;
     }
 
-    std::size_t size() const {
+    [[nodiscard]] std::size_t size() const {
         return last - first;
+    }
+
+    [[nodiscard]] bool empty() const {
+        return last == first;
     }
 
 private:
@@ -30,5 +34,5 @@ auto Head(Container& c, int top) {
 
 template <typename C>
 auto asRange(const C& container) {
-  return Range{std::begin(container), std::end(container)};
+  return IteratorRange{std::begin(container), std::end(container)};
 }
