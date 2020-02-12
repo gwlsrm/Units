@@ -67,6 +67,10 @@ inline double linear_interpol(double x1, double x2, double y1, double y2, double
     double w = (x - x1) / (x2 - x1);
     return (1 - w) * y1 + w * y2;
 }
+inline double linear_interpol(double w, double y1, double y2) {
+    return (1 - w) * y1 + w * y2;
+}
+
 
 // errors
 /// if b = k*a; rel. errors are equal: db = da / a * b (returns db)
@@ -159,8 +163,8 @@ void convolution_with_gauss(std::vector<double>& data, Func sigma_func) {
       double sigma = sigma_func(i);
       double sigma_2x2 = !isDblZero(sigma) ? 2 * sqr(sigma) : 1.0 / FLT_MAX_EXP;
       // set convolution boundaries
-      const int j1 = round(i - NSIGMA * sigma);
-      const int j2 = round(i + NSIGMA * sigma);
+      const int j1 = lround(i - NSIGMA * sigma);
+      const int j2 = lround(i + NSIGMA * sigma);
       // convolution with gauss
       double norm = 0, r;
       for (int j = j1; j <= j2; ++j) {

@@ -15,6 +15,8 @@
 std::string trim(const std::string& s);
 /// remove spaces from the end
 std::string trim_right(const std::string& s);
+/// strip 
+std::string_view strip(std::string_view line);
 /// trim_right for c-string: it removes blanks from the end
 void removeblanks(char* str);
 [[deprecated]] std::string toLower(std::string s);
@@ -58,6 +60,7 @@ T from_string(const std::string& s)
 	return t;
 }
 // to string
+std::string intToStringF(int number, int digits);
 enum class TFloatFormat {ffGeneral, ffExponent, ffFixed};
 template<class T> std::string toStringF(const T& value, TFloatFormat float_format = TFloatFormat::ffGeneral,
                                         int precision = -1)
