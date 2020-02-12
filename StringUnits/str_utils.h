@@ -60,6 +60,7 @@ T from_string(const std::string& s)
 	return t;
 }
 // to string
+std::string intToStringF(int number, int digits);
 enum class TFloatFormat {ffGeneral, ffExponent, ffFixed};
 template<class T> std::string toStringF(const T& value, TFloatFormat float_format = TFloatFormat::ffGeneral,
                                         int precision = -1)

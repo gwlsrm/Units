@@ -149,6 +149,13 @@ bool tryStrToFloat(const std::string& str, double& value) {
     }
 }
 
+std::string intToStringF(int number, int digits) {
+    stringstream ss;
+    ss << setfill('0') << setw(digits);
+    ss << number;
+    return ss.str();
+}
+
 bool same_text(const std::string& s1, const std::string& s2)
 {
 #ifndef __BORLANDC__
@@ -172,7 +179,7 @@ std::vector<std::string> split_into_words(const std::string& str, char sep/*, bo
 
     while (true) {
         auto it = find(str_begin, str_end, sep);
-        result.push_back(string(str_begin, it));
+        result.emplace_back(str_begin, it);
 
         if (it == str_end) {
             break;
@@ -191,7 +198,7 @@ std::vector<std::string> split_into_words(const std::string& str, char sep/*, bo
 
 std::pair<std::string_view, std::optional<std::string_view>> split_two_strict(std::string_view s, std::string_view delimiter) {
   const size_t pos = s.find(delimiter);
-  if (pos == s.npos) {
+  if (pos == std::string_view::npos) {
     return {s, nullopt};
   } else {
     return {s.substr(0, pos), s.substr(pos + delimiter.length())};
