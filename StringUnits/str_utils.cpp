@@ -229,6 +229,14 @@ void print_strings(std::ostream& out, const std::vector<std::string>& strings, c
     out << end_symbol;
 }
 
+std::string intToStringF(int i, int width) {
+    string res = to_string(i);
+    if ((int)res.size() < width) {
+        res = string(width - res.size(), '0') + res;
+    }
+    return res;
+}
+
 //int word_count(const string& s, const set<char>& delimeters)
 //{
 //    size_t i(0);

@@ -82,6 +82,9 @@ template<class T> std::string toStringF(const T& value, TFloatFormat float_forma
     return os.str();
 }
 
+/// int -> string, if string size < width, zeros will be added to str begin
+std::string intToStringF(int i, int width);
+
 /// split words from string using separator
 std::vector<std::string> split_into_words(const std::string& str, char sep = ' '/*, bool is_grouped = false -- unrealized now*/);
 /// reads next token from string and returns rest part of string as string_view
