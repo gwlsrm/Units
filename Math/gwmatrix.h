@@ -38,19 +38,20 @@ public:
     matrix_const_iterator begin() const {return mElements.begin();}
     matrix_const_iterator end() const {return mElements.end();}
     // getters
-    std::size_t getRowCount() const {return row_count;}
-    std::size_t getColCount() const {return col_count;}
+    std::size_t getRowCount() const {return row_count_;}
+    std::size_t getColCount() const {return col_count_;}
     // methods
-    bool isSquare() const {return row_count == col_count;}
+    bool isSquare() const {return row_count_ == col_count_;}
     double determinant() const;
 private:
-    std::size_t row_count = 0;
-    std::size_t col_count = 0;
+    std::size_t row_count_ = 0;
+    std::size_t col_count_ = 0;
     std::vector<std::vector<double>> mElements;
 };
 
 // operations with matrix
 DoubleMatrix operator+(const DoubleMatrix& one, const DoubleMatrix& two);
+DoubleMatrix operator-(const DoubleMatrix& one, const DoubleMatrix& two);
 bool operator==(const DoubleMatrix& lhs, const DoubleMatrix& rhs);
 std::istream& operator>>(std::istream& in, DoubleMatrix& matrix);
 std::ostream& operator<<(std::ostream& out, const DoubleMatrix& matrix);
