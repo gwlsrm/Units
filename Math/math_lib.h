@@ -14,7 +14,7 @@ constexpr int MAX_LOG_DOUBLE = 300;
 
 // mathematic
 /// sqr(x) -- the same as x^2, x**2
-inline double sqr(double value) { return pow(value, 2); }
+inline double sqr(double value) { return value*value;/*pow(value, 2);*/ }
 /// factorial of n (n!)
 double factorial(double n);
 /// rounds to 10^n, can be negative: n=-2 => to 0.01
@@ -29,6 +29,7 @@ int gcd (int a, int b);
 int squareEquationSolver(double a, double b, double c, double& x1, double& x2);
 /// calculates polynomial value for x, coeffs: 0, 1, .. n
 double poly(double x, const std::vector<double>& coeffs);
+double poly(double x, const double* coeffs, int coeffs_sze);
 /// calculates polynomial value for x, coeffs: n, n-1, ..., 1, 0 (reverse)
 double poly_reverse(double x, const std::vector<double>& coeffs);
 /// return true, if difference between a and b is less than absEpsilon or relEpsilon
@@ -67,6 +68,10 @@ inline double linear_interpol(double x1, double x2, double y1, double y2, double
     double w = (x - x1) / (x2 - x1);
     return (1 - w) * y1 + w * y2;
 }
+inline double linear_interpol(double w, double y1, double y2) {
+    return (1 - w) * y1 + w * y2;
+}
+
 
 // errors
 /// if b = k*a; rel. errors are equal: db = da / a * b (returns db)
@@ -154,22 +159,23 @@ void convolution_with_gauss(std::vector<double>& data, Func sigma_func) {
   std::vector<double> orig_data{std::move(data)};
   data.resize(orig_data.size(), 0);
 
-  for (int i = 0; i < static_cast<int>(orig_data.size()); ++i) {
+  auto sze = static_cast<int>(orig_data.size());
+  for (int i = 0; i < sze; ++i) {
       // get conv function parameters: gauss
       double sigma = sigma_func(i);
       double sigma_2x2 = !isDblZero(sigma) ? 2 * sqr(sigma) : 1.0 / FLT_MAX_EXP;
       // set convolution boundaries
-      const int j1 = round(i - NSIGMA * sigma);
-      const int j2 = round(i + NSIGMA * sigma);
+      const int j1 = lround(i - NSIGMA * sigma);
+      const int j2 = lround(i + NSIGMA * sigma);
       // convolution with gauss
       double norm = 0, r;
       for (int j = j1; j <= j2; ++j) {
-          if (j < 0 || j >= int(orig_data.size())) {
+          if (j < 0 || j >= sze) {
               r = 0;
           } else {
               r = orig_data[j];
           }
-          double gaus = exp(-sqr(i-j)/sigma_2x2);
+          double gaus = expf(-sqr(i-j)/sigma_2x2);
           data[i] += r * gaus;
           norm += gaus;
       }

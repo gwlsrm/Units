@@ -55,6 +55,16 @@ std::string trim_right(const std::string& s) {
     return string(b_it, e_it);
 }
 
+std::string_view strip(std::string_view line) {
+    while (!line.empty() && isspace(line.front())) {
+        line.remove_prefix(1);
+    }
+    while (!line.empty() && isspace(line.back())) {
+        line.remove_suffix(1);
+    }
+    return line;
+}
+
 void removeblanks(char* str)
 {
   int n = int(strlen(str)) - 1;
@@ -95,7 +105,7 @@ bool startWith(const char* source, const char* signature)
   int i = 0;
   for(i = 0; i < n; i++)
     if(source[i] != signature[i]) break;
-  return i == n ? true : false;
+  return i == n;
 }
 
 bool startWith(const std::string& source, const std::string& signature) {
@@ -139,6 +149,21 @@ bool tryStrToFloat(const std::string& str, double& value) {
     }
 }
 
+std::string intToStringF_need_to_test(int number, int digits) {
+    stringstream ss;
+    ss << setfill('0') << setw(digits);
+    ss << number;
+    return ss.str();
+}
+
+std::string intToStringF(int i, int width) {
+    string res = to_string(i);
+    if ((int)res.size() < width) {
+        res = string(width - res.size(), '0') + res;
+    }
+    return res;
+}
+
 bool same_text(const std::string& s1, const std::string& s2)
 {
 #ifndef __BORLANDC__
@@ -162,7 +187,7 @@ std::vector<std::string> split_into_words(const std::string& str, char sep/*, bo
 
     while (true) {
         auto it = find(str_begin, str_end, sep);
-        result.push_back(string(str_begin, it));
+        result.emplace_back(str_begin, it);
 
         if (it == str_end) {
             break;
@@ -181,7 +206,7 @@ std::vector<std::string> split_into_words(const std::string& str, char sep/*, bo
 
 std::pair<std::string_view, std::optional<std::string_view>> split_two_strict(std::string_view s, std::string_view delimiter) {
   const size_t pos = s.find(delimiter);
-  if (pos == s.npos) {
+  if (pos == std::string_view::npos) {
     return {s, nullopt};
   } else {
     return {s.substr(0, pos), s.substr(pos + delimiter.length())};
