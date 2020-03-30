@@ -55,16 +55,16 @@ BOOST_AUTO_TEST_SUITE(str_test_suite)
                 cnf.getStringValue("key4") == "4"
         );
         BOOST_TEST(
-                *cnf.getValue<int>("key1") == 4
+                cnf.getValue<int>("key1") == 4
         );
         BOOST_TEST(
-                *cnf.getValue<double>("key2") == 2.5
+                cnf.getValue<double>("key2") == 2.5
         );
         BOOST_TEST(
-                *cnf.getValue<bool>("key3")
+                cnf.getValue<bool>("key3")
         );
         BOOST_TEST(
-                *cnf.getValue<int>("key2") == 2
+                cnf.getValue<int>("key2") == 2
         );
     }
 
@@ -75,13 +75,13 @@ BOOST_AUTO_TEST_SUITE(str_test_suite)
             << "key3 = 1 kg\n";
         CnfReader cnf(ss, "=");
         BOOST_TEST(
-                *cnf.getValue<double>("key1") == 4.5
+                cnf.getValue<double>("key1") == 4.5
         );
         BOOST_TEST(
-                *cnf.getValue<double>("key2") == 2.5
+                cnf.getValue<double>("key2") == 2.5
         );
         BOOST_TEST(
-                *cnf.getValue<double>("key3") == 1
+                cnf.getValue<double>("key3") == 1
         );
     }
 

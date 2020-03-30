@@ -99,6 +99,7 @@ std::string_view readToken(std::string_view& s, std::string_view delimiter = " "
 
 /// join string to the one big string (seems to be more effective than '+')
 std::string join_strings(const std::vector<std::string>& strings, char sep = ' ');
+std::string join_strings(const std::vector<std::string>& strings, std::string_view sep);
 
 // print some strings
 template <typename T>

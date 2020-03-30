@@ -46,18 +46,17 @@ public:
         ss >> res;
         return res;
     }
-    /// get value, throughs exceptions
+    /// get value, throws exceptions
     template <typename T>
-    std::optional<T> getValue(const std::string& par_name) const {
+    T getValue(const std::string& par_name) const {
         if constexpr (std::is_same_v<T, bool>) {
-            return getBoolValueOpt(par_name);
+            return getBoolValue(par_name);
         } else if constexpr (std::is_integral_v<T>) {
-            return getIntValueOpt(par_name);
+            return getIntValue(par_name);
         } else if constexpr (std::is_floating_point_v<T>) {
-            return getDoubleValueOpt(par_name);
+            return getDoubleValue(par_name);
         }
         const auto& par_value = getStringValue(par_name);
-        if (par_value.empty()) return std::nullopt;
         std::stringstream ss;
         ss << par_value;
         T res;

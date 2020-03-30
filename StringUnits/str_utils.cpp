@@ -225,20 +225,45 @@ std::string_view readToken(std::string_view& s, std::string_view delimiter) {
 }
 
 std::string join_strings(const std::vector<std::string>& strings, char sep) {
-  string res;
-  size_t full_size = accumulate(begin(strings), end(strings), 0u,
-                              [](size_t b, const string& s) {return b + s.size() + 1u;});
-  res.reserve(full_size);
-  bool is_first = true;
-  for (const auto& s : strings) {
-    if (is_first) {
-      is_first = false;
-    } else {
-      res += sep;
+    if (strings.empty()) return "";
+    // calc final string size
+    size_t full_size = accumulate(begin(strings), end(strings), 0u,
+                              [](size_t b, const string& s) {return b + s.size();});
+    full_size += strings.size() - 1;
+    // make string
+    string res;
+    res.reserve(full_size);
+    bool is_first = true;
+    for (const auto& s : strings) {
+        if (is_first) {
+            is_first = false;
+        } else {
+            res += sep;
+        }
+        res += s;
     }
-    res += s;
-  }
-  return res;
+    return res;
+}
+
+std::string join_strings(const std::vector<std::string>& strings, std::string_view sep) {
+    if (strings.empty()) return "";
+    // calc final string size
+    size_t full_size = accumulate(begin(strings), end(strings), 0u,
+                                  [](size_t b, const string& s) {return b + s.size();});
+    full_size += (strings.size() - 1) * sep.size();
+    // make string
+    string res;
+    res.reserve(full_size);
+    bool is_first = true;
+    for (const auto& s : strings) {
+        if (is_first) {
+            is_first = false;
+        } else {
+            res += sep;
+        }
+        res += s;
+    }
+    return res;
 }
 
 void print_strings(std::ostream& out, const std::vector<std::string>& strings, char sep, char end_symbol) {
