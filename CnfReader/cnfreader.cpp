@@ -79,24 +79,36 @@ std::optional<double> CnfReader::getDoubleValueOpt(const std::string& par_name) 
 }
 
 int CnfReader::getIntValue(const std::string& par_name) const {
-    const auto& par_value = data_.at(par_name);
-    return stol(par_value);
+    try {
+        const auto& par_value = data_.at(par_name);
+        return stol(par_value);
+    } catch (const exception& e) {
+        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+    }
 }
 
 bool CnfReader::getBoolValue(const std::string& par_name) const {
-    const auto& par_value = data_.at(par_name);
-    if (par_value.find("true") != std::string::npos) {
-        return true;
-    } else if (par_value.find("false") != std::string::npos) {
-        return false;
-    } else {
-        throw out_of_range(par_name + " is not in cnf_file");
+    try {
+        const auto &par_value = data_.at(par_name);
+        if (par_value.find("true") != std::string::npos) {
+            return true;
+        } else if (par_value.find("false") != std::string::npos) {
+            return false;
+        } else {
+            throw out_of_range(par_name + " is not in cnf_file");
+        }
+    } catch (const exception& e) {
+        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
 
 double CnfReader::getDoubleValue(const std::string& par_name) const {
-    const auto& par_value = data_.at(par_name);
-    return stod(par_value);
+    try {
+        const auto& par_value = data_.at(par_name);
+        return stod(par_value);
+    } catch (const exception& e) {
+        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+    }
 }
 
 

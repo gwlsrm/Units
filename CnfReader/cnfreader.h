@@ -57,6 +57,9 @@ public:
             return getDoubleValue(par_name);
         }
         const auto& par_value = getStringValue(par_name);
+        if (par_value.empty()) {
+            throw std::invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+        }
         std::stringstream ss;
         ss << par_value;
         T res;
