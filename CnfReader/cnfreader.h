@@ -63,6 +63,26 @@ public:
         ss >> res;
         return res;
     }
+    template <typename T>
+    T getValueDef(const std::string& par_name, const T& defValue) const {
+        if constexpr (std::is_same_v<T, bool>) {
+            auto opt = getBoolValueOpt(par_name);
+            return opt ? *opt : defValue;
+        } else if constexpr (std::is_integral_v<T>) {
+            auto opt = getIntValueOpt(par_name);
+            return opt ? *opt : defValue;
+        } else if constexpr (std::is_floating_point_v<T>) {
+            auto opt = getDoubleValueOpt(par_name);
+            return opt ? *opt : defValue;
+        }
+        const auto& par_value = getStringValue(par_name);
+        if (par_value.empty()) return defValue;
+        std::stringstream ss;
+        ss << par_value;
+        T res;
+        ss >> res;
+        return res;
+    }
 private:
     std::unordered_map<std::string, std::string> data_;
     const std::string empty_string_;

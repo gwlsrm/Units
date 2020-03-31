@@ -85,4 +85,31 @@ BOOST_AUTO_TEST_SUITE(str_test_suite)
         );
     }
 
+    BOOST_AUTO_TEST_CASE(test_read_cnf_with_def_value) {
+        stringstream ss;
+        ss  << "key1=4\n"
+            << "key2=2.5\n"
+            << "key3=true\n"
+            << "key4 = 4\n";
+        CnfReader cnf(ss, "=");
+        BOOST_TEST(
+                cnf.getValueDef<int>("key1", 5) == 4
+        );
+        BOOST_TEST(
+                cnf.getValueDef<double>("key2", 4) == 2.5
+        );
+        BOOST_TEST(
+                cnf.getValueDef<bool>("key3", false)
+        );
+        BOOST_TEST(
+                cnf.getValueDef<int>("key4", 2) == 4
+        );
+        BOOST_TEST(
+                cnf.getValueDef<int>("key5", 6) == 6
+        );
+        BOOST_TEST(
+                cnf.getValueDef<bool>("key6", false) == false
+        );
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
