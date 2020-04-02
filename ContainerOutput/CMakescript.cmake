@@ -7,11 +7,11 @@ add_library(${LIB_NAME} STATIC ${SRC_LOGGER_UNITS})
 
 # tests
 if (USE_TEST)
-set(TEST_NAME test_gw_logger)
-add_executable(${TEST_NAME} ${LOGGER_UNITS}/tests/test_gw_logger.cpp)
+    set(TEST_NAME test_gw_logger)
+    add_executable(${TEST_NAME} ${LOGGER_UNITS}/tests/test_gw_logger.cpp)
 
-# boost dependensies
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+    # boost dependensies
+    #find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 endif()
 
 # set library properties    

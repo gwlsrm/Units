@@ -10,11 +10,11 @@ add_library(${LIB_NAME} STATIC ${SRC_MATH_UNITS})
 
 # tests
 if (USE_TEST)
-set(TEST_NAME test_math_lib)
-add_executable(${TEST_NAME} ${MATH_UNITS}/tests/test_math_lib.cpp)
+    set(TEST_NAME test_math_lib)
+    add_executable(${TEST_NAME} ${MATH_UNITS}/tests/test_math_lib.cpp)
 
-# boost dependensies
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+    # boost dependensies
+    #find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 endif()
 
 # set library properties    

@@ -12,7 +12,7 @@ if (USE_TEST)
     add_executable(${TEST_NAME} ${CNF_READER_UNITS}/tests/test_cnf_reader.cpp)
 
     # boost dependensies
-    find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+    #find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 endif()
 
 # set library properties    
