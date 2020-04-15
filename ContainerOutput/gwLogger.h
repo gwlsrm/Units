@@ -18,6 +18,11 @@ public:
     /// delete instance of logger
     static void deleteLogger();
 
+    /// flush data to disk
+    void flush() {
+        out_.flush();
+    }
+
     // public log methods
     /// log variable of any type that has << operator
     template <typename T>
