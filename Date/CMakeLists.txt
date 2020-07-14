@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Date) 
+project(gwdate)
 
-add_library(gwDate STATIC date.cpp date.h)   # can be SHARED (dll)
-    
-set_target_properties(gwDate PROPERTIES      
+add_library(gwdate STATIC date.cpp date.h)
+
+set_target_properties(gwdate PROPERTIES
                       CXX_STANDARD 14
                       CXX_STANDARD_REQUIRED ON
                       )

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Profile) 
+project(profile_advanced)
 
-add_library(profile_advanced STATIC profile_advanced.cpp profile_advanced.h)   # can be SHARED (dll)
+add_library(profile_advanced STATIC profile_advanced.cpp profile_advanced.h)
     
 set_target_properties(profile_advanced PROPERTIES      
                       CXX_STANDARD 14

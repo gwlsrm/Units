@@ -21,23 +21,23 @@ endif()
 set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 
 if (USE_TEST)
-# set tests properties
-set_target_properties(${TEST_NAME} PROPERTIES 
-    CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-)
-target_include_directories(${TEST_NAME}
-    PRIVATE ${Boost_INCLUDE_DIR}
-    PRIVATE ${MATH_UNITS}
-)
+    # set tests properties
+    set_target_properties(${TEST_NAME} PROPERTIES
+        CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+    )
+    target_include_directories(${TEST_NAME}
+        PRIVATE ${Boost_INCLUDE_DIR}
+        PRIVATE ${MATH_UNITS}
+    )
 
-# link to tests
-target_link_libraries(${TEST_NAME} 
-    ${LIB_NAME}
-    ${Boost_LIBRARIES}
-)
+    # link to tests
+    target_link_libraries(${TEST_NAME}
+        ${LIB_NAME}
+        ${Boost_LIBRARIES}
+    )
 
-# tests
-enable_testing()
-add_test(math_tests ${TEST_NAME})
+    # tests
+    enable_testing()
+    add_test(math_tests ${TEST_NAME})
 endif()

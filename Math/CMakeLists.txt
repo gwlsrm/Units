@@ -1,29 +1,44 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(MathLib) 
+project(math_lib)
 
-add_library(geom_lib STATIC geom_lib.cpp geom_lib.h)
-add_library(gw_algorithm STATIC gw_algorithm.cpp gw_algorithm.h)
-add_library(gwmatrix STATIC gwmatrix.cpp gwmatrix.h)
-add_library(gw_solid_matrix STATIC gw_solid_matrix.cpp gw_solid_matrix.h)
-add_library(gw_triangle_matrix STATIC gw_triangle_matrix.cpp gw_triangle_matrix.h)
-add_library(interpol STATIC interpol.cpp interpol.h)
-add_library(leastsquares STATIC leastsquares.cpp leastsquares.h)
-add_library(math_lib STATIC math_lib.cpp math_lib.h)
-add_library(nonlinearsolver STATIC nonlinearsolver.cpp nonlinearsolver.h)
-add_library(numeric_integration STATIC numeric_integration.cpp numeric_integration.h)
-add_library(sle STATIC sle.cpp sle.h)
-    
-set_target_properties(geom_lib PROPERTIES CXX_STANDARD 14)
-set_target_properties(gw_algorithm PROPERTIES CXX_STANDARD 14)
-set_target_properties(gwmatrix PROPERTIES CXX_STANDARD 14)
-set_target_properties(gw_solid_matrix PROPERTIES CXX_STANDARD 14)
-set_target_properties(gw_triangle_matrix PROPERTIES CXX_STANDARD 14)
-set_target_properties(interpol PROPERTIES CXX_STANDARD 14)
-set_target_properties(leastsquares PROPERTIES CXX_STANDARD 14)
-set_target_properties(math_lib PROPERTIES CXX_STANDARD 14)
-set_target_properties(nonlinearsolver PROPERTIES CXX_STANDARD 14)
-set_target_properties(numeric_integration PROPERTIES CXX_STANDARD 14)
-set_target_properties(sle PROPERTIES CXX_STANDARD 14)
+set(SRC_MATH_UNITS sle.cpp numeric_integration.cpp
+        math_lib.cpp leastsquares.cpp interpol.cpp
+        gwmatrix.cpp geom_lib.cpp gw_algorithm.cpp
+        nonlinearsolver.cpp
+        )
+set(HEADER_MATH_UNITS sle.h numeric_integration.h
+        math_lib.h leastsquares.h interpol.h
+        gwmatrix.h geom_lib.h gw_algorithm.h
+        nonlinearsolver.h
+        )
 
+add_library(math_lib STATIC ${SRC_MATH_UNITS} ${HEADER_MATH_UNITS})
 
+# set library properties
+set_target_properties(math_lib PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+
+# tests
+if (USE_TEST)
+    set(TEST_NAME test_math_lib)
+    add_executable(${TEST_NAME} tests/test_math_lib.cpp)
+
+    # set tests properties
+#    set_target_properties(${TEST_NAME} PROPERTIES
+#            CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+#            COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+#            )
+    target_include_directories(${TEST_NAME}
+            PRIVATE ${Boost_INCLUDE_DIR}
+            PRIVATE ${MATH_UNITS}
+            )
+
+    # link to tests
+    target_link_libraries(${TEST_NAME}
+            math_lib
+            ${Boost_LIBRARIES}
+            )
+
+    # tests
+    add_test(math_tests ${TEST_NAME})
+endif()

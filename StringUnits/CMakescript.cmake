@@ -10,12 +10,12 @@ add_library(${LIB_NAME} STATIC ${SRC_STR_UTILS})
 
 # tests
 if (USE_TEST)
-set(TEST_NAME test_str_utils)
-add_executable(${TEST_NAME} ${STR_UNITS}/tests/str_utils_boost_ut.cpp)
+    set(TEST_NAME test_str_utils)
+    add_executable(${TEST_NAME} ${STR_UNITS}/tests/str_utils_boost_ut.cpp)
 
 
-# boost dependensies
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+    # boost dependensies
+    find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 endif()
 
 # set library properties    
@@ -23,24 +23,24 @@ set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIR
 
 # set tests properties
 if (USE_TEST)
-set_target_properties(${TEST_NAME} PROPERTIES 
-    CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-)
-target_include_directories(${TEST_NAME}
-    PRIVATE ${Boost_INCLUDE_DIR}
-    PRIVATE ${STR_UNITS}
-)
+    set_target_properties(${TEST_NAME} PROPERTIES
+        CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+    )
+    target_include_directories(${TEST_NAME}
+        PRIVATE ${Boost_INCLUDE_DIR}
+        PRIVATE ${STR_UNITS}
+    )
 
-# link to tests
-target_link_libraries(${TEST_NAME} 
-    ${LIB_NAME}
-    ${Boost_LIBRARIES}
-)
+    # link to tests
+    target_link_libraries(${TEST_NAME}
+        ${LIB_NAME}
+        ${Boost_LIBRARIES}
+    )
 
-# tests
-enable_testing()
-add_test(str_tests ${TEST_NAME})
+    # tests
+    enable_testing()
+    add_test(str_tests ${TEST_NAME})
 endif()
 
 
