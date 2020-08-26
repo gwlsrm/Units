@@ -13,17 +13,17 @@ class MetrNumber {
 public:
     /// default constructor value = 0, unc = 0
     MetrNumber() = default;
-    MetrNumber(double aValue, double aUnc = 0);
+    explicit MetrNumber(double aValue, double aUnc = 0);
     // getters and setters
-    double getValue() const {return m_value;};
-    void setValue(double aValue) {m_value = aValue;}
-    double getUnc() const {return m_unc;};
-    void setUnc(double aUnc) {m_unc = aUnc;};
-    double getRelUnc() const {return m_value != 0 ? m_unc/m_value : 0;}
+    [[nodiscard]] double value() const {return value_;};
+    void setValue(double aValue) { value_ = aValue;}
+    [[nodiscard]] double unc() const {return unc_;};
+    void setUnc(double aUnc) { unc_ = aUnc;};
+    [[nodiscard]] double getRelUnc() const {return value_ != 0 ? unc_ / value_ : 0;}
     void setRelUnc(double aUnc);
     // representation
     std::string asString();
-    friend std::ostream& operator<< (std::ostream& os, const MetrNumber& m);
+    friend std::ostream& operator<< (std::ostream& out, const MetrNumber& m);
     std::string getValueAsString();
     std::string getUncAsString();
     std::string getRelUncAsString();
@@ -35,16 +35,16 @@ public:
     // arithmetic unary operators
     MetrNumber operator-() const;
     // boolean operators
-    operator bool() {return m_value != 0;};
-    friend bool operator==(MetrNumber &m1, MetrNumber &m2);
-    friend bool operator!=(MetrNumber &m1, MetrNumber &m2);
-    friend bool operator>(MetrNumber &m1, MetrNumber &m2);
-    friend bool operator<(MetrNumber &m1, MetrNumber &m2);
-    friend bool operator>=(MetrNumber &m1, MetrNumber &m2);
-    friend bool operator<=(MetrNumber &m1, MetrNumber &m2);
+    explicit operator bool() const {return value_ != 0;};
+    friend bool operator==(const MetrNumber &lhs, const MetrNumber &rhs);
+    friend bool operator!=(const MetrNumber &lhs, const MetrNumber &rhs);
+    friend bool operator>(const MetrNumber &lhs, const MetrNumber &rhs);
+    friend bool operator<(const MetrNumber &lhs, const MetrNumber &rhs);
+    friend bool operator>=(const MetrNumber &lhs, const MetrNumber &rhs);
+    friend bool operator<=(const MetrNumber &lhs, const MetrNumber &rhs);
 private:
-    double m_value = 0;
-    double m_unc = 0;
+    double value_ = 0;
+    double unc_ = 0;
 };
 
 #endif // METRNUMBER_H

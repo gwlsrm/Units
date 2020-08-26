@@ -11,91 +11,91 @@
 using namespace std;
 
 MetrNumber::MetrNumber(double aValue, double aUnc)
-    : m_value(aValue), m_unc(aUnc)
+    : value_(aValue), unc_(aUnc)
 {
-    if (m_unc < 0) m_unc = -m_unc;
+    if (unc_ < 0) unc_ = -unc_;
 }
 
 void MetrNumber::setRelUnc(double aUnc)
 {
-    m_unc = aUnc * m_value;
+    unc_ = aUnc * value_;
 }
 
-std::ostream& operator<< (std::ostream& os, const MetrNumber& m)
+std::ostream& operator<< (std::ostream& out, const MetrNumber& m)
 {
-    os << m.m_value << " +/- " << m.m_unc;
-    return os;
+    out << m.value_ << " +/- " << m.unc_;
+    return out;
 }
 
 string MetrNumber::asString()
 {
-    return to_string(m_value) + " +/- " + to_string(m_unc);
+    return to_string(value_) + " +/- " + to_string(unc_);
 }
 
 MetrNumber operator+(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    double tval = lhs.m_value + rhs.m_value;
-    double tunc = hypot(lhs.m_unc, rhs.m_unc);
-    return MetrNumber(tval, tunc);
+    double tval = lhs.value_ + rhs.value_;
+    double tunc = hypot(lhs.unc_, rhs.unc_);
+    return MetrNumber{tval, tunc};
 }
 
 MetrNumber operator-(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    double tval = lhs.m_value - rhs.m_value;
-    double tunc = hypot(lhs.m_unc, rhs.m_unc);
-    return MetrNumber(tval, tunc);
+    double tval = lhs.value_ - rhs.value_;
+    double tunc = hypot(lhs.unc_, rhs.unc_);
+    return MetrNumber{tval, tunc};
 }
 
 MetrNumber operator*(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    double tval = lhs.m_value * rhs.m_value;
+    double tval = lhs.value_ * rhs.value_;
     double tunc = 0;
     if (tval != 0)
-        tunc = tval * hypot(lhs.m_unc/lhs.m_value, rhs.m_unc/rhs.m_value);
-    return MetrNumber(tval, tunc);
+        tunc = tval * hypot(lhs.unc_ / lhs.value_, rhs.unc_ / rhs.value_);
+    return MetrNumber{tval, tunc};
 }
 
 MetrNumber operator/(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    assert(rhs.m_value != 0 && "Division by zero");
-    double tval = lhs.m_value / rhs.m_value;
+    assert(rhs.value_ != 0 && "Division by zero");
+    double tval = lhs.value_ / rhs.value_;
     double tunc = 0;
     if (tval != 0)
-        tunc = tval * hypot(lhs.m_unc/lhs.m_value, rhs.m_unc/rhs.m_value);
-    return MetrNumber(tval, tunc);
+        tunc = tval * hypot(lhs.unc_ / lhs.value_, rhs.unc_ / rhs.value_);
+    return MetrNumber{tval, tunc};
 }
 
 MetrNumber MetrNumber::operator-() const
 {
-    return MetrNumber(-m_value, m_unc);
+    return MetrNumber{-value_, unc_};
 }
 
-bool operator==(MetrNumber &m1, MetrNumber &m2)
+bool operator==(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return fabs(m1.m_value - m2.m_value) <= hypot(m1.m_unc, m2.m_unc);
+    return (lhs.value_ - rhs.value_) * (lhs.value_ - rhs.value_) <= lhs.unc_ * lhs.unc_ + rhs.unc_ * rhs.unc_;
 }
 
-bool operator!=(MetrNumber &m1, MetrNumber &m2)
+bool operator!=(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return fabs(m1.m_value - m2.m_value) > hypot(m1.m_unc, m2.m_unc);
+    return !(lhs == rhs);
 }
 
-bool operator>(MetrNumber &m1, MetrNumber &m2)
+bool operator>(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return (m1.m_value - m2.m_value) > hypot(m1.m_unc, m2.m_unc);
+    return (lhs.value_ - rhs.value_) > hypot(lhs.unc_, rhs.unc_);
 }
 
-bool operator<(MetrNumber &m1, MetrNumber &m2)
+bool operator<(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return (m2.m_value - m1.m_value) > hypot(m1.m_unc, m2.m_unc);
+    return (rhs.value_ - lhs.value_) > hypot(lhs.unc_, rhs.unc_);
 }
 
-bool operator>=(MetrNumber &m1, MetrNumber &m2)
+bool operator>=(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return !(m1 < m2);
+    return !(lhs < rhs);
 }
 
-bool operator<=(MetrNumber &m1, MetrNumber &m2)
+bool operator<=(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return !(m1 > m2);
+    return !(lhs > rhs);
 }

@@ -82,7 +82,7 @@ int CnfReader::getIntValue(const std::string& par_name) const {
     try {
         const auto& par_value = data_.at(par_name);
         return stol(par_value);
-    } catch (const exception& e) {
+    } catch (const exception&) {
         throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
