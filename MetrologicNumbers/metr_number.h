@@ -42,6 +42,7 @@ public:
     friend bool operator<(const MetrNumber &lhs, const MetrNumber &rhs);
     friend bool operator>=(const MetrNumber &lhs, const MetrNumber &rhs);
     friend bool operator<=(const MetrNumber &lhs, const MetrNumber &rhs);
+    static bool cmpWithK(const MetrNumber &lhs, const MetrNumber &rhs, double k);
 private:
     double value_ = 0;
     double unc_ = 0;
