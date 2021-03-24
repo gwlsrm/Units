@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 /**
   @brief matrix for POD types: int, double, etc
@@ -31,6 +32,12 @@ public:
   T& at(std::size_t row, std::size_t col) {
     return data_.at(num_cols_ * row + col);
   }
+  const T* operator[](std::size_t row) const {
+    return data_.data() + row*num_cols_;
+  }
+  T* operator[](std::size_t row) {
+    return data_.data() + row*num_cols_;
+  }
   // getters
   std::size_t getRowCount() const {return num_rows_;}
   std::size_t getColCount() const {return num_cols_;}
@@ -45,7 +52,7 @@ template <typename T>
 void Matrix<T>::reset(std::size_t num_rows, std::size_t num_cols) {
     num_rows_ = num_rows;
     num_cols_ = num_cols;
-    data_.resize(num_rows_ * num_cols_, 0);
+    data_.resize(num_rows_ * num_cols_, T{});
 }
 
 // operators
