@@ -39,5 +39,5 @@ if (USE_TEST)
             )
 
     # tests
-    add_test(math_tests ${TEST_NAME})
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()

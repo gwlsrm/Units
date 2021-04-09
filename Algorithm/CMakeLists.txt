@@ -27,5 +27,6 @@ if (USE_TEST)
             )
 
     # tests
-    add_test(algo_tests ${TEST_NAME})
+    message(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()
