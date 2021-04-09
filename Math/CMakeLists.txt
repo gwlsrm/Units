@@ -24,12 +24,12 @@ if (USE_TEST)
     add_executable(${TEST_NAME} tests/test_math_lib.cpp)
 
     # set tests properties
-#    set_target_properties(${TEST_NAME} PROPERTIES
-#            CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-#            COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-#            )
+   set_target_properties(${TEST_NAME} PROPERTIES
+           CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+           #COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+           )
     target_include_directories(${TEST_NAME}
-            PRIVATE ${Boost_INCLUDE_DIR}
+            PRIVATE ${Boost_INCLUDE_DIR} .
             )
 
     # link to tests

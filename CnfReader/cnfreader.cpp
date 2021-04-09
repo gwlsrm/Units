@@ -97,7 +97,7 @@ bool CnfReader::getBoolValue(const std::string& par_name) const {
         } else {
             throw out_of_range(par_name + " is not in cnf_file");
         }
-    } catch (const exception& e) {
+    } catch (const exception&) {
         throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
@@ -106,7 +106,7 @@ double CnfReader::getDoubleValue(const std::string& par_name) const {
     try {
         const auto& par_value = data_.at(par_name);
         return stod(par_value);
-    } catch (const exception& e) {
+    } catch (const exception&) {
         throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }

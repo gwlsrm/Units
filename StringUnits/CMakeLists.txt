@@ -10,25 +10,28 @@ set(HEADER_STR_UTILS str_utils.h param_str_utils.h
         )
 
 # library
-add_library(str_utils STATIC ${SRC_STR_UTILS} ${HEADER_STR_UTILS})
+add_library(${PROJECT_NAME} STATIC ${SRC_STR_UTILS} ${HEADER_STR_UTILS})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+           CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+           )
 
 # tests
 if (USE_TEST)
     set(TEST_NAME test_str_utils)
     add_executable(${TEST_NAME} tests/str_utils_boost_ut.cpp)
 
-#    set_target_properties(${TEST_NAME} PROPERTIES
-#            CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-#            COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-#            )
+   set_target_properties(${TEST_NAME} PROPERTIES
+           CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+           #COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+           )
     target_include_directories(${TEST_NAME}
             PRIVATE ${Boost_INCLUDE_DIR}
-            PRIVATE ${STR_UNITS}
+            .
             )
 
     # link to tests
     target_link_libraries(${TEST_NAME}
-            str_utils
+            ${PROJECT_NAME}
             ${Boost_LIBRARIES}
             )
 

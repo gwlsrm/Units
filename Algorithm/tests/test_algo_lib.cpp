@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.1);
             dict.add_value(1.2);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 2);
+            BOOST_TEST(d.size() == 2u);
             BOOST_TEST(d.at(1.1) == 1);
             BOOST_TEST(d.at(1.2) == 1);
         }
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.1);
             dict.add_value(1.109);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 1);
+            BOOST_TEST(d.size() == 1u);
             BOOST_TEST(d.at(1.1) == 2);
         }
         // add smaller close values in the end
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.1);
             dict.add_value(1.091);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 1);
+            BOOST_TEST(d.size() == 1u);
             BOOST_TEST(d.at(1.1) == 2);
         }
         // add bigger close values in the middle
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.2);
             dict.add_value(1.109);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 3);
+            BOOST_TEST(d.size() == 3u);
             BOOST_TEST(d.at(1.1) == 2);
             BOOST_TEST(d.at(1.0) == 1);
             BOOST_TEST(d.at(1.2) == 1);
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.2);
             dict.add_value(1.091);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 3);
+            BOOST_TEST(d.size() == 3u);
             BOOST_TEST(d.at(1.1) == 2);
             BOOST_TEST(d.at(1.0) == 1);
             BOOST_TEST(d.at(1.2) == 1);
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.2);
             dict.add_value(1.009);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 3);
+            BOOST_TEST(d.size() == 3u);
             BOOST_TEST(d.at(1.1) == 1);
             BOOST_TEST(d.at(1.0) == 2);
             BOOST_TEST(d.at(1.2) == 1);
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             dict.add_value(1.2);
             dict.add_value(0.991);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 3);
+            BOOST_TEST(d.size() == 3u);
             BOOST_TEST(d.at(1.1) == 1);
             BOOST_TEST(d.at(1.0) == 2);
             BOOST_TEST(d.at(1.2) == 1);

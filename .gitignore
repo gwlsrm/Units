@@ -9,6 +9,7 @@ _MC_description/
 nuclei/
 debug/
 release/
+build*/
 
 # IDE files and binary
 *.[oa]

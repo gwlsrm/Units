@@ -227,7 +227,7 @@ std::string_view readToken(std::string_view& s, std::string_view delimiter) {
 std::string join_strings(const std::vector<std::string>& strings, char sep) {
     if (strings.empty()) return "";
     // calc final string size
-    size_t full_size = accumulate(begin(strings), end(strings), 0u,
+    size_t full_size = accumulate(begin(strings), end(strings), size_t{0},
                               [](size_t b, const string& s) {return b + s.size();});
     full_size += strings.size() - 1;
     // make string
