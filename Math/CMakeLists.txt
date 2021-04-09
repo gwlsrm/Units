@@ -30,7 +30,6 @@ if (USE_TEST)
 #            )
     target_include_directories(${TEST_NAME}
             PRIVATE ${Boost_INCLUDE_DIR}
-            PRIVATE ${MATH_UNITS}
             )
 
     # link to tests
