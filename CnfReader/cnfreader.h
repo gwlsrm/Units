@@ -86,6 +86,31 @@ public:
         ss >> res;
         return res;
     }
+    template <typename T>
+    void updateValueIfExists(const std::string& par_name, T& value) const {
+        if constexpr (std::is_same_v<T, bool>) {
+            auto opt = getBoolValueOpt(par_name);
+            if (opt) {
+                value = *opt;
+            }
+        } else if constexpr (std::is_integral_v<T>) {
+            auto opt = getIntValueOpt(par_name);
+            if (opt) {
+                value = *opt;
+            }
+        } else if constexpr (std::is_floating_point_v<T>) {
+            auto opt = getDoubleValueOpt(par_name);
+            if (opt) {
+                value = *opt;
+            }
+        } else {
+            const auto& par_value = getStringValue(par_name);
+            if (par_value.empty()) return;
+            std::stringstream ss;
+            ss << par_value;
+            ss >> value;
+        }
+    }
 private:
     std::unordered_map<std::string, std::string> data_;
     const std::string empty_string_;
