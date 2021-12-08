@@ -46,7 +46,7 @@ T get_or_default(const rapidjson::Value& node, std::string_view param_name, cons
 }
 
 template <typename T>
-T get_if_exists(const rapidjson::Value& node, std::string_view param_name, T& value) {
+void get_if_exists(const rapidjson::Value& node, std::string_view param_name, T& value) {
     auto it = node.FindMember(param_name.data());
     if (it != node.MemberEnd() && is_correct_type<T>(it->value)) {
         value = read_value<T>(it->value);
