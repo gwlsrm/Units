@@ -20,6 +20,7 @@ public:
 
     void add_value(double value); ///< inc counter in dict if value exist or add new value with cnt = 1
     const std::map<double, T>& getCounterDict() const { return dict_; } ///< get counter map
+    void clear() { dict_.clear(); };
 
 
 private:
