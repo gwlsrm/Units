@@ -18,6 +18,8 @@ enum class LogState {
 /// interpolates grid function (xi, yi) with poly and returns value in x
 double interpol(int poly_degree, const std::vector<double>& xi, const std::vector<double>& yi,
                 double x, LogState x_or_y_log);
+double interpol(int poly_degree, std::size_t array_size, const double* xi, const double* yi,
+                double x, LogState x_or_y_log);
 
 
 #endif // INTERPOL_H_INCLUDED

@@ -101,4 +101,17 @@ inline auto get_value_as_array(const rapidjson::Value& node, std::string_view pa
     return array_node.GetArray();
 }
 
+inline std::vector<double> read_double_vector(const rapidjson::Value& node, std::string_view param_name) {
+    const auto& array_node = get_value_as_array(node, param_name);
+    std::vector<double> res;
+    res.reserve(array_node.Size());
+    for (const auto& anode : array_node) {
+        if (!anode.IsNumber()) {
+            throw std::invalid_argument("Elements must be numbers");
+        }
+        res.push_back(anode.GetDouble());
+    }
+    return res;
+}
+
 }
