@@ -1,9 +1,11 @@
 #define BOOST_TEST_MODULE math_test_module
 #include <boost/test/unit_test.hpp>
+#include <utility>
 #include <vector>
 #include <iostream>
 
 #include "../double_counter_map.h"
+#include "../algo_lib.h"
 
 using namespace std;
 namespace tt = boost::test_tools;
@@ -29,7 +31,7 @@ std::ostream& operator<<(std::ostream& out, std::map<K,V> dict) {
 */
 
 
-BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
+BOOST_AUTO_TEST_SUITE(double_counter_map_test_suite)
 
     BOOST_AUTO_TEST_CASE(test_double_map) {
         // add 2 different values
@@ -111,6 +113,71 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             BOOST_TEST(d.at(1.1) == 1);
             BOOST_TEST(d.at(1.0) == 2);
             BOOST_TEST(d.at(1.2) == 1);
+        }
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
+
+    BOOST_AUTO_TEST_CASE(test_sumEqual) {
+        {
+            vector<pair<int, int>> v{
+                {1, 1},
+                {2, 1}, {2, 1},
+                {3, 1},
+                {4, 1}, {4, 1}, {4, 1},
+                {5, 1}, {5, 1}};
+            vector<pair<int, int>> expected{{1, 1}, {2, 2}, {3, 1}, {4, 3}, {5, 2}};
+            v.erase(
+                sumEqual(v.begin(), v.end(),
+                        [](const auto& lhs, const auto& rhs){ return lhs.first == rhs.first;},
+                        [](auto& target, const auto& item){target.second += item.second;}
+                        ),
+                v.end()
+            );
+
+            BOOST_TEST(v == expected);
+        }
+        {
+            vector<pair<int, int>> v{};
+            vector<pair<int, int>> expected{};
+            v.erase(
+                sumEqual(v.begin(), v.end(),
+                        [](const auto& lhs, const auto& rhs){ return lhs.first == rhs.first;},
+                        [](auto& target, const auto& item){target.second += item.second;}
+                        ),
+                v.end()
+            );
+
+            BOOST_TEST(v == expected);
+        }
+        {
+            vector<pair<int, int>> v{{1, 1}};
+            vector<pair<int, int>> expected{{1, 1}};
+            v.erase(
+                sumEqual(v.begin(), v.end(),
+                        [](const auto& lhs, const auto& rhs){ return lhs.first == rhs.first;},
+                        [](auto& target, const auto& item){target.second += item.second;}
+                        ),
+                v.end()
+            );
+
+            BOOST_TEST(v == expected);
+        }
+        {
+            vector<pair<int, int>> v{{1, 1}, {2, 1}, {1, 1}};
+            vector<pair<int, int>> expected{{1, 1}, {2, 1}, {1, 1}};
+            v.erase(
+                sumEqual(v.begin(), v.end(),
+                        [](const auto& lhs, const auto& rhs){ return lhs.first == rhs.first;},
+                        [](auto& target, const auto& item){target.second += item.second;}
+                        ),
+                v.end()
+            );
+
+            BOOST_TEST(v == expected);
         }
     }
 
