@@ -5,21 +5,34 @@
 
 using namespace std;
 
-CnfReader::CnfReader(const std::string& filename, std::string_view sep)
+
+template <class charT, charT sep>
+class punct_facet: public std::numpunct<charT> {
+protected:
+    charT do_decimal_point() const { return sep; }
+};
+
+
+CnfReader::CnfReader(const std::string& filename, std::string_view sep, char decimal_sep)
 {
     ifstream in(filename);
     if (!in) {
         throw invalid_argument(filename + " doesn't exist");
     }
 
-    readFromStream(in, sep);
+    readFromStream(in, sep, decimal_sep);
 }
 
-CnfReader::CnfReader(std::istream& in, std::string_view sep) {
-    readFromStream(in, sep);
+CnfReader::CnfReader(std::istream& in, std::string_view sep, char decimal_sep) {
+    readFromStream(in, sep, decimal_sep);
 }
 
-void CnfReader::readFromStream(std::istream& in, std::string_view sep) {
+void CnfReader::readFromStream(std::istream& in, std::string_view sep, char decimal_sep) {
+    if (decimal_sep == ',') {
+        in.imbue(std::locale(std::cout.getloc(), new punct_facet<char, ','>));
+    } else if (decimal_sep != '\0') {
+        in.imbue(std::locale(std::cout.getloc(), new punct_facet<char, '.'>));
+    }
     for (string line; getline(in, line); ) {
         line = trim(line);
         if (line.empty() || line[0] == '#' || startWith(line, "//")) {continue;}
@@ -110,5 +123,3 @@ double CnfReader::getDoubleValue(const std::string& par_name) const {
         throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
-
-

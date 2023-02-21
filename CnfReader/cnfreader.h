@@ -11,19 +11,21 @@
 
 #include "StringUnits/str_utils.h"
 
+
 /**
     \brief Simple config (ini)-file reader
-    
-    Simple reader of files type: 
-    "# comment"
+
+    Simple reader of files type:
+    # comment
+    // comment
     'name' = 'value'
 */
 class CnfReader {
 public:
     /// ctor with filename
-    explicit CnfReader(const std::string& filename, std::string_view sep);
+    explicit CnfReader(const std::string& filename, std::string_view sep, char decimal_sep = '\0');
     /// ctor with stream
-    explicit CnfReader(std::istream& in, std::string_view sep);
+    explicit CnfReader(std::istream& in, std::string_view sep, char decimal_sep = '\0');
     /// check key in readed file
     bool hasValue(const std::string& par_name) const;
     /// get string value by it's name
@@ -116,7 +118,7 @@ private:
     const std::string empty_string_;
 
     // methods
-    void readFromStream(std::istream& in, std::string_view sep);
+    void readFromStream(std::istream& in, std::string_view sep, char decimal_sep);
     // getters
     std::optional<int> getIntValueOpt(const std::string& par_name) const;
     std::optional<bool> getBoolValueOpt(const std::string& par_name) const;
