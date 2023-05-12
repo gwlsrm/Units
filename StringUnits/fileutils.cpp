@@ -7,7 +7,7 @@
 
 using namespace std;
 
-std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]const char* argv[]) {
+std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char** argv) {
 #ifndef __linux__
     char newPath[MAX_PATH];
     GetModuleFileNameA(0, newPath, MAX_PATH);

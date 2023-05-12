@@ -7,7 +7,7 @@
 
 // file structure
 /// returns name of application for windows and linux
-std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char* argv[]);
+std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char** argv);
 /// extracts file path from full path
 std::string extractFilePath(const std::string &fname);
 /// extracts filename from full path
