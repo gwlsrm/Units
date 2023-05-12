@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INTERPOL_H_INCLUDED
 #define INTERPOL_H_INCLUDED
 

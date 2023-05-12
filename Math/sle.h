@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SLE_H_INCLUDED
 #define SLE_H_INCLUDED
 

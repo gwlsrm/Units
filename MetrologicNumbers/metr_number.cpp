@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "metr_number.h"
 
 #include <cassert>
@@ -72,13 +70,13 @@ MetrNumber MetrNumber::operator-() const
 
 bool operator==(const MetrNumber &lhs, const MetrNumber &rhs)
 {
-    return (lhs.value_ - rhs.value_) * (lhs.value_ - rhs.value_) 
+    return (lhs.value_ - rhs.value_) * (lhs.value_ - rhs.value_)
         <= lhs.unc_ * lhs.unc_ + rhs.unc_ * rhs.unc_;
 }
 
 bool MetrNumber::cmpWithK(const MetrNumber &lhs, const MetrNumber &rhs, double k)
 {
-    return (lhs.value_ - rhs.value_) * (lhs.value_ - rhs.value_) 
+    return (lhs.value_ - rhs.value_) * (lhs.value_ - rhs.value_)
         <= k*k * (lhs.unc_ * lhs.unc_ + rhs.unc_ * rhs.unc_);
 }
 

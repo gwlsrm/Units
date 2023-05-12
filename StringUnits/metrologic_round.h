@@ -1,3 +1,4 @@
+#pragma once
 #ifndef METROLOGIC_ROUND_H_INCLUDED
 #define METROLOGIC_ROUND_H_INCLUDED
 

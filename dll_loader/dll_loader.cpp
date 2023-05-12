@@ -5,9 +5,9 @@ using namespace std;
 DllLoader::DllLoader(const std::string& dll_name)
 {
 #ifdef __linux
-   dll_handle = dlopen(dll_name.c_str(), RTLD_LAZY);
+    dll_handle = dlopen(dll_name.c_str(), RTLD_LAZY);
 #else
-   dll_handle = LoadLibraryA(dll_name.c_str());
+    dll_handle = LoadLibraryA(dll_name.c_str());
 #endif
     if (!dll_handle) {
     #ifdef __linux
@@ -29,5 +29,3 @@ DllLoader::~DllLoader()
     #endif
     }
 }
-
-

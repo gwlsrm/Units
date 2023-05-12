@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GWMATRIX_H_INCLUDED
 #define GWMATRIX_H_INCLUDED
 
@@ -5,7 +6,7 @@
 #include <iostream>
 #include <initializer_list>
 
-/**@file 
+/**@file
     @brief contains class with double matrix
 */
 

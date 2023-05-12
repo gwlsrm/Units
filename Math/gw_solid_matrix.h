@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GWSOLIDMATRIX_H_INCLUDED
 #define GWSOLIDMATRIX_H_INCLUDED
 

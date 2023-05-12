@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DATE_H_
 #define DATE_H_
 

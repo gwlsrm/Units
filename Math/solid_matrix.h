@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SOLID_MATRIX_H_INCLUDED
 #define SOLID_MATRIX_H_INCLUDED
 

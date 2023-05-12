@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "metrologic_round.h"
 #include "math_lib.h"
 #include "str_utils.h"
@@ -7,12 +5,11 @@
 using namespace std;
 
 int findPowerNum(double v) {
-#ifndef __BORLANDC__
     v = fabs(v);
     string s = toStringF(v);
     size_t dot_pos = s.find('.');
     if (dot_pos == string::npos || dot_pos > 1) {    // integer value or xyz.abc value
-        if (dot_pos != string::npos) s = s.substr(0, dot_pos);
+        if (dot_pos != string::npos) s.resize(dot_pos);
         if (s[0] == '2' || s[0] == '1')
             return s.size()-2;
         else
@@ -39,7 +36,6 @@ int findPowerNum(double v) {
             return 1-fs;
     }
     return 0;
-#endif
 }
 
 std::string metrologic_round(double value, double dvalue)

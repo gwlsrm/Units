@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BINTEXT_FSTREAM_H_INCLUDED
 #define BINTEXT_FSTREAM_H_INCLUDED
 
@@ -6,7 +7,7 @@
 
 /**
     \brief class is intended to work with text data in binary files
-    
+
     class is intended to work with text data in binary files.
     Can read lines, read int values, read 'name'='value' strings
 */
@@ -27,7 +28,7 @@ public:
     BinTxtIFStream& read_int(int& value);
     /// read uint stored in binare format
     BinTxtIFStream& read_uint(uint32_t& value);
-    /// reads string 'name' = 'value' and stores to name and value 
+    /// reads string 'name' = 'value' and stores to name and value
     BinTxtIFStream& getNameValue(std::string& name, std::string& value,
                                  const std::string& stop_name, char sep = '=');
     // operators

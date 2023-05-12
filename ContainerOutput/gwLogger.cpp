@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "gwLogger.h"
 
 #include <fstream>
@@ -69,4 +67,3 @@ void Logger::printEqualWithError(const std::string& name, double value, double d
 void Logger::printEqualWithErrorRel(const std::string& name, double value, double dValue, double dValueRelative) {
     out_ << name << '=' << value << " +/- " << dValue << " (" << dValueRelative*100 << "%)\n";
 }
-

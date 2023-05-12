@@ -1,7 +1,3 @@
-
-
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "interpol.h"
 
 #include <cmath>
@@ -106,7 +102,7 @@ double interpol(int poly_degree, std::size_t array_size, const double* xi, const
                 double x, LogState x_or_y_log)
 {
     // input data check
-    if (array_size <= 0) {
+    if (array_size == 0) {
         throw invalid_argument("x must not be empty");
     }
     if (poly_degree+1 > static_cast<int>(array_size)) { // decrease polynom degree

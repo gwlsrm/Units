@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "numeric_integration.h"
 
 #include <cassert>
@@ -107,4 +105,3 @@ double trapGridIntegration(int nstep, double step, const double* values) {
     }
     return integral * step / 2.0;
 }
-

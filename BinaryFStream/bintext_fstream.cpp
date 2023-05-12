@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "bintext_fstream.h"
 #include <fstream>
 
@@ -70,4 +68,3 @@ BinTxtIFStream& BinTxtIFStream::getNameValue(std::string& name, std::string& val
 bool getline(BinTxtIFStream& in, std::string& line, char sep) {
     return static_cast<bool>(in.getline(line, sep));
 }
-

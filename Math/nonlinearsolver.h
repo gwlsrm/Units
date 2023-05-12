@@ -1,3 +1,4 @@
+#pragma once
 #ifndef NONLINEARSOLVER_H_INCLUDED
 #define NONLINEARSOLVER_H_INCLUDED
 

@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "fileutils.h"
 
 #include <fstream>
@@ -9,7 +7,7 @@
 
 using namespace std;
 
-std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char* argv[]) {
+std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]const char* argv[]) {
 #ifndef __linux__
     char newPath[MAX_PATH];
     GetModuleFileNameA(0, newPath, MAX_PATH);
@@ -66,7 +64,7 @@ std::string goOneLevelUp(const std::string& path) {
     if (slash_pos == string::npos) {
         slash_pos = path.find('/');
     }
-    if (slash_pos + 1 == path.size()) {
+    if (slash_pos == string::npos || slash_pos + 1 == path.size()) {
         return path;
     }
 
@@ -82,7 +80,7 @@ std::string goOneLevelUp(const std::string& path) {
         slash_pos = res.rfind('/');
     }
     if (slash_pos != string::npos) {
-        res = res.substr(0, res.rfind('\\') + 1);
+        res.resize(slash_pos + 1);
     }
     return res;
 }

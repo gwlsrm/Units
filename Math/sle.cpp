@@ -1,5 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "sle.h"
 
 #include <cmath>
@@ -33,7 +31,7 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
             if (!isDblZero(c[i][i])) {
                 c[j][i] = - c[j][i] / c[i][i];
             } else {
-                vector<double> temp_vec(m-1);
+                vector<double> temp_vec;
                 for (size_t k=i+1; k < m; ++k) {
                     if (!isDblZero(c[k][i])) {
                         temp_vec = c[k];

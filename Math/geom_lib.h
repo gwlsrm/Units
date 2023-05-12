@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GEOM_LIB_H_INCLUDED
 #define GEOM_LIB_H_INCLUDED
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef METRNUMBER_H
 #define METRNUMBER_H
 
@@ -5,8 +6,8 @@
 
 /**
     @brief class metrologic numbers: value and uncertainty
-    
-    Metrological numbers class: value and uncertainty. 
+
+    Metrological numbers class: value and uncertainty.
     Arithmetic operations for such numbers are realized
 */
 class MetrNumber {

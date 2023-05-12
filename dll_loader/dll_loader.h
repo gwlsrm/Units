@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DLL_LOADER_H_INCLUDED
 #define DLL_LOADER_H_INCLUDED
 
@@ -11,7 +12,7 @@
 
 /**
     \brief Wrapper class to work with dll
-    
+
     RAII-wrapper class to work with dll. Can operate in windows and linux
 */
 class DllLoader {
@@ -20,8 +21,7 @@ public:
     /// open (load) dll by name and throws invalid_argument if fails
     explicit DllLoader(const std::string& dll_name);
     DllLoader(const DllLoader&) = delete;
-    DllLoader(DllLoader&& other) {
-        dll_handle = other.dll_handle;
+    DllLoader(DllLoader&& other) : dll_handle(other.dll_handle) {
         other.dll_handle = nullptr;
     }
     DllLoader& operator=(const DllLoader&) = delete;

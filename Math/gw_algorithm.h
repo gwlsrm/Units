@@ -1,9 +1,10 @@
+#pragma once
 #ifndef GWALGORITHM_H_INCLUDED
 #define GWALGORITHM_H_INCLUDED
 
 #include <vector>
 
-/**\file 
+/**\file
     @brief additional algorithms like search in vector with tolerance and range
 */
 

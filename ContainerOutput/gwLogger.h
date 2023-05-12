@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GWLOGGER_H_INCLUDED
 #define GWLOGGER_H_INCLUDED
 
@@ -7,8 +8,8 @@
 
 /**
     \brief Singleton Logger
-    
-    Logger can log info to cout or file. 
+
+    Logger can log info to cout or file.
     It can be obtained as one instance from any place of code
 */
 class Logger {

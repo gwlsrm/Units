@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GW_TRIANGLE_MATRIX_H_INCLUDED
 #define GW_TRIANGLE_MATRIX_H_INCLUDED
 

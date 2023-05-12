@@ -1,3 +1,4 @@
+#pragma once
 #ifndef FILEUTILS_H_INCLUDED
 #define FILEUTILS_H_INCLUDED
 
