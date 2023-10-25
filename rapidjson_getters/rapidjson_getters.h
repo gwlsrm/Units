@@ -1,6 +1,8 @@
 #pragma once
 
 #include "rapidjson/document.h"
+
+#include <vector>
 #include <string_view>
 #include <string>
 #include <typeinfo>
@@ -10,7 +12,7 @@ namespace rapidjson {
 inline const rapidjson::Value& get_value_or_except(const rapidjson::Value& node, std::string_view param_name) {
     auto it = node.FindMember(param_name.data());
     if (it == node.MemberEnd()) {
-        throw std::invalid_argument(std::string("No param name: \"") 
+        throw std::invalid_argument(std::string("No param name: \"")
             + std::string(param_name) + "\" in document");
     }
     return it->value;
