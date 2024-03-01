@@ -2,8 +2,9 @@
 #ifndef BINTEXT_FSTREAM_H_INCLUDED
 #define BINTEXT_FSTREAM_H_INCLUDED
 
-#include <string>
+#include <cstdint>
 #include <fstream>
+#include <string>
 
 /**
     \brief class is intended to work with text data in binary files
@@ -23,11 +24,11 @@ public:
     /// read line from stream (file) and stores it to line, end of line can be setted
     BinTxtIFStream& getline(std::string& line, char sep = '\n');
     /// ignore symbol
-    void ignore(uint32_t cnt);
+    void ignore(std::uint32_t cnt);
     /// read int stored in binare format
     BinTxtIFStream& read_int(int& value);
     /// read uint stored in binare format
-    BinTxtIFStream& read_uint(uint32_t& value);
+    BinTxtIFStream& read_uint(std::uint32_t& value);
     /// reads string 'name' = 'value' and stores to name and value
     BinTxtIFStream& getNameValue(std::string& name, std::string& value,
                                  const std::string& stop_name, char sep = '=');
