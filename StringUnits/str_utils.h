@@ -27,6 +27,12 @@ std::string str_toupper(std::string s);
 bool startWith(const char* source, const char* signature);
 /// returns true if string starts with signature (std::strings)
 bool startWith(const std::string& source, const std::string& signature);
+/// returns true if string starts with signature (std::strings)
+bool startWith(std::string_view source, std::string_view signature);
+/// returns true if string ends with signature (std::strings)
+bool endWith(const std::string& source, const std::string& signature);
+/// returns true if string ends with signature (std::strings)
+bool endWith(std::string_view source, std::string_view signature);
 /// case insensitive compare
 bool same_text(const std::string& s1, const std::string& s2);
 /// add spaces to the end of string to new length

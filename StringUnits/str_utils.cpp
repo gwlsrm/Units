@@ -111,6 +111,27 @@ bool startWith(const std::string& source, const std::string& signature) {
     return source.compare(0, signature.size(), signature) == 0;
 }
 
+bool startWith(std::string_view source, std::string_view signature) {
+    if (signature.size() > source.size()) return false;
+    return source.compare(0, signature.size(), signature) == 0;
+}
+
+bool endWith(const std::string& source, const std::string& signature) {
+    if (signature.size() > source.size()) return false;
+    return source.compare(
+        source.size() - signature.size(),
+        string::npos,
+        signature) == 0;
+}
+
+bool endWith(std::string_view source, std::string_view signature) {
+    if (signature.size() > source.size()) return false;
+    return source.compare(
+        source.size() - signature.size(),
+        string::npos,
+        signature) == 0;
+}
+
 int strToIntDef(const std::string& str, int defValue){
     try {
         int res = stol(str);
