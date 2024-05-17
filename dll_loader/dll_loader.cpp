@@ -29,3 +29,14 @@ DllLoader::~DllLoader()
     #endif
     }
 }
+
+std::optional<DllLoader> tryLoadDllFromNames(std::vector<std::string>&& dll_names) {
+    for (const auto& dll_name : dll_names) {
+        try {
+            return DllLoader(dll_name);
+        } catch (const invalid_argument&) {
+
+        }
+    }
+    return std::nullopt;
+}

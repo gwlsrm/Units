@@ -9,6 +9,8 @@
 #include <dlfcn.h>
 #endif // _WIN32
 #include <string>
+#include <optional>
+#include <vector>
 
 /**
     \brief Wrapper class to work with dll
@@ -68,6 +70,8 @@ private:
     void* dll_handle;
 #endif // _WIN32
 };
+
+std::optional<DllLoader> tryLoadDllFromNames(std::vector<std::string>&& dll_names);
 
 
 
