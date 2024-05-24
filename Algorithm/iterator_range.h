@@ -2,6 +2,10 @@
 
 #include <algorithm>
 
+
+/**
+ * @brief IteratorRange -- class contains start and last iterators
+*/
 template <typename It>
 class IteratorRange {
 public:

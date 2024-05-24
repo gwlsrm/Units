@@ -7,16 +7,13 @@
 
 /**
  * @brief map double_value to counter within epsilon
- *
  */
 template <typename T>
 class DoubleCounterMap {
 public:
     explicit DoubleCounterMap(double epsilon)
         : epsilon_(epsilon)
-    {
-        //TODO: constexpr int-type
-    }
+    {}
 
     void add_value(double value); ///< inc counter in dict if value exists or add new value with cnt = 1
     void inc_value_cnt(double value, T cnt=1); ///< inc counter in dict of cnt if value exists or add new value with cnt=cnt

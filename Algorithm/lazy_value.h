@@ -2,6 +2,10 @@
 #include <functional>
 #include <optional>
 
+
+/**
+ * @brief LazyValue -- initializes value only on request (get)
+*/
 template <typename T>
 class LazyValue {
 public:

@@ -3,6 +3,10 @@
 #include <array>
 #include <stdexcept>
 
+
+/**
+ * StackVector -- vector on stack
+*/
 template <typename T, std::size_t N>
 class StackVector {
 public:
@@ -66,4 +70,3 @@ private:
   std::size_t size_ = 0;
   std::array<T, N> data_;
 };
-

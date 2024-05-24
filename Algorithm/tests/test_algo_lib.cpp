@@ -6,6 +6,7 @@
 
 #include "../double_counter_map.h"
 #include "../algo_lib.h"
+#include "../dictionary.h"
 
 using namespace std;
 namespace tt = boost::test_tools;
@@ -178,6 +179,84 @@ BOOST_AUTO_TEST_SUITE(algo_lib_test_suite)
             );
 
             BOOST_TEST(v == expected);
+        }
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(dictionary_test_suite)
+
+    BOOST_AUTO_TEST_CASE(test_simple_dict) {
+        {
+            Dict<int, int> d;
+            BOOST_TEST(d.empty());
+            BOOST_TEST(d.size() == 0u);
+        }
+        {
+            Dict<int, int> d;
+            BOOST_TEST(d.count(0) == 0u);
+            BOOST_TEST(!d.contains(0));
+            d[0] = 1;
+            BOOST_TEST(!d.empty());
+            BOOST_TEST(d.size() == 1u);
+            BOOST_TEST(d.count(0) == 1u);
+            BOOST_TEST(d.contains(0));
+            BOOST_TEST(d.at(0) == 1);
+            BOOST_TEST(d[0] == 1);
+            d[0] = 2;
+            BOOST_TEST(d.size() == 1u);
+            BOOST_TEST(d.count(0) == 1u);
+            BOOST_TEST(d.contains(0));
+            BOOST_TEST(d.count(1) == 0u);
+            BOOST_TEST(!d.contains(1));
+            BOOST_TEST(d.at(0) == 2);
+            BOOST_TEST(d[0] == 2);
+            d[1] = 3;
+            BOOST_TEST(d.size() == 2u);
+            BOOST_TEST(d.count(0) == 1u);
+            BOOST_TEST(d.contains(0));
+            BOOST_TEST(d.count(1) == 1u);
+            BOOST_TEST(d.contains(1));
+            BOOST_TEST(d.at(0) == 2);
+            BOOST_TEST(d[0] == 2);
+            BOOST_TEST(d.at(1) == 3);
+            BOOST_TEST(d[1] == 3);
+            std::size_t erased_count = d.erase(10);
+            BOOST_TEST(erased_count == 0u);
+            erased_count = d.erase(0);
+            BOOST_TEST(erased_count == 1u);
+            BOOST_TEST(d.size() == 1u);
+            BOOST_TEST(d.count(0) == 0u);
+            BOOST_TEST(!d.contains(0));
+            BOOST_TEST(d.count(1) == 1u);
+            BOOST_TEST(d.contains(1));
+            BOOST_TEST(d.at(1) == 3);
+            erased_count = d.erase(1);
+            BOOST_TEST(erased_count == 1u);
+            BOOST_TEST(d.empty());
+        }
+    }
+
+    BOOST_AUTO_TEST_CASE(test_iterate_dict_order) {
+        Dict<std::string, int> d;
+        d["one"] = 1;
+        d["two"] = 2;
+        d["three"] = 3;
+        d["zero"] = 0;
+        std::vector<std::pair<std::string, int>> expected{
+            std::pair{"one", 1},
+            std::pair{"two", 2},
+            std::pair{"three", 3},
+            std::pair{"zero", 0},
+        };
+
+        std::size_t i = 0;
+        for (const auto& [k, v] : d) {
+            const auto& [ke, ve] = expected[i];
+            BOOST_TEST(k == ke);
+            BOOST_TEST(v == ve);
+            i++;
         }
     }
 
