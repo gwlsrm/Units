@@ -36,6 +36,7 @@ public:
     bool hasValue(const std::string& section_name, const std::string& key) const;
     /// get string value by it's name
     const std::string& getStringValue(const std::string& section_name, const std::string& key) const;
+    const std::string& getStringValueDef(const std::string& section_name, const std::string& key, const std::string& defValue) const;
     /// get value (copy if string) by its name, returns option value
     template <typename T>
     std::optional<T> getOptValue(const std::string& section_name, const std::string& key) const;

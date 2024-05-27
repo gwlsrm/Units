@@ -86,6 +86,15 @@ const std::string& IniParser::getStringValue(const Section& section, const std::
     return empty_string_;
 }
 
+const std::string& IniParser::getStringValueDef(const std::string& section_name, const std::string& key, const std::string& defValue) const {
+    if (auto it = data_.find(section_name); it != data_.end()) {
+        if (it->second.count(key)) {
+            return it->second.at(key);
+        }
+    }
+    return defValue;
+}
+
 const IniParser::Section* IniParser::getSection(const std::string& section_name) const {
     if (auto it = data_.find(section_name); it != data_.end()) {
         return &(it->second);
