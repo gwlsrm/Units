@@ -115,6 +115,18 @@ BOOST_AUTO_TEST_SUITE(double_counter_map_test_suite)
             BOOST_TEST(d.at(1.0) == 2);
             BOOST_TEST(d.at(1.2) == 1);
         }
+        // inc value_cnt
+        {
+            DoubleCounterMap<int> dict{0.01};
+            dict.add_value(1.1);
+            dict.add_value(1.109);
+            dict.add_value(1.0);
+            dict.inc_value_cnt(1.101, 3);
+            const auto& d = dict.getCounterDict();
+            BOOST_TEST(d.size() == 2u);
+            BOOST_TEST(d.at(1.1) == 5);
+            BOOST_TEST(d.at(1.0) == 1);
+        }
     }
 
 BOOST_AUTO_TEST_SUITE_END()
