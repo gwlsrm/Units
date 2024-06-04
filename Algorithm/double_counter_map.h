@@ -63,7 +63,7 @@ void DoubleCounterMap<T>::inc_value_cnt(double value, T cnt) {
                 return;
             }
         }
-        dict_.emplace(value, 1);
+        dict_.emplace(value, cnt);
     } else if (approx_equal(value, it->first)) {
         it->second += cnt;
     } else if (it != dict_.begin() && approx_equal(value, prev(it)->first)) {

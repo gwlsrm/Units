@@ -122,10 +122,12 @@ BOOST_AUTO_TEST_SUITE(double_counter_map_test_suite)
             dict.add_value(1.109);
             dict.add_value(1.0);
             dict.inc_value_cnt(1.101, 3);
+            dict.inc_value_cnt(2.0, 4);
             const auto& d = dict.getCounterDict();
-            BOOST_TEST(d.size() == 2u);
+            BOOST_TEST(d.size() == 3u);
             BOOST_TEST(d.at(1.1) == 5);
             BOOST_TEST(d.at(1.0) == 1);
+            BOOST_TEST(d.at(2.0) == 4);
         }
     }
 
