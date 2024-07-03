@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <utility>
+#include <vector>
 
 
 /**
@@ -45,4 +46,12 @@ ForwardIt sumEqual(ForwardIt first, ForwardIt last, CompareBinaryPredicate cmp, 
     }
 
     return ++result;
+}
+
+/**
+ * @brief sumVectors -- sums vFrom to vTo: vTo += vFrom elementwise
+*/
+template <typename T>
+void sumVectors(std::vector<T>& vTo, const std::vector<T>& vFrom) {
+    std::transform(vTo.begin(), vTo.end(), vFrom.begin(), vTo.begin(), std::plus<T>());
 }
