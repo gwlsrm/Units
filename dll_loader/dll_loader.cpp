@@ -30,7 +30,7 @@ DllLoader::~DllLoader()
     }
 }
 
-std::optional<DllLoader> tryLoadDllFromNames(std::vector<std::string>&& dll_names) {
+std::optional<DllLoader> tryLoadDllFromNames(const std::vector<std::string>& dll_names) {
     for (const auto& dll_name : dll_names) {
         try {
             return DllLoader(dll_name);

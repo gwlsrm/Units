@@ -71,7 +71,7 @@ private:
 #endif // _WIN32
 };
 
-std::optional<DllLoader> tryLoadDllFromNames(std::vector<std::string>&& dll_names);
+std::optional<DllLoader> tryLoadDllFromNames(const std::vector<std::string>& dll_names);
 
 
 
