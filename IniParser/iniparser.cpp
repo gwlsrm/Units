@@ -172,7 +172,7 @@ double IniParser::getDoubleValue(const Section& section, const std::string& key)
 void IniParser::writeToFile(const std::string& filename) const {
     ofstream out(filename);
     if (!out) {
-        throw invalid_argument("cnnnot open '" + filename + "' to write");
+        throw invalid_argument("cannot open '" + filename + "' to write");
     }
     this->writeToStream(out);
 }
