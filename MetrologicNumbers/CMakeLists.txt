@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(metr_number)
 
 add_library(metr_number STATIC metr_number.cpp metr_number.h)
-    
-set_target_properties(metr_number PROPERTIES      
+
+set_target_properties(metr_number PROPERTIES
                       CXX_STANDARD 14
                       CXX_STANDARD_REQUIRED ON
                       )
@@ -32,4 +32,3 @@ if (USE_TEST)
 #    # tests
 #    add_test(metr_number_tests ${TEST_NAME})
 endif()
-

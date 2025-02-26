@@ -1,11 +1,14 @@
 #include "sle.h"
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
 #include "math_lib.h"
 
 using namespace std;
+
+namespace gwmath {
 
 std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     /**Gaussian elimination*/
@@ -15,8 +18,8 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     size_t m = a.getColCount();
     // check if only one equation
     if (m == 1) {
-        if (!isDblZero(a[0][0])) {
-            return {b[0] / a[0][0]};
+        if (!isDblZero(a(0,0))) {
+            return {b[0] / a(0,0)};
         } else {
             return {};
         }
@@ -28,25 +31,26 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     */;
     for (size_t i=0; i < m-1; ++i) { // for every column
         for (size_t j = i+1; j < m; ++j) { // for i-th column looking only rows from i+1
-            if (!isDblZero(c[i][i])) {
-                c[j][i] = - c[j][i] / c[i][i];
+            if (!isDblZero(c(i,i))) {
+                c(j,i) = - c(j,i) / c(i,i);
             } else {
-                vector<double> temp_vec;
+                vector<double> temp_vec(m);
+                ArrayView<double> temp_vec_view(m, temp_vec.data());
                 for (size_t k=i+1; k < m; ++k) {
-                    if (!isDblZero(c[k][i])) {
-                        temp_vec = c[k];
-                        c[k] = c[i];
-                        c[i] = temp_vec;
-                        c[i][i] = -c[i][i];
+                    if (!isDblZero(c(k,i))) {
+                        temp_vec_view.copy_from(c[k]);
+                        c[k].copy_from(c[i]);
+                        c[i].copy_from(temp_vec_view);
+                        c(i,i) = -c(i,i);
                     }
                 }
-                c[j][i] = -c[j][i] / c[i][i];
+                c(j,i) = -c(j,i) / c(i,i);
             }
 
             for (size_t k = i+1; k < m; ++k) {
-                c[j][k] += c[j][i] * c[i][k];
+                c(j,k) += c(j,i) * c(i,k);
             }
-            b[j] += c[j][i] * b[i];
+            b[j] += c(j,i) * b[i];
         }
     }
 
@@ -56,9 +60,9 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     for (int i = static_cast<int>(m)-1; i >= 0; --i) {
         x[i] = b[i];
         for (size_t j = i+1; j < m; ++j) {
-            x[i] -= c[i][j] * x[j];
+            x[i] -= c(i,j) * x[j];
         }
-        x[i] /= c[i][i];
+        x[i] /= c(i,i);
     }
     return x;
 }
@@ -104,3 +108,6 @@ std::vector<double> chol(const DoubleMatrix& a, const std::vector<double>& b) {
     }
     return x;
 }
+
+
+}  // namespace gwmath

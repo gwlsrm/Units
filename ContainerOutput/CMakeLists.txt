@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
-project(gw_logger) 
+project(gw_logger)
 
 add_library(gw_logger STATIC gwLogger.cpp gwLogger.h)
 
@@ -27,5 +27,3 @@ add_library(gw_logger STATIC gwLogger.cpp gwLogger.h)
 #    # tests
 #    add_test(gw_logger_tests ${TEST_NAME})
 #endif()
-
-

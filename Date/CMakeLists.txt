@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(gwdate)
 
@@ -8,5 +8,3 @@ set_target_properties(gwdate PROPERTIES
                       CXX_STANDARD 14
                       CXX_STANDARD_REQUIRED ON
                       )
-
-

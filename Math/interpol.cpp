@@ -79,12 +79,12 @@ double interpol(int poly_degree, const std::vector<double>& xi, const std::vecto
     }
 
     // fill matrix and vectors for SLE(SLAU)
-    DoubleMatrix a(poly_degree + 1);
+    gwmath::DoubleMatrix a(poly_degree + 1, poly_degree + 1);
     vector<double> b(poly_degree + 1);
     for (int i = 0; i <= poly_degree; ++i) {
         a(i, 0) = 1;
         for (int j=1; j <= poly_degree; ++j) {
-            a[i][j] = a[i][j-1] * get_x_log_state(xi[li + i], x_or_y_log);
+            a(i, j) = a(i, j-1) * get_x_log_state(xi[li + i], x_or_y_log);
         }
         b[i] = get_y_log_state(yi.at(li+i), x_or_y_log);
     }
@@ -139,12 +139,12 @@ double interpol(int poly_degree, std::size_t array_size, const double* xi, const
     }
 
     // fill matrix and vectors for SLE(SLAU)
-    DoubleMatrix a(poly_degree + 1);
+    gwmath::DoubleMatrix a(poly_degree + 1, poly_degree + 1);
     vector<double> b(poly_degree + 1);
     for (int i = 0; i <= poly_degree; ++i) {
         a(i, 0) = 1;
         for (int j=1; j <= poly_degree; ++j) {
-            a[i][j] = a[i][j-1] * get_x_log_state(xi[li + i], x_or_y_log);
+            a(i,j) = a(i,j-1) * get_x_log_state(xi[li + i], x_or_y_log);
         }
         b[i] = get_y_log_state(yi[li+i], x_or_y_log);
     }

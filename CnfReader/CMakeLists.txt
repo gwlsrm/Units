@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(cnfreader)
 
 add_library(${PROJECT_NAME} STATIC cnfreader.cpp cnfreader.h)
-    
+
 target_link_libraries(${PROJECT_NAME} str_utils)
 
 # set library properties
@@ -33,5 +33,3 @@ if (USE_TEST)
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 endif()
-
-

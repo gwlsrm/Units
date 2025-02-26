@@ -10,6 +10,8 @@
 
 using namespace std;
 
+namespace gwmath {
+
 void ols_StraightLineProp(const std::vector<double>& xi, const std::vector<double>& yi,
                           double& a, double& da) {
     /** Least squares method for straight proportion: y = a * x */
@@ -63,3 +65,5 @@ bool ols_poly(const std::vector<double>& xi, const std::vector<double>& yi, int 
     coeffs = chol(A, b);
     return true;
 }
+
+}  // namespace gwmath
