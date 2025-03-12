@@ -6,6 +6,10 @@
     @brief Structures to work with geometry like Point2D, Point3D
 */
 
+#include "gw_static_matrix.h"
+
+namespace gwmath{
+
 /*--------------
  plain (2D)
 ----------------*/
@@ -26,6 +30,18 @@ struct Point3D {
     double z = 0;
 };
 
+// calculate Euclidean distance
+double calcDistance(double x, double y, double z);
 
+// calulates square of euclidian distance
+double calcSquareDistance(double x, double y, double z);
+double calcSquareDistance(const StaticDoubleVector3& v);
+
+// Convert cartesian coordinates to spherical
+void convertCartToSpherical(double x, double y, double z,
+    double& r, double& costheta, double& sintheta, double& cosphi, double& sinphi);
+
+
+} // namespace gwmath
 
 #endif // GEOM_LIB_H_INCLUDED

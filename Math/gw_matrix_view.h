@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <tuple>
+
+#include "array_view.h"
 
 
 namespace gwmath {
@@ -10,40 +13,51 @@ namespace gwmath {
 template <typename T>
 class MatrixView {
 public:
-  MatrixView(std::size_t row_count, std::size_t col_count, T* data);
-  // iterators
-  auto begin() {return data_;}
-  const auto begin() const {return data_;}
-  auto end() {return data_ + row_count_ * col_count_;}
-  const auto end() const {return data_ + row_count_ * col_count_;}
-  // getters
-  const T& operator()(std::size_t row, std::size_t col) const {
-    return data_[calcIdx(row, col)];
-  }
-  T& operator()(std::size_t row, std::size_t col) {return data_[calcIdx(row, col)];}
-  const T& at(std::size_t row_idx, std::size_t col_idx) const {
-    if (row_idx >= row_count_ || col_idx >= col_count_) {
-      throw std::out_of_range("row_idx or col_idx is out of range");
+    MatrixView() = default;
+    MatrixView(std::size_t row_count, std::size_t col_count, T* data);
+    // iterators
+    auto begin() {return data_;}
+    const auto begin() const {return data_;}
+    auto end() {return data_ + row_count_ * col_count_;}
+    const auto end() const {return data_ + row_count_ * col_count_;}
+    // getters
+    const T& operator()(std::size_t row, std::size_t col) const {
+        return data_[calcIdx(row, col)];
     }
-    return data_[calcIdx(row_idx, col_idx)];
-  }
-  T& at(std::size_t row_idx, std::size_t col_idx) {
-    if (row_idx >= row_count_ || col_idx >= col_count_) {
-      throw std::out_of_range("row_idx or col_idx is out of range");
+    T& operator()(std::size_t row, std::size_t col) {return data_[calcIdx(row, col)];}
+    const T& at(std::size_t row_idx, std::size_t col_idx) const {
+        if (row_idx >= row_count_ || col_idx >= col_count_) {
+            throw std::out_of_range("row_idx or col_idx is out of range");
+        }
+        return data_[calcIdx(row_idx, col_idx)];
     }
-    return data_[calcIdx(row_idx, col_idx)];
-  }
-  const T* operator[](std::size_t idx) const {return data_ + idx * col_count_;}
-  std::size_t getRowCount() const { return row_count_;}
-  std::size_t getColCount() const { return col_count_;}
-private:
-  T* data_;
-  std::size_t row_count_ = 0;
-  std::size_t col_count_ = 0;
+    T& at(std::size_t row_idx, std::size_t col_idx) {
+        if (row_idx >= row_count_ || col_idx >= col_count_) {
+            throw std::out_of_range("row_idx or col_idx is out of range");
+        }
+        return data_[calcIdx(row_idx, col_idx)];
+    }
+    ArrayView<T> operator[](std::size_t row) {
+    return ArrayView<T>(col_count_, data_ + row*col_count_);}
+    ConstArrayView<T> operator[](std::size_t row) const {
+    return ConstArrayView<T>(col_count_, data_ + row*col_count_);}
+    T* data() { return data_.data();}
+    const T* data() const { return data_.data();}
 
-  std::size_t calcIdx(std::size_t row, std::size_t col) const {
-    return row * col_count_ + col;
-  }
+    std::size_t getRowCount() const { return row_count_;}
+    std::size_t getColCount() const { return col_count_;}
+    std::tuple<std::size_t, std::size_t> shape() const {return {row_count_, col_count_};}
+    // methods
+    bool isSquare() const {return row_count_ == col_count_;}
+
+protected:
+    T* data_ = nullptr;
+    std::size_t row_count_ = 0;
+    std::size_t col_count_ = 0;
+
+    std::size_t calcIdx(std::size_t row, std::size_t col) const {
+        return row * col_count_ + col;
+    }
 };
 // operators
 template<typename T>
@@ -62,33 +76,33 @@ MatrixView<T>::MatrixView(std::size_t row_count, std::size_t col_count, T* data)
 
 // operators
 template <typename T>
-std::ostream& operator<<(std::ostream& out, const MatrixView<T>& m) {
-  out << m.getNumRows() << " " << m.getNumColumns() << '\n';
-  for (int row = 0; row < m.getNumRows(); ++row) {
-    if (row > 0) {
-      out << '\n';
+std::ostream& operator<<(std::ostream& out, const MatrixView<T>& matrix) {
+    out << "[\n";
+    for (std::size_t row = 0; row < matrix.getRowCount(); ++row) {
+        out << " [";
+        for (std::size_t column = 0; column < matrix.getColCount(); ++column) {
+            if (column > 0) {
+                out << ", ";
+            }
+            out << matrix.at(row, column);
+        }
+        out << "],\n";
     }
-    for (int col = 0; col < m.getNumColumns(); ++col) {
-      if (col > 0) {
-        out << ' ';
-      }
-      out << m(row, col);
-    }
-  }
-  return out;
+    out << "]";
+    return out;
 }
 
 template <typename T>
 bool operator==(const MatrixView<T>& lhs, const MatrixView<T>& rhs) {
-  if (lhs.getNumRows() != rhs.getNumRows() || lhs.getNumColumns() != rhs.getNumColumns()) {
-    return false;
-  }
-  for (int ri = 0; ri < lhs.getNumRows(); ++ri) {
-    for (int ci = 0; ci < lhs.getNumColumns(); ++ci) {
-      if (lhs(ri, ci) != rhs(ri, ci)) return false;
+    if (lhs.shape() != rhs.shape()) {
+        return false;
     }
-  }
-  return true;
+    for (std::size_t row = 0; row < lhs.getRowCount(); ++row) {
+        for (std::size_t column = 0; column < lhs.getColCount(); ++column) {
+            if (lhs(row, column) != rhs(row, column)) return false;
+        }
+    }
+    return true;
 }
 
 }  // namespace gwmath
