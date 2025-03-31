@@ -2,14 +2,13 @@
 #include "math_lib.h"
 #include "str_utils.h"
 
-using namespace std;
 
 int findPowerNum(double v) {
     v = fabs(v);
-    string s = toStringF(v);
+    std::string s = toStringF(v);
     size_t dot_pos = s.find('.');
-    if (dot_pos == string::npos || dot_pos > 1) {    // integer value or xyz.abc value
-        if (dot_pos != string::npos) s.resize(dot_pos);
+    if (dot_pos == std::string::npos || dot_pos > 1) {    // integer value or xyz.abc value
+        if (dot_pos != std::string::npos) s.resize(dot_pos);
         if (s[0] == '2' || s[0] == '1')
             return s.size()-2;
         else

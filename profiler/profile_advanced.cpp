@@ -6,18 +6,18 @@
 using namespace std;
 using namespace chrono;
 
-TotalDuration::TotalDuration(const string& msg)
+TotalDuration::TotalDuration(const std::string& msg)
   : message(msg + ": ")
   , value(0)
 {
 }
 
 TotalDuration::~TotalDuration() {
-  ostringstream os;
+  std::ostringstream os;
   os << message
      << duration_cast<milliseconds>(value).count()
      << " ms" << endl;
-  cerr << os.str();
+  std::cerr << os.str();
 }
 
 AddDuration::AddDuration(steady_clock::duration& dest)

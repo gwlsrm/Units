@@ -10,6 +10,9 @@
     @brief Numeric integration functions
 */
 
+namespace gwmath
+{
+
 /// main fucntional type for numeric integration functions
 using FuncTyped2d = std::function<double(double)>;
 
@@ -50,5 +53,7 @@ double aveIntegration2(FuncType f, double a, double b, double EPS = 1e-6) {
 }
 
 double trapGridIntegration(int nstep, double step, const double* values);
+
+} // namespace gwmath
 
 #endif // NUMERIC_INTEGRATION_H_INCLUDED

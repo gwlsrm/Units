@@ -1,6 +1,5 @@
 #include "dll_loader.h"
 
-using namespace std;
 
 DllLoader::DllLoader(const std::string& dll_name)
 {
@@ -11,7 +10,7 @@ DllLoader::DllLoader(const std::string& dll_name)
 #endif
     if (!dll_handle) {
     #ifdef __linux
-        throw invalid_argument("Cannot load library " + dll_name + '\n' + dlerror());
+        throw std::invalid_argument("Cannot load library " + dll_name + '\n' + dlerror());
     #else
         auto dlerror = GetLastError();
         throw invalid_argument("Cannot load library " + dll_name + ". Error code is " + to_string(dlerror));
@@ -34,7 +33,7 @@ std::optional<DllLoader> tryLoadDllFromNames(const std::vector<std::string>& dll
     for (const auto& dll_name : dll_names) {
         try {
             return DllLoader(dll_name);
-        } catch (const invalid_argument&) {
+        } catch (const std::invalid_argument&) {
 
         }
     }

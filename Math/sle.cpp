@@ -6,14 +6,12 @@
 
 #include "math_lib.h"
 
-using namespace std;
-
 namespace gwmath {
 
 std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
     /**Gaussian elimination*/
     if (!a.isSquare()) {
-        throw invalid_argument("The matrix must be square");
+        throw std::invalid_argument("The matrix must be square");
     }
     size_t m = a.getColCount();
     // check if only one equation
@@ -34,13 +32,13 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
             if (!isDblZero(c(i,i))) {
                 c(j,i) = - c(j,i) / c(i,i);
             } else {
-                vector<double> temp_vec(m);
+                std::vector<double> temp_vec(m);
                 ArrayView<double> temp_vec_view(m, temp_vec.data());
                 for (size_t k=i+1; k < m; ++k) {
                     if (!isDblZero(c(k,i))) {
-                        temp_vec_view.copy_from(c[k]);
-                        c[k].copy_from(c[i]);
-                        c[i].copy_from(temp_vec_view);
+                        temp_vec_view.copyFrom(c[k]);
+                        c[k].copyFrom(c[i]);
+                        c[i].copyFrom(temp_vec_view);
                         c(i,i) = -c(i,i);
                     }
                 }
@@ -56,7 +54,7 @@ std::vector<double> gauss(const DoubleMatrix& a, std::vector<double> b) {
 
     // direct movement
     /*x[i] = 1/a[i,i]*(b[i] - Sum(a[i,j]*x[j]))*/
-    vector<double> x(m);
+    std::vector<double> x(m);
     for (int i = static_cast<int>(m)-1; i >= 0; --i) {
         x[i] = b[i];
         for (size_t j = i+1; j < m; ++j) {
@@ -90,7 +88,7 @@ std::vector<double> chol(const DoubleMatrix& a, const std::vector<double>& b) {
     }
 
     // solving system l * y = b
-    vector<double> y(m);
+    std::vector<double> y(m);
     for (size_t i = 0; i < m; ++i) {
         y[i] = b[i] / l(i, i);
         for (size_t k = 0; k < i; ++k) {
@@ -99,7 +97,7 @@ std::vector<double> chol(const DoubleMatrix& a, const std::vector<double>& b) {
     }
 
     // solving system l_transp * x = y (back)
-    vector<double> x(m);
+    std::vector<double> x(m);
     for (int i = int(m)-1; i >= 0; --i) {
         x[i] = y[i] / l(i, i);
         for (int k = int(m)-1; k > i; --k) {

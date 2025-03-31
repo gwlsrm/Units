@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+namespace gwmath {
+
 double aveIntegration(const FuncTyped2d& f, double a, double b, double EPS) {
     /**
         numeric integral calulation int{from a, to b} {f(double)} using average value on grid
@@ -105,3 +107,5 @@ double trapGridIntegration(int nstep, double step, const double* values) {
     }
     return integral * step / 2.0;
 }
+
+} // namespace gwmath

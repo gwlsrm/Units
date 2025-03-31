@@ -9,7 +9,8 @@
 */
 
 /// finds value in vector<double> with tolerance
-int find_dbl_vector(const std::vector<double>& vctr, double value, double tolerance = 0.001);
+int findInDoubleVector(const std::vector<double>& vctr, double value, double tolerance = 0.001);
+
 /// generate range from init_value to end_value with step
 std::vector<double> generateRange(double init_value, double end_value, double step);
 

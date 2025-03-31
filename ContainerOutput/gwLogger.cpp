@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 
-using namespace std;
 
 std::unique_ptr<Logger> Logger::logger_instance = nullptr;
 
@@ -11,9 +10,9 @@ Logger& Logger::getLogger(const std::string& filename)
 {
   if (!logger_instance) {
     if (filename == "stdout") {
-      logger_instance = unique_ptr<Logger>(new Logger());
+      logger_instance = std::unique_ptr<Logger>(new Logger());
     } else {
-      logger_instance = unique_ptr<Logger>(new Logger(filename)); //make_unique<Logger>(filename);
+      logger_instance = std::unique_ptr<Logger>(new Logger(filename)); //make_unique<Logger>(filename);
     }
   }
   return *logger_instance;
@@ -27,12 +26,12 @@ void Logger::deleteLogger()
 }
 
 Logger::Logger()
-  : out_(cout)
+  : out_(std::cout)
 {
 }
 
 Logger::Logger(const std::string& filename)
-  : pout(make_unique<ofstream>(filename)), out_(*pout)
+  : pout(std::make_unique<std::ofstream>(filename)), out_(*pout)
 {
 }
 

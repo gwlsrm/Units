@@ -6,7 +6,6 @@
 #include <iostream>
 #include <algorithm>
 
-using namespace std;
 
 MetrNumber::MetrNumber(double aValue, double aUnc)
     : value_(aValue), unc_(aUnc)
@@ -25,9 +24,9 @@ std::ostream& operator<< (std::ostream& out, const MetrNumber& m)
     return out;
 }
 
-string MetrNumber::asString()
+std::string MetrNumber::asString()
 {
-    return to_string(value_) + " +/- " + to_string(unc_);
+    return std::to_string(value_) + " +/- " + std::to_string(unc_);
 }
 
 MetrNumber operator+(const MetrNumber &lhs, const MetrNumber &rhs)

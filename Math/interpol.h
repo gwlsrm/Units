@@ -8,6 +8,8 @@
     @brief polynomial interpolation functions
 */
 
+namespace gwmath {
+
 /// interpolation modes
 enum class LogState {
     lsNone,     ///< all scales are linear
@@ -22,5 +24,6 @@ double interpol(int poly_degree, const std::vector<double>& xi, const std::vecto
 double interpol(int poly_degree, std::size_t array_size, const double* xi, const double* yi,
                 double x, LogState x_or_y_log);
 
+}  // namespace gwmath
 
 #endif // INTERPOL_H_INCLUDED

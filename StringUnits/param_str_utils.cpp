@@ -1,6 +1,5 @@
 #include "param_str_utils.h"
 
-using namespace std;
 
 std::string readParam(int argc, const char *argv[], int param_num, const std::string& defValue) {
     if (param_num > argc) {
@@ -10,7 +9,7 @@ std::string readParam(int argc, const char *argv[], int param_num, const std::st
 }
 
 std::string getAllParamString(int argc, const char *argv[]) {
-    string res;
+    std::string res;
     for (int i = 1; i < argc; ++i) {
         res += argv[i];
         res += " ";

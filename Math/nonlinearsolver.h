@@ -8,6 +8,9 @@
     @brief Newton methods of solving non-linear equaton
 */
 
+namespace gwmath
+{
+
 /** \brief Newton method of solving non-linear equaton.
 
     Newton method of solving non-linear equaton.
@@ -61,5 +64,6 @@ double getRootNewtonSimple(FuncType1 f, FuncType2 fdiff, double x0, double EPS =
     return x;
 }
 
+} // namespace gwmath
 
 #endif // NONLINEARSOLVER_H_INCLUDED

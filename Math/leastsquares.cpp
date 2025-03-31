@@ -8,15 +8,13 @@
 #include "sle.h"
 //#include "container_output.h"
 
-using namespace std;
-
 namespace gwmath {
 
 void ols_StraightLineProp(const std::vector<double>& xi, const std::vector<double>& yi,
                           double& a, double& da) {
     /** Least squares method for straight proportion: y = a * x */
     if (xi.size() != yi.size() || xi.empty()) {
-        throw runtime_error("ols_StraightLineProp error: xi is empty or different length for xi and yi");
+        throw std::runtime_error("ols_StraightLineProp error: xi is empty or different length for xi and yi");
     }
 
     double xx_ave = 0, xy_ave = 0;
@@ -46,7 +44,7 @@ bool ols_poly(const std::vector<double>& xi, const std::vector<double>& yi, int 
      Bk= Sum(i) (y_i * x_i^k)  */
 
     size_t m = degree + 1;
-    vector<double> b(m);
+    std::vector<double> b(m);
     DoubleMatrix A(m, m);
     coeffs.resize(m);
 

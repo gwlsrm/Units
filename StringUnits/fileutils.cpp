@@ -5,7 +5,6 @@
 #include <windows.h>
 #endif
 
-using namespace std;
 
 std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char** argv) {
 #ifndef __linux__
@@ -51,7 +50,7 @@ std::string extractFileExt(const std::string& filename) {
 }
 
 bool fileExists(const std::string& filePath) {
-    ifstream fin(filePath.c_str());
+    std::ifstream fin(filePath.c_str());
     return fin.is_open();
 }
 
@@ -61,25 +60,25 @@ std::string goOneLevelUp(const std::string& path) {
     }
     // only one /
     size_t slash_pos = path.find('\\');
-    if (slash_pos == string::npos) {
+    if (slash_pos == std::string::npos) {
         slash_pos = path.find('/');
     }
-    if (slash_pos == string::npos || slash_pos + 1 == path.size()) {
+    if (slash_pos == std::string::npos || slash_pos + 1 == path.size()) {
         return path;
     }
 
     // remove last /
-    string res(path);
+    std::string res(path);
     if (res.back() == '\\' || res.back() == '/') {
         res.pop_back();
     }
 
     // remove last level
     slash_pos = res.rfind('\\');
-    if (slash_pos == string::npos) {
+    if (slash_pos == std::string::npos) {
         slash_pos = res.rfind('/');
     }
-    if (slash_pos != string::npos) {
+    if (slash_pos != std::string::npos) {
         res.resize(slash_pos + 1);
     }
     return res;
@@ -102,7 +101,7 @@ std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::
     if (fileName.find(':') != fileName.npos) {
         return fileName;
     }
-    string res_path = addSlash(baseDir);
+    std::string res_path = addSlash(baseDir);
     // expand ..
     if (fileName.size() >= 3 &&
         (fileName.compare(0, 3, "..\\") == 0  ||
@@ -116,22 +115,22 @@ std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::
 }
 
 std::vector<std::string> loadListFromFile(const std::string& filename) {
-    ifstream in;
+    std::ifstream in;
     if (!in) {
-        throw invalid_argument("Can't open file " + filename);
+        throw std::invalid_argument("Can't open file " + filename);
     }
-    vector<string> res;
-    string s;
-    while (getline(in, s)) {
+    std::vector<std::string> res;
+    std::string s;
+    while (std::getline(in, s)) {
         res.push_back(move(s));
     }
     return res;
 }
 
 void saveStrListToFile(const std::vector<std::string>& str_list, const std::string& filename) {
-    ofstream out;
+    std::ofstream out;
     if (!out) {
-        throw invalid_argument("Can't create file " + filename);
+        throw std::invalid_argument("Can't create file " + filename);
     }
     for (const auto& line : str_list) {
         out << line << '\n';

@@ -12,7 +12,7 @@ template <typename T>
 class ArrayView {
 public:
     ArrayView(std::size_t size, T *data);
-    void copy_from(const ArrayView& a);
+    void copyFrom(const ArrayView& a);
     // iterators
     auto begin() { return data_; }
     const auto begin() const { return data_; }
@@ -93,7 +93,7 @@ ArrayView<T>::ArrayView(std::size_t size, T* data)
 {}
 
 template <typename T>
-void ArrayView<T>::copy_from(const ArrayView& a) {
+void ArrayView<T>::copyFrom(const ArrayView& a) {
     if (this == &a) {
         return;
     }

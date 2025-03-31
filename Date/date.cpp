@@ -4,13 +4,12 @@
 #include <iomanip>
 #include "date.h"
 
-using namespace std;
 
 Date::Date(int new_year, int new_month, int new_day)
 	: year(new_year), month(new_month), day(new_day)
 {
     if (!isValidDate(new_year, new_month, new_day)) {
-        throw logic_error("Invalid date: ");
+        throw std::logic_error("Invalid date: ");
     };
 }
 
@@ -38,50 +37,50 @@ int Date::dayInMonth(int aMonth, int aYear) {
 }
 
 std::string Date::asString(char sep) const {
-    stringstream stream;
+    std::stringstream stream;
     stream << *this;
     return stream.str();
 }
 
 bool operator<(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) <
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) <
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
 bool operator<=(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) <=
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) <=
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
 bool operator>(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) >
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) >
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
 bool operator>=(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) >=
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) >=
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
 bool operator==(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) ==
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) ==
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
 bool operator!=(const Date& lhs, const Date& rhs) {
-	return tie(lhs.year, lhs.month, lhs.day) !=
-		   tie(rhs.year, rhs.month, rhs.day);
+	return std::tie(lhs.year, lhs.month, lhs.day) !=
+		   std::tie(rhs.year, rhs.month, rhs.day);
 }
 
-ostream& operator<<(ostream& stream, const Date& date) {
-  stream << setw(4) << setfill('0') << date.getYear() <<
-      '-' << setw(2) << setfill('0') << date.getMonth() <<
-      '-' << setw(2) << setfill('0') << date.getDay();
+std::ostream& operator<<(std::ostream& stream, const Date& date) {
+  stream << std::setw(4) << std::setfill('0') << date.getYear() <<
+      '-' << std::setw(2) << std::setfill('0') << date.getMonth() <<
+      '-' << std::setw(2) << std::setfill('0') << date.getDay();
   return stream;
 }
 
 Date parseDate(const std::string& date) {
-  istringstream date_stream(date);
+  std::istringstream date_stream(date);
   return parseDate(date_stream);
 }
 
@@ -105,7 +104,7 @@ Date parseDate(std::istream& date_stream) {
 
 	  if (!ok) {
 	    //throw logic_error("Wrong date format: ");
-		  cerr << "Wrong date format: " << endl;
+	      std::cerr << "Wrong date format: " << std::endl;
 		  return Date(-1, 1, 1);
 	  }
 	  return Date(year, month, day);

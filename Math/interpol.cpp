@@ -7,7 +7,8 @@
 #include "gwmatrix.h"
 #include "sle.h"
 
-using namespace std;
+
+namespace gwmath {
 
 inline double get_x_log_state(double x, LogState x_or_y_log) {
     switch (x_or_y_log) {
@@ -16,7 +17,7 @@ inline double get_x_log_state(double x, LogState x_or_y_log) {
         return x;
     case LogState::lsXonly:
     case LogState::lsXYBoth:
-        return log(x);
+        return std::log(x);
     default:
         return x;
     }
@@ -29,7 +30,7 @@ inline double get_y_log_state(double y, LogState x_or_y_log) {
         return y;
     case LogState::lsYonly:
     case LogState::lsXYBoth:
-        return log(y);
+        return std::log(y);
     default:
         return y;
     }
@@ -40,36 +41,36 @@ double interpol(int poly_degree, const std::vector<double>& xi, const std::vecto
 {
     // input data check
     if (xi.size() != yi.size()) {
-        throw invalid_argument("x and y arrays must be the same size");
+        throw std::invalid_argument("x and y arrays must be the same size");
     }
     if (xi.empty()) {
-        throw invalid_argument("x must not be empty");
+        throw std::invalid_argument("x must not be empty");
     }
     if (poly_degree+1 > static_cast<int>(xi.size())) { // decrease polynom degree
         poly_degree = static_cast<int>(xi.size()) - 1;
     }
     if (poly_degree < 0) {
-        throw invalid_argument("Polynom degree is less than zero");
+        throw std::invalid_argument("Polynom degree is less than zero");
     }
 
     // for odd numbers low bound Xi is: Xi<=X<Xi+1. If X<=X0: Xi = X0. And equal points to the right and to the left
     // for even numbers found the closest Xi to X and equal points to the right and to the left
     int li = 0;
     if (odd(poly_degree)) {
-        auto low_it = lower_bound(begin(xi), end(xi), x);
+        auto low_it = std::lower_bound(std::begin(xi), std::end(xi), x);
         if (low_it != xi.begin()) {
             --low_it;
         }
-        li = static_cast<int>(low_it - begin(xi));
+        li = static_cast<int>(low_it - std::begin(xi));
     } else {
-        auto low_it = lower_bound(begin(xi), end(xi), x);
+        auto low_it = std::lower_bound(std::begin(xi), std::end(xi), x);
         if (low_it != xi.begin()) {
-            if (low_it == end(xi)) --low_it;
-            if (x - *prev(low_it) < fabs(*low_it - x)) {
+            if (low_it == xi.end()) --low_it;
+            if (x - *std::prev(low_it) < std::fabs(*low_it - x)) {
                 --low_it;
             }
         }
-        li = static_cast<int>(low_it - begin(xi));
+        li = static_cast<int>(low_it - std::begin(xi));
     }
     // step to the left for center polynom
     li -= poly_degree / 2;
@@ -80,7 +81,7 @@ double interpol(int poly_degree, const std::vector<double>& xi, const std::vecto
 
     // fill matrix and vectors for SLE(SLAU)
     gwmath::DoubleMatrix a(poly_degree + 1, poly_degree + 1);
-    vector<double> b(poly_degree + 1);
+    std::vector<double> b(poly_degree + 1);
     for (int i = 0; i <= poly_degree; ++i) {
         a(i, 0) = 1;
         for (int j=1; j <= poly_degree; ++j) {
@@ -90,10 +91,10 @@ double interpol(int poly_degree, const std::vector<double>& xi, const std::vecto
     }
 
     // solving SLE (SLAU)
-    vector<double> coeffs = gauss(a, b);
+    std::vector<double> coeffs = gauss(a, b);
     double y = poly(get_x_log_state(x, x_or_y_log), coeffs);
     if (x_or_y_log == LogState::lsYonly || x_or_y_log == LogState::lsXYBoth) {
-        y = exp(y);
+        y = std::exp(y);
     }
     return y;
 }
@@ -103,29 +104,29 @@ double interpol(int poly_degree, std::size_t array_size, const double* xi, const
 {
     // input data check
     if (array_size == 0) {
-        throw invalid_argument("x must not be empty");
+        throw std::invalid_argument("x must not be empty");
     }
     if (poly_degree+1 > static_cast<int>(array_size)) { // decrease polynom degree
         poly_degree = static_cast<int>(array_size) - 1;
     }
     if (poly_degree < 0) {
-        throw invalid_argument("Polynom degree is less than zero");
+        throw std::invalid_argument("Polynom degree is less than zero");
     }
 
     // for odd numbers low bound Xi is: Xi<=X<Xi+1. If X<=X0: Xi = X0. And equal points to the right and to the left
     // for even numbers found the closest Xi to X and equal points to the right and to the left
     int li = 0;
     if (odd(poly_degree)) {
-        auto low_it = lower_bound(xi, xi+array_size, x);
+        auto low_it = std::lower_bound(xi, xi+array_size, x);
         if (low_it != xi) {
             --low_it;
         }
         li = static_cast<int>(low_it - xi);
     } else {
-        auto low_it = lower_bound(xi, xi+array_size, x);
+        auto low_it = std::lower_bound(xi, xi+array_size, x);
         if (low_it != xi) {
             if (low_it == (xi+array_size)) --low_it;
-            if (x - *prev(low_it) < fabs(*low_it - x)) {
+            if (x - *std::prev(low_it) < std::fabs(*low_it - x)) {
                 --low_it;
             }
         }
@@ -140,7 +141,7 @@ double interpol(int poly_degree, std::size_t array_size, const double* xi, const
 
     // fill matrix and vectors for SLE(SLAU)
     gwmath::DoubleMatrix a(poly_degree + 1, poly_degree + 1);
-    vector<double> b(poly_degree + 1);
+    std::vector<double> b(poly_degree + 1);
     for (int i = 0; i <= poly_degree; ++i) {
         a(i, 0) = 1;
         for (int j=1; j <= poly_degree; ++j) {
@@ -150,10 +151,12 @@ double interpol(int poly_degree, std::size_t array_size, const double* xi, const
     }
 
     // solving SLE (SLAU)
-    vector<double> coeffs = gauss(a, b);
+    std::vector<double> coeffs = gauss(a, b);
     double y = poly(get_x_log_state(x, x_or_y_log), coeffs);
     if (x_or_y_log == LogState::lsYonly || x_or_y_log == LogState::lsXYBoth) {
-        y = exp(y);
+        y = std::exp(y);
     }
     return y;
 }
+
+}  // namespace gwmath

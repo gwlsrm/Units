@@ -3,8 +3,6 @@
 #include <fstream>
 #include <stdexcept>
 
-using namespace std;
-
 
 template <class charT, charT sep>
 class punct_facet: public std::numpunct<charT> {
@@ -15,9 +13,9 @@ protected:
 
 IniParser::IniParser(const std::string& filename, char decimal_sep)
 {
-    ifstream in(filename);
+    std::ifstream in(filename);
     if (!in) {
-        throw invalid_argument(filename + " doesn't exist");
+        throw std::invalid_argument(filename + " doesn't exist");
     }
 
     readFromStream(in, decimal_sep);
@@ -34,15 +32,15 @@ void IniParser::readFromStream(std::istream& in, char decimal_sep) {
         in.imbue(std::locale(std::cout.getloc(), new punct_facet<char, '.'>));
     }
     std::string current_section_name = "";
-    for (string line; getline(in, line); ) {
+    for (std::string line; std::getline(in, line); ) {
         line = trim(line);
         if (line.empty() || line[0] == '#' || startWith(line, "//")) {continue;}
 
-        string_view data{line};
+        std::string_view data{line};
         if (startWith(data, "[")) {
             // parse section name
             if (!endWith(data, "]")) {
-                throw invalid_argument("wrong ini-file format in line: " + line);
+                throw std::invalid_argument("wrong ini-file format in line: " + line);
             }
             data.remove_prefix(1);
             data.remove_suffix(1);
@@ -52,7 +50,7 @@ void IniParser::readFromStream(std::istream& in, char decimal_sep) {
             auto word = strip(readToken(data, "="));
             data = strip(data);
             if (word.empty() || data.empty()) { continue;}
-            data_[current_section_name][string(word)] = data;
+            data_[current_section_name][std::string(word)] = data;
         }
     }
 }
@@ -140,8 +138,8 @@ int IniParser::getIntValue(const Section& section, const std::string& key) const
     try {
         const auto& par_value = section.at(key);
         return stol(par_value);
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + key + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + key + " in file or it has bad type");
     }
 }
 
@@ -153,10 +151,10 @@ bool IniParser::getBoolValue(const Section& section, const std::string& key) con
         } else if (par_value.find("false") != std::string::npos) {
             return false;
         } else {
-            throw out_of_range(key + " is not in cnf_file");
+            throw std::out_of_range(key + " is not in cnf_file");
         }
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + key + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + key + " in file or it has bad type");
     }
 }
 
@@ -164,15 +162,15 @@ double IniParser::getDoubleValue(const Section& section, const std::string& key)
     try {
         const auto& par_value = section.at(key);
         return stod(par_value);
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + key + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + key + " in file or it has bad type");
     }
 }
 
 void IniParser::writeToFile(const std::string& filename) const {
-    ofstream out(filename);
+    std::ofstream out(filename);
     if (!out) {
-        throw invalid_argument("cannot open '" + filename + "' to write");
+        throw std::invalid_argument("cannot open '" + filename + "' to write");
     }
     this->writeToStream(out);
 }
@@ -206,7 +204,7 @@ void IniParser::setStringValue(Section& section, const std::string& key, const s
 }
 
 void IniParser::setIntValue(Section& section, const std::string& key, int value) {
-    section[key] = to_string(value);
+    section[key] = std::to_string(value);
 }
 
 void IniParser::setBoolValue(Section& section, const std::string& key, bool value) {
@@ -214,5 +212,5 @@ void IniParser::setBoolValue(Section& section, const std::string& key, bool valu
 }
 
 void IniParser::setDoubleValue(Section& section, const std::string& key, double value) {
-    section[key] = to_string(value);
+    section[key] = std::to_string(value);
 }

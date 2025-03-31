@@ -6,18 +6,17 @@
 #include <iostream>
 #include <random>
 
-using namespace std;
-
 double factorial1(double n)
 {
-  if(n <= 1) return 1.0;
+  if (n <= 1) return 1.0;
   return n * factorial(n-1);
 }
 
 double factorial_ber(double N)
-{ double Factor = 1.0;
-  if(N <= 1) return Factor;
-  for(double TN = 2.0; TN <= N; TN++) Factor *= TN;
+{
+  double Factor = 1.0;
+  if (N <= 1) return Factor;
+  for (double TN = 2.0; TN <= N; TN++) Factor *= TN;
   return Factor;
 }
 
@@ -36,7 +35,7 @@ int gcd (int a, int b) {
 }
 
 double roundTo(double f, int n) {
-    double mult = pow(10.0, n);
+    double mult = std::pow(10.0, n);
 #ifndef __BORLANDC__
     return round(f / mult) * mult;
 #else
@@ -88,7 +87,7 @@ double average(double x, double y)
 
 double poly(double x, const std::vector<double>& coeffs) {
     /** Horner's method of calculating polynomial*/
-    if (coeffs.empty()) {throw runtime_error("Coeffs array must not be empty");}
+    if (coeffs.empty()) {throw std::runtime_error("Coeffs array must not be empty");}
     double res = coeffs.back();
     for (int i = static_cast<int>(coeffs.size())-2; i >=0; --i) {
         res = res * x + coeffs[i];
@@ -98,7 +97,7 @@ double poly(double x, const std::vector<double>& coeffs) {
 
 double poly(double x, const double* coeffs, int coeffs_sze) {
     /** Horner's method of calculating polynomial*/
-    if (coeffs_sze <= 0) {throw runtime_error("Coeffs array must not be empty");}
+    if (coeffs_sze <= 0) {throw std::runtime_error("Coeffs array must not be empty");}
     double res = coeffs[coeffs_sze-1];
     for (int i = coeffs_sze-2; i >=0; --i) {
         res = res * x + coeffs[i];
@@ -107,7 +106,7 @@ double poly(double x, const double* coeffs, int coeffs_sze) {
 }
 
 double poly_reverse(double x, const std::vector<double>& coeffs) {
-    if (coeffs.empty()) {throw runtime_error("Coeffs array must not be empty");}
+    if (coeffs.empty()) {throw std::runtime_error("Coeffs array must not be empty");}
     double res = coeffs.front();
     for (size_t i = 1; i < coeffs.size(); ++i) {
         res = res * x + coeffs[i];
@@ -160,7 +159,7 @@ void weightedMeanWeights(const std::vector<double>& vals, const std::vector<doub
             stdev += weights[i] * sqr(vals[i] - wMean);
         }
         stdev = sqrt(stdev / weightSum / (vals.size()-1));
-        wError = max(wError, stdev);
+        wError = std::max(wError, stdev);
     }
 
     // second run for removing bad points
@@ -200,12 +199,12 @@ void weightedMeanWeights(const std::vector<double>& vals, const std::vector<doub
         } else {
             stdev = 0;
         }
-        wError = max(wError, stdev);
+        wError = std::max(wError, stdev);
     }
 }
 
 std::vector<double> weightsCalculation(const std::vector<double>& err_arr) {
-    vector<double> w(err_arr.size());
+    std::vector<double> w(err_arr.size());
     for (size_t i = 0; i < err_arr.size(); ++i) {
         w[i] = !isDblZero(err_arr[i]) ? 1. / sqr(err_arr[i]) : 0;
     }

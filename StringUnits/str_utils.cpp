@@ -18,7 +18,6 @@
   #endif
 #endif // NEW_COMPILER
 
-using namespace std;
 
 std::string trim(const std::string& s)
 {
@@ -35,7 +34,7 @@ std::string trim(const std::string& s)
     }
     e_it = e_it + 1;
     // return trimmed string
-    return string(b_it, e_it);
+    return std::string(b_it, e_it);
 }
 
 std::string trim_right(const std::string& s) {
@@ -50,7 +49,7 @@ std::string trim_right(const std::string& s) {
     }
     e_it = e_it + 1;
     // return trimmed string
-    return string(b_it, e_it);
+    return std::string(b_it, e_it);
 }
 
 std::string_view strip(std::string_view line) {
@@ -120,7 +119,7 @@ bool endWith(const std::string& source, const std::string& signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(
         source.size() - signature.size(),
-        string::npos,
+        std::string::npos,
         signature) == 0;
 }
 
@@ -128,7 +127,7 @@ bool endWith(std::string_view source, std::string_view signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(
         source.size() - signature.size(),
-        string::npos,
+        std::string::npos,
         signature) == 0;
 }
 
@@ -169,16 +168,16 @@ bool tryStrToFloat(const std::string& str, double& value) {
 }
 
 std::string intToStringF_need_to_test(int number, int digits) {
-    stringstream ss;
-    ss << setfill('0') << setw(digits);
+    std::stringstream ss;
+    ss << std::setfill('0') << std::setw(digits);
     ss << number;
     return ss.str();
 }
 
 std::string intToStringF(int i, int width) {
-    string res = to_string(i);
+    std::string res = std::to_string(i);
     if ((int)res.size() < width) {
-        res = string(width - res.size(), '0') + res;
+        res = std::string(width - res.size(), '0') + res;
     }
     return res;
 }
@@ -199,10 +198,10 @@ void addSpacesToString(std::string& str, size_t new_length) {
 }
 
 std::vector<std::string> split_into_words(const std::string& str, char sep/*, bool is_grouped*/) {
-    vector<string> result;
-    string s = trim(str);
-    auto str_begin = begin(s);
-    const auto str_end = end(s);
+    std::vector<std::string> result;
+    std::string s = trim(str);
+    auto str_begin = std::begin(s);
+    const auto str_end = std::end(s);
 
     while (true) {
         auto it = find(str_begin, str_end, sep);
@@ -226,7 +225,7 @@ std::vector<std::string> split_into_words(const std::string& str, char sep/*, bo
 std::pair<std::string_view, std::optional<std::string_view>> split_two_strict(std::string_view s, std::string_view delimiter) {
   const size_t pos = s.find(delimiter);
   if (pos == std::string_view::npos) {
-    return {s, nullopt};
+    return {s, std::nullopt};
   } else {
     return {s.substr(0, pos), s.substr(pos + delimiter.length())};
   }
@@ -247,10 +246,10 @@ std::string join_strings(const std::vector<std::string>& strings, char sep) {
     if (strings.empty()) return "";
     // calc final string size
     size_t full_size = accumulate(begin(strings), end(strings), size_t{0},
-                              [](size_t b, const string& s) {return b + s.size();});
+                              [](size_t b, const std::string& s) {return b + s.size();});
     full_size += strings.size() - 1;
     // make string
-    string res;
+    std::string res;
     res.reserve(full_size);
     bool is_first = true;
     for (const auto& s : strings) {
@@ -268,10 +267,10 @@ std::string join_strings(const std::vector<std::string>& strings, std::string_vi
     if (strings.empty()) return "";
     // calc final string size
     size_t full_size = accumulate(begin(strings), end(strings), 0u,
-                                  [](size_t b, const string& s) {return b + s.size();});
+                                  [](size_t b, const std::string& s) {return b + s.size();});
     full_size += (strings.size() - 1) * sep.size();
     // make string
-    string res;
+    std::string res;
     res.reserve(full_size);
     bool is_first = true;
     for (const auto& s : strings) {

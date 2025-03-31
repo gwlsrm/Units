@@ -2,11 +2,10 @@
 
 #include <cmath>
 
-using namespace std;
 
-int find_dbl_vector(const std::vector<double>& vctr, double value, double tolerance) {
+int findInDoubleVector(const std::vector<double>& vctr, double value, double tolerance) {
     for (size_t i = 0; i < vctr.size(); ++i) {
-        if (fabs(vctr[i] - value) < tolerance) {
+        if (std::fabs(vctr[i] - value) < tolerance) {
             return i;
         }
     }
@@ -14,8 +13,8 @@ int find_dbl_vector(const std::vector<double>& vctr, double value, double tolera
 }
 
 std::vector<double> generateRange(double init_value, double end_value, double step) {
-    int cnt = static_cast<int>(fabs((end_value - init_value) / step));
-    vector<double> res(cnt);
+    int cnt = static_cast<int>(std::fabs((end_value - init_value) / step));
+    std::vector<double> res(cnt);
     if (!cnt) return res;
 
     res[0] = init_value;

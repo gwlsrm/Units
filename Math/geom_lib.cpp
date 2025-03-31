@@ -8,7 +8,7 @@
 namespace gwmath {
 
 
-void line_from_segment(const Point2D& p1, const Point2D& p2, double& a, double& b, double& c) {
+void lineFromSegment(const Point2D& p1, const Point2D& p2, double& a, double& b, double& c) {
     /// get line equation coefficients a*x + b*y + c = 0 going through line segment
     /*solution is:
         a = p1y - P2y

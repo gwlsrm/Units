@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_SUITE(matrix_test_suite)
         ArrayView<int> view_expected(v_expected.size(), v_expected.data());
         BOOST_TEST(v2 != v_expected);
         BOOST_TEST(!(view2 == view_expected));
-        view2.copy_from(view1);
+        view2.copyFrom(view1);
         BOOST_TEST(v2 == v_expected);
         BOOST_TEST(view2 == view_expected);
         v1.clear();

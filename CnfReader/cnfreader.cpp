@@ -3,8 +3,6 @@
 #include <fstream>
 #include <stdexcept>
 
-using namespace std;
-
 
 template <class charT, charT sep>
 class punct_facet: public std::numpunct<charT> {
@@ -15,9 +13,9 @@ protected:
 
 CnfReader::CnfReader(const std::string& filename, std::string_view sep, char decimal_sep)
 {
-    ifstream in(filename);
+    std::ifstream in(filename);
     if (!in) {
-        throw invalid_argument(filename + " doesn't exist");
+        throw std::invalid_argument(filename + " doesn't exist");
     }
 
     readFromStream(in, sep, decimal_sep);
@@ -33,14 +31,14 @@ void CnfReader::readFromStream(std::istream& in, std::string_view sep, char deci
     } else if (decimal_sep != '\0') {
         in.imbue(std::locale(std::cout.getloc(), new punct_facet<char, '.'>));
     }
-    for (string line; getline(in, line); ) {
+    for (std::string line; std::getline(in, line); ) {
         line = trim(line);
         if (line.empty() || line[0] == '#' || startWith(line, "//")) {continue;}
-        string_view data{line};
+        std::string_view data{line};
         auto word = strip(readToken(data, sep));
         data = strip(data);
         if (word.empty() || data.empty()) { continue;}
-        data_[string(word)] = data;
+        data_[std::string(word)] = data;
     }
 }
 
@@ -95,8 +93,8 @@ int CnfReader::getIntValue(const std::string& par_name) const {
     try {
         const auto& par_value = data_.at(par_name);
         return stol(par_value);
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
 
@@ -108,10 +106,10 @@ bool CnfReader::getBoolValue(const std::string& par_name) const {
         } else if (par_value.find("false") != std::string::npos) {
             return false;
         } else {
-            throw out_of_range(par_name + " is not in cnf_file");
+            throw std::out_of_range(par_name + " is not in cnf_file");
         }
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
 
@@ -119,7 +117,7 @@ double CnfReader::getDoubleValue(const std::string& par_name) const {
     try {
         const auto& par_value = data_.at(par_name);
         return stod(par_value);
-    } catch (const exception&) {
-        throw invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
+    } catch (const std::exception&) {
+        throw std::invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }

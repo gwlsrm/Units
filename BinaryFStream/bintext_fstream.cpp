@@ -1,11 +1,10 @@
 #include "bintext_fstream.h"
 #include <fstream>
 
-using namespace std;
 
 BinTxtIFStream::BinTxtIFStream(const std::string& filename)
 {
-    m_stream.open(filename, ios_base::binary);
+    m_stream.open(filename, std::ios_base::binary);
 }
 
 BinTxtIFStream& BinTxtIFStream::getline(std::string& line, char sep)
