@@ -13,7 +13,7 @@ DllLoader::DllLoader(const std::string& dll_name)
         throw std::invalid_argument("Cannot load library " + dll_name + '\n' + dlerror());
     #else
         auto dlerror = GetLastError();
-        throw invalid_argument("Cannot load library " + dll_name + ". Error code is " + to_string(dlerror));
+        throw std::invalid_argument("Cannot load library " + dll_name + ". Error code is " + std::to_string(dlerror));
     #endif
     }
 }
