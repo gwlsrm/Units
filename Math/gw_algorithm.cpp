@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+namespace gwmath {
 
 int findInDoubleVector(const std::vector<double>& vctr, double value, double tolerance) {
     for (size_t i = 0; i < vctr.size(); ++i) {
@@ -23,3 +24,5 @@ std::vector<double> generateRange(double init_value, double end_value, double st
     }
     return res;
 }
+
+} // namespace gwmath
