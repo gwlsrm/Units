@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 
+
 /**
     \brief Singleton Logger
 
@@ -51,7 +52,10 @@ public:
     /// prints double matrix with specified separator
     Logger& printDblMtrx(const std::vector<std::vector<double>>& mtrx, char sep = '\t');
     /// prints 'name'='value' and end of line
-    void printEqual(const std::string& name, double value);
+    template <typename T>
+    void printEqual(const std::string &name, const T& value) {
+        out_ << name << '=' << value << '\n';
+    }
     /// prints 'name'='value'+/-'dValue' and end of line
     void printEqualWithError(const std::string& name, double value, double dValue);
     /// prints 'name'='value'+/-'dValue' (relError*100)% and end of line
@@ -69,6 +73,12 @@ private:
     Logger& operator=(const Logger&) = delete;
 };
 
+#define LOG_DEBUG_STR(x) \
+    auto &log_out = Logger::getLogger(); \
+    log_out << (x) << '\n';
 
+#define LOG_DEBUG_KEY_VAL(x, y)          \
+    auto &log_out = Logger::getLogger(); \
+    log_out.printEqual((x), (y));
 
 #endif // GWLOGGER_H_INCLUDED

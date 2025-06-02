@@ -8,14 +8,14 @@ std::unique_ptr<Logger> Logger::logger_instance = nullptr;
 
 Logger& Logger::getLogger(const std::string& filename)
 {
-  if (!logger_instance) {
-    if (filename == "stdout") {
-      logger_instance = std::unique_ptr<Logger>(new Logger());
-    } else {
-      logger_instance = std::unique_ptr<Logger>(new Logger(filename)); //make_unique<Logger>(filename);
+    if (!logger_instance) {
+        if (filename == "stdout") {
+            logger_instance = std::unique_ptr<Logger>(new Logger());
+        } else {
+            logger_instance = std::unique_ptr<Logger>(new Logger(filename)); //make_unique<Logger>(filename);
+        }
     }
-  }
-  return *logger_instance;
+    return *logger_instance;
 }
 
 void Logger::deleteLogger()
@@ -53,10 +53,6 @@ Logger& Logger::printDblMtrx(const std::vector<std::vector<double>>& mtrx, char 
     }
 
     return *this;
-}
-
-void Logger::printEqual(const std::string& name, double value) {
-    out_ << name << '=' << value << '\n';
 }
 
 void Logger::printEqualWithError(const std::string& name, double value, double dValue) {
