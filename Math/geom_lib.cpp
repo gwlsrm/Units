@@ -61,4 +61,59 @@ void convertCartToSpherical(double x, double y, double z,
     }
 }
 
+
+StaticDoubleMatrix3x3 createXRotationMatrix(double cosphi, double sinphi) {
+    return gwmath::StaticDoubleMatrix3x3{
+        {1, 0,       0     },
+        {0, cosphi, -sinphi},
+        {0, sinphi,  cosphi},
+    };
+}
+
+
+StaticDoubleMatrix3x3 createYRotationMatrix(double costheta, double sintheta) {
+    return gwmath::StaticDoubleMatrix3x3{
+        { costheta, 0, sintheta},
+        { 0,        1, 0     },
+        {-sintheta, 0, costheta},
+    };
+}
+
+
+StaticDoubleMatrix3x3 createZRotationMatrix(double cospsi, double sinpsi) {
+    return gwmath::StaticDoubleMatrix3x3{
+        {cospsi, -sinpsi, 0},
+        {sinpsi,  cospsi, 0},
+        {0,       0,      1},
+    };
+}
+
+
+StaticDoubleMatrix3x3 createXMinusRotationMatrix(double cosphi, double sinphi) {
+    return gwmath::StaticDoubleMatrix3x3{
+        {1,  0,      0     },
+        {0,  cosphi, sinphi},
+        {0, -sinphi, cosphi},
+    };
+}
+
+
+StaticDoubleMatrix3x3 createYMinusRotationMatrix(double costheta, double sintheta) {
+    return gwmath::StaticDoubleMatrix3x3{
+        {costheta, 0, -sintheta},
+        {0,        1,  0     },
+        {sintheta, 0,  costheta},
+    };
+}
+
+
+StaticDoubleMatrix3x3 createZMinusRotationMatrix(double cospsi, double sinpsi) {
+    return gwmath::StaticDoubleMatrix3x3{
+        { cospsi, sinpsi, 0},
+        {-sinpsi, cospsi, 0},
+        { 0,      0,      1},
+    };
+}
+
+
 } // namespace gwmath

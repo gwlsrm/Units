@@ -42,6 +42,21 @@ void convertCartToSpherical(double x, double y, double z,
     double& r, double& costheta, double& sintheta, double& cosphi, double& sinphi);
 
 
+// Create rotation matrix around x-axis
+StaticDoubleMatrix3x3 createXRotationMatrix(double cosphi, double sinphi);
+// Create rotation matrix around y-axis
+StaticDoubleMatrix3x3 createYRotationMatrix(double costheta, double sintheta);
+// Create rotation matrix around z-axis
+StaticDoubleMatrix3x3 createZRotationMatrix(double cospsi, double sinpsi);
+
+// Create rotation matrix around x-axis
+StaticDoubleMatrix3x3 createXMinusRotationMatrix(double cosphi, double sinphi);
+// Create rotation matrix around y-axis
+StaticDoubleMatrix3x3 createYMinusRotationMatrix(double costheta, double sintheta);
+// Create rotation matrix around z-axis
+StaticDoubleMatrix3x3 createZMinusRotationMatrix(double cospsi, double sinpsi);
+
+
 } // namespace gwmath
 
 #endif // GEOM_LIB_H_INCLUDED
