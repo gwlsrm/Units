@@ -64,6 +64,8 @@ template<typename T>
 std::ostream& operator<<(std::ostream& out, const MatrixView<T>& m);
 template<typename T>
 bool operator==(const MatrixView<T>& lhs, const MatrixView<T>& rhs);
+template<typename T>
+bool operator!=(const MatrixView<T>& lhs, const MatrixView<T>& rhs);
 
 
 // realization
@@ -104,5 +106,11 @@ bool operator==(const MatrixView<T>& lhs, const MatrixView<T>& rhs) {
     }
     return true;
 }
+
+template <typename T>
+bool operator!=(const MatrixView<T>& lhs, const MatrixView<T>& rhs) {
+    return !(lhs == rhs);
+}
+
 
 }  // namespace gwmath
