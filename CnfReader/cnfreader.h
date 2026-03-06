@@ -20,6 +20,7 @@
     // comment
     'name' = 'value'
 */
+// TODO: rename as parser
 class CnfReader {
 public:
     /// ctor with filename
@@ -113,6 +114,8 @@ public:
             ss >> value;
         }
     }
+    void setValue(const std::string& par_name, const std::string& par_value);
+    void saveToFile(const std::string& filename) const;
 private:
     std::unordered_map<std::string, std::string> data_;
     const std::string empty_string_;

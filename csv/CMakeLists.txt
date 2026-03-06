@@ -2,9 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 
 project(csvlib)
 
-set(HEADER_CSV_UNITS csv_writer.h)
+set(SRC_CSV_UNITS csv_reader.cpp)
+set(HEADER_CSV_UNITS csv_writer.h csv_reader.h)
 
-add_library(csvlib INTERFACE ${HEADER_CSV_UNITS})
+add_library(${PROJECT_NAME} STATIC ${SRC_CSV_UNITS} ${HEADER_CSV_UNITS})
+# add_library(csvlib INTERFACE ${HEADER_CSV_UNITS})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+           CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
+           )
+target_link_libraries(${PROJECT_NAME} str_utils)
 
 # set library properties
 set_target_properties(csvlib PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)

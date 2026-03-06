@@ -121,3 +121,17 @@ double CnfReader::getDoubleValue(const std::string& par_name) const {
         throw std::invalid_argument("No parameter with name " + par_name + " in file or it has bad type");
     }
 }
+
+void CnfReader::setValue(const std::string& par_name, const std::string& par_value) {
+    data_[par_name] = par_value;
+}
+
+void CnfReader::saveToFile(const std::string& filename) const {
+    std::ofstream out(filename);
+    if (!out) {
+        throw std::invalid_argument("cannot open '" + filename + "' to write");
+    }
+    for (const auto& [key, value] : data_) {
+        out << key << '=' << value << '\n';
+    }
+}
