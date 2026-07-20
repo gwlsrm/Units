@@ -7,13 +7,15 @@
 #include <vector>
 
 
+// CsvWriter -- simple csv writer, can write one value or the whole line to file
+// enclose string values in quotes
 class CsvWriter {
 public:
     explicit CsvWriter(std::ostream& out, char sep = ',')
         : out_(out), sep_(sep)
     {}
 
-    explicit CsvWriter(const std::string& filename, char sep = ',', bool append = false) 
+    explicit CsvWriter(const std::string& filename, char sep = ',', bool append = false)
         : f_(filename, append ? std::ios_base::app : std::ios_base::out), out_(f_), sep_(sep)
     {}
 

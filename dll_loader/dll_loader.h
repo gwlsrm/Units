@@ -71,6 +71,9 @@ private:
 #endif // _WIN32
 };
 
+// tryLoadDllFromNames try to load libraries sequentially, return first success loaded library
+// the motivation: libraries can have different names depends on platform, use this function
+// platform independed code
 std::optional<DllLoader> tryLoadDllFromNames(const std::vector<std::string>& dll_names);
 
 

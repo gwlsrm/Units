@@ -1,22 +1,18 @@
 #include "str_utils.h"
 
-#include <cstring>
+#include <algorithm>
 #include <cctype>
 #include <cmath>
-#include <algorithm>
-#include <numeric>
+#include <cstring>
+#include <fstream>
 #include <iostream>
 #include <iomanip>
-#include <fstream>
+#include <numeric>
 #include <optional>
 
-#ifdef __BCPLUSPLUS__
-#include <ctype.h>
-#else
-  #ifdef USE_BOOST
-  #include <boost/algorithm/string.hpp>
-  #endif
-#endif // NEW_COMPILER
+#ifdef USE_BOOST
+#include <boost/algorithm/string.hpp>
+#endif
 
 
 std::string trim(const std::string& s)
@@ -184,9 +180,7 @@ std::string intToStringF(int i, int width) {
 
 bool same_text(const std::string& s1, const std::string& s2)
 {
-#ifndef __BORLANDC__
     return str_tolower(s1) == str_tolower(s2);
-#endif
 }
 
 void addSpacesToString(std::string& str, size_t new_length) {

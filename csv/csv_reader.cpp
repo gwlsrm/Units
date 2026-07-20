@@ -43,3 +43,10 @@ void CsvReader::readHeader() {
         throw std::runtime_error("There is no header in file");
     }
 }
+
+std::optional<std::vector<std::string>> CsvReader::readLine() {
+    if (has_header_ && header_.empty()) {
+        readHeader();
+    }
+    return rawReadLine();
+}

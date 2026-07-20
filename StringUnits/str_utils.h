@@ -1,13 +1,13 @@
 #pragma once
 
-#include <string>
-#include <set>
-#include <vector>
-#include <typeinfo>
-#include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <set>
+#include <sstream>
+#include <string>
 #include <string_view>
+#include <typeinfo>
+#include <vector>
 
 // remove spaces, compare
 /// remove spaces from begin and end

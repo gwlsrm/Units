@@ -1,8 +1,8 @@
 #pragma once
 
 #include <array>
-#include <iostream>
 #include <initializer_list>
+#include <iostream>
 #include <stdexcept>
 
 #include "array_view.h"

@@ -3,8 +3,8 @@
 #define NUMERIC_INTEGRATION_H_INCLUDED
 
 #include <cmath>
-#include <utility>
 #include <functional>
+#include <utility>
 
 /**@file
     @brief Numeric integration functions

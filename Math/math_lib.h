@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cmath>
-#include <vector>
 #include <algorithm>
 #include <cfloat>
+#include <cmath>
+#include <vector>
 
 /**@file
     @brief Some mathematical tools: check double for zero, approximately compare, statistic functions etc

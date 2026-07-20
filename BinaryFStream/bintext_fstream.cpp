@@ -22,20 +22,6 @@ void BinTxtIFStream::ignore(std::uint32_t cnt)
     m_stream.ignore(cnt);
 }
 
-BinTxtIFStream& BinTxtIFStream::read_int(int& value)
-{
-    int sze = sizeof(value);
-    m_stream.read((char*)&value, sze);
-    return *this;
-}
-
-BinTxtIFStream& BinTxtIFStream::read_uint(std::uint32_t& value)
-{
-    int sze = sizeof(value);
-    m_stream.read((char*)&value, sze);
-    return *this;
-}
-
 BinTxtIFStream::operator bool()
 {
     return static_cast<bool>(m_stream);

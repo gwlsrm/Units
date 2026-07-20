@@ -17,12 +17,12 @@
 namespace ContainerOutputTypes {
 
 template <typename Collection>
-std::string Join(const Collection& c, char d) {
+std::string Join(const Collection& c, char sep) {
   std::stringstream ss;
   bool first = true;
   for (const auto& i : c) {
     if (!first) {
-      ss << d;
+      ss << sep;
     }
     first = false;
     ss << i;
@@ -58,7 +58,7 @@ std::ostream& operator << (std::ostream& out, const std::vector<T>& vi) {
 
 template <class T>
 std::ostream& operator << (std::ostream& out, const std::set<T>& si) {
-    return out << '[' << ContainerOutputTypes::Join(si, ',') << ']';
+    return out << '{' << ContainerOutputTypes::Join(si, ',') << '}';
 }
 
 template <typename K, typename V>

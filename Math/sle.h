@@ -3,6 +3,7 @@
 #define SLE_H_INCLUDED
 
 #include <vector>
+
 #include "gwmatrix.h"
 
 /**@file

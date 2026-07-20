@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+
+// LogCtor is a mixine tool for debuging objects life-time
 class LogCtor {
 public:
     virtual ~LogCtor() {
@@ -19,12 +21,12 @@ protected:
     LogCtor(LogCtor&& other) {
         std::cout << "Move ctor" << std::endl;
     }
-    
+
     LogCtor& operator=(const LogCtor& other) {
         std::cout << "copy assignment" << std::endl;
         return *this;
     }
-    
+
     LogCtor& operator=(LogCtor&& other) {
         std::cout << "move assignment" << std::endl;
         return *this;

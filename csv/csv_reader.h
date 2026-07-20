@@ -8,6 +8,8 @@
 #include <vector>
 
 
+/// CsvReader -- simple csv reader, can read csv-file line by line or
+///  as dict: column_name -> column as vector
 class CsvReader{
 public:
     explicit CsvReader(const std::string& filename, char sep = ',', bool has_header = true)
@@ -16,14 +18,9 @@ public:
     CsvReader(const CsvReader&) = delete;
     CsvReader& operator=(const CsvReader&) = delete;
 
-    // try to read line, 1st line is a header, if cannot read header -- throw exception
-    std::optional<std::vector<std::string>> readLine() {
-        // TODO: move to cpp
-        if (has_header_ && header_.empty()) {
-            readHeader();
-        }
-        return rawReadLine();
-    }
+    // try to read line as array of words, 1st line is a header,
+    // if cannot read header -- throw exception
+    std::optional<std::vector<std::string>> readLine();
 
     // read csv-file as dict: column_name -> column as vector
     std::unordered_map<std::string, std::vector<std::string>> readColumns();
