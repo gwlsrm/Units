@@ -1,6 +1,6 @@
-#define BOOST_TEST_MODULE math_test_module
-#include <boost/test/unit_test.hpp>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
 
-BOOST_AUTO_TEST_SUITE(metr_number_test_suite)
+TEST_SUITE("metr_number_test_suite") {
 
-BOOST_AUTO_TEST_SUITE_END()
+}

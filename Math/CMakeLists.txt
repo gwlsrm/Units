@@ -33,11 +33,10 @@ if (UNITS_BUILD_TESTS)
     add_executable(${TEST_MATRIX} tests/test_matrix_array.cpp)
 
     set_target_properties(${TEST_MATH_LIB} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
-    target_include_directories(${TEST_MATH_LIB} PRIVATE ${Boost_INCLUDE_DIR} .)
-    target_include_directories(${TEST_MATRIX} PRIVATE ${Boost_INCLUDE_DIR} .)
+    set_target_properties(${TEST_MATRIX} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 
-    target_link_libraries(${TEST_MATH_LIB} math_lib ${Boost_LIBRARIES})
-    target_link_libraries(${TEST_MATRIX} math_lib ${Boost_LIBRARIES})
+    target_link_libraries(${TEST_MATH_LIB} PRIVATE math_lib doctest)
+    target_link_libraries(${TEST_MATRIX} PRIVATE math_lib doctest)
 
     add_test(NAME ${TEST_MATH_LIB} COMMAND ${TEST_MATH_LIB} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     add_test(NAME ${TEST_MATRIX} COMMAND ${TEST_MATRIX} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

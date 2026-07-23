@@ -21,12 +21,7 @@ if(UNITS_BUILD_TESTS)
     set(TEST_NAME test_algo_lib)
     add_executable(${TEST_NAME} tests/test_algo_lib.cpp)
 
-    target_include_directories(${TEST_NAME}
-        PRIVATE ${Boost_INCLUDE_DIR}
-        PRIVATE ..
-    )
-
-    target_link_libraries(${TEST_NAME} ${Boost_LIBRARIES})
+    target_link_libraries(${TEST_NAME} PRIVATE algo_lib doctest)
 
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()

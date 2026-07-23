@@ -13,3 +13,14 @@ target_include_directories(gw_logger PUBLIC
 )
 
 add_library(GwUnits::gw_logger ALIAS gw_logger)
+
+# tests
+if (UNITS_BUILD_TESTS)
+    set(TEST_NAME test_gw_logger)
+    add_executable(${TEST_NAME} tests/test_gw_logger.cpp)
+
+    set_target_properties(${TEST_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+    target_link_libraries(${TEST_NAME} PRIVATE gw_logger doctest)
+
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif()

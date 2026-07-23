@@ -23,8 +23,7 @@ if (UNITS_BUILD_TESTS)
     add_executable(${TEST_NAME} tests/str_utils_boost_ut.cpp)
 
     set_target_properties(${TEST_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
-    target_include_directories(${TEST_NAME} PRIVATE ${Boost_INCLUDE_DIR} .)
-    target_link_libraries(${TEST_NAME} ${PROJECT_NAME} ${Boost_LIBRARIES})
+    target_link_libraries(${TEST_NAME} PRIVATE ${PROJECT_NAME} doctest)
 
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()

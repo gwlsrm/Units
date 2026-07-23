@@ -10,6 +10,8 @@ nuclei/
 debug/
 release/
 build*/
+thirdparty/
+.cache/
 
 # IDE files and binary
 *.[oa]
