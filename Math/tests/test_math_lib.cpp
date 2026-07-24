@@ -6,6 +6,7 @@
 #include "math_lib.h"
 
 using namespace std;
+using namespace gwmath;
 
 TEST_SUITE("math_lib_test_suite") {
 

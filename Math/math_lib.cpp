@@ -6,6 +6,8 @@
 #include <iostream>
 #include <random>
 
+namespace gwmath {
+
 double factorial1(double n)
 {
   if (n <= 1) return 1.0;
@@ -276,3 +278,5 @@ double errorFromPropValue(double a, double da, double b) {
         return 0;
     }
 }
+
+}  // namespace gwmath

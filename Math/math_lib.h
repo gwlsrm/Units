@@ -9,6 +9,8 @@
     @brief Some mathematical tools: check double for zero, approximately compare, statistic functions etc
 */
 
+namespace gwmath {
+
 constexpr int MAX_LOG_DOUBLE = 300;
 
 // mathematic
@@ -182,3 +184,5 @@ void convolution_with_gauss(std::vector<double>& data, Func sigma_func) {
       if (!isDblZero(norm)) data[i] /= norm;
   }
 }
+
+}  // namespace gwmath
