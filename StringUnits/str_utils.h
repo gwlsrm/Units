@@ -2,41 +2,48 @@
 
 #include <iomanip>
 #include <iostream>
-#include <set>
 #include <sstream>
 #include <string>
 #include <string_view>
 #include <typeinfo>
 #include <vector>
 
-// remove spaces, compare
+namespace gwstr {
+
+/// remove spaces from left and right
+std::string_view strip(std::string_view line);
+/// remove spaces from left
+std::string_view lstrip(std::string_view line);
+/// remove spaces from right
+std::string_view rstrip(std::string_view line);
 /// remove spaces from begin and end
 std::string trim(const std::string& s);
+/// remove spaces from begin
+std::string trim_left(const std::string& s);
 /// remove spaces from the end
 std::string trim_right(const std::string& s);
-/// strip
-std::string_view strip(std::string_view line);
 /// trim_right for c-string: it removes blanks from the end
 void removeblanks(char* str);
-[[deprecated]] std::string toLower(std::string s);
+
 /// converts string to lower: can be used with move for parameter
 std::string str_tolower(std::string s);
 /// converts string to upper
 std::string str_toupper(std::string s);
+
 /// returns true if string starts with signature (C-strings)
-bool startWith(const char* source, const char* signature);
+bool starts_with(const char* source, const char* signature);
 /// returns true if string starts with signature (std::strings)
-bool startWith(const std::string& source, const std::string& signature);
+bool starts_with(const std::string& source, const std::string& signature);
 /// returns true if string starts with signature (std::strings)
-bool startWith(std::string_view source, std::string_view signature);
+bool starts_with(std::string_view source, std::string_view signature);
 /// returns true if string ends with signature (std::strings)
-bool endWith(const std::string& source, const std::string& signature);
+bool ends_with(const std::string& source, const std::string& signature);
 /// returns true if string ends with signature (std::strings)
-bool endWith(std::string_view source, std::string_view signature);
+bool ends_with(std::string_view source, std::string_view signature);
 /// case insensitive compare
 bool same_text(const std::string& s1, const std::string& s2);
 /// add spaces to the end of string to new length
-void addSpacesToString(std::string& str, std::size_t new_length);
+void ljust(std::string& str, std::size_t new_length, char fillchar=' ');
 
 // convert from and to string
 // from string
@@ -50,11 +57,9 @@ bool tryStrToInt(const std::string& str, int& value);
 bool tryStrToFloat(const std::string& str, double& value);
 struct bad_from_string : std::bad_cast  // class for transform error
 {
-#ifndef __BORLANDC__
 	const char* what() const throw() { // override bad_cast's what
         return "bad cast from string";
     }
-#endif
 };
 template<class T>
 T from_string(const std::string& s)
@@ -88,23 +93,28 @@ template<class T> std::string toStringF(const T& value, TFloatFormat float_forma
         os << std::setprecision(precision) << value;
     return os.str();
 }
-
 /// int -> string, if string size < width, zeros will be added to str begin
 std::string intToStringF(int i, int width);
 
 /// split words from string using separator
-std::vector<std::string> split_into_words(const std::string& str, char sep = ' '/*, bool is_grouped = false -- unrealized now*/);
+std::vector<std::string> split_into_words(const std::string& str, char sep = ' ');
 /// reads next token from string and returns rest part of string as string_view
 std::string_view readToken(std::string_view& s, std::string_view delimiter = " ");
-//int word_count(const std::string& s, const std::set<char>& delimeters);
-//std::string extract_word(int wordNum, const std::string& s,
-//                         const std::set<char>& delimeters);
-//std::string extract_word(int wordNum, const std::string& s,
-//                         const std::string& delimeters);
-
 /// join string to the one big string (seems to be more effective than '+')
 std::string join_strings(const std::vector<std::string>& strings, char sep = ' ');
 std::string join_strings(const std::vector<std::string>& strings, std::string_view sep);
+
+/// true if all characters in string are digits
+bool isdigit_s(std::string_view s);
+/// true if all characters in string are letters
+bool isalpha_s(std::string_view s);
+/// true if all characters in string are letters or digits
+bool isalnum_s(std::string_view s);
+/// true if all characters in string are uppercase
+bool isupper_s(std::string_view s);
+/// true if all characters in string are lowercase
+bool islower_s(std::string_view s);
+
 
 // print some strings
 template <typename T>
@@ -122,4 +132,4 @@ void print_vector(std::ostream& out, const std::vector<T>& values,
     out << end_symbol;
 }
 
-[[deprecated]]void print_strings(std::ostream& out, const std::vector<std::string>& strings, char sep = '\t', char end_symbol = '\n');
+} // namespace gwstr

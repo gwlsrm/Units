@@ -8,6 +8,7 @@
 #include "fileutils.h"
 
 using namespace std;
+using namespace gwstr;
 
 TEST_SUITE("str_test_suite") {
 
@@ -30,19 +31,48 @@ TEST_SUITE("str_test_suite") {
         CHECK(trim_right("\n") == ""s);
     }
 
+    TEST_CASE("test_str_trim_left") {
+        CHECK(trim_left("   test string   ") == "test string   "sv);
+        CHECK(trim_left("   test string") == "test string"sv);
+        CHECK(trim_left("test string   ") == "test string   "sv);
+        CHECK(trim_left("test string") == "test string"sv);
+        CHECK(trim_left(" ") == ""s);
+        CHECK(trim_left("\n") == ""s);
+    }
+
     TEST_CASE("test_tolower") {
         CHECK(str_tolower("Test string") == "test string"sv);
         CHECK(str_tolower("TesT StrIng") == "test string"sv);
         CHECK(str_tolower("test string") == "test string"sv);
     }
 
-    TEST_CASE("test_startsWith") {
-        CHECK(startWith("Test string", "Test"));
-        CHECK(startWith("Test string"s, "Test"s));
-        CHECK(startWith("  Test string"s, "  Test"s));
-        CHECK(startWith("  Test"s, "  Test"s));
-        CHECK(startWith("  Test string"s, "  Test "s));
-        CHECK(startWith("  Test string", "  Test "));
+    TEST_CASE("test_toupper") {
+        CHECK(str_toupper("Test string") == "TEST STRING"sv);
+        CHECK(str_toupper("TesT StrIng") == "TEST STRING"sv);
+        CHECK(str_toupper("test string") == "TEST STRING"sv);
+    }
+
+    TEST_CASE("test_starts_with") {
+        CHECK(starts_with("Test string", "Test"));
+        CHECK(starts_with("Test string"s, "Test"s));
+        CHECK(starts_with("  Test string"s, "  Test"s));
+        CHECK(starts_with("  Test"s, "  Test"s));
+        CHECK(starts_with("  Test string"s, "  Test "s));
+        CHECK(starts_with("  Test string", "  Test "));
+        CHECK(!starts_with("Test", "Test string"));
+        CHECK(starts_with(" "s, ""s));
+    }
+
+    TEST_CASE("test_endswith") {
+        CHECK(ends_with("Test string"s, "string"s));
+        CHECK(ends_with("Test string  "s, "tring  "s));
+        CHECK(!ends_with("Test string  "s, "tring"s));
+        CHECK(!ends_with("string"sv, "Test string"));
+    }
+
+    TEST_CASE("test_same_text") {
+        CHECK(same_text("Test string"s, "test String"s));
+        CHECK(!same_text("Test string"s, "tes String"s));
     }
 
     TEST_CASE("test_join_strings") {

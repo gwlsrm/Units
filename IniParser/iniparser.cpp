@@ -33,13 +33,13 @@ void IniParser::readFromStream(std::istream& in, char decimal_sep) {
     }
     std::string current_section_name = "";
     for (std::string line; std::getline(in, line); ) {
-        line = trim(line);
-        if (line.empty() || line[0] == '#' || startWith(line, "//")) {continue;}
+        line = gwstr::trim(line);
+        if (line.empty() || line[0] == '#' || gwstr::starts_with(line, "//")) {continue;}
 
         std::string_view data{line};
-        if (startWith(data, "[")) {
+        if (gwstr::starts_with(data, "[")) {
             // parse section name
-            if (!endWith(data, "]")) {
+            if (!gwstr::ends_with(data, "]")) {
                 throw std::invalid_argument("wrong ini-file format in line: " + line);
             }
             data.remove_prefix(1);
@@ -47,8 +47,8 @@ void IniParser::readFromStream(std::istream& in, char decimal_sep) {
             current_section_name = data;
         } else {
             // parse section parameters
-            auto word = strip(readToken(data, "="));
-            data = strip(data);
+            auto word = gwstr::strip(gwstr::readToken(data, "="));
+            data = gwstr::strip(data);
             if (word.empty() || data.empty()) { continue;}
             data_[current_section_name][std::string(word)] = data;
         }
@@ -104,7 +104,7 @@ std::optional<int> IniParser::getIntValueOpt(const Section& section, const std::
     const auto& par_value = getStringValue(section, key);
     if (par_value.empty()) return std::nullopt;
     int res;
-    if (tryStrToInt(par_value, res)) {
+    if (gwstr::tryStrToInt(par_value, res)) {
         return res;
     } else {
         return std::nullopt;
@@ -127,7 +127,7 @@ std::optional<double> IniParser::getDoubleValueOpt(const Section& section, const
     const auto& par_value = getStringValue(section, key);
     if (par_value.empty()) return std::nullopt;
     double res;
-    if (tryStrToFloat(par_value, res)) {
+    if (gwstr::tryStrToFloat(par_value, res)) {
         return res;
     } else {
         return std::nullopt;

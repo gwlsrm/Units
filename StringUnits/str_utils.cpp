@@ -14,39 +14,7 @@
 #include <boost/algorithm/string.hpp>
 #endif
 
-
-std::string trim(const std::string& s)
-{
-    auto b_it = s.begin();
-    auto e_it = s.end();
-    // find new first position in string
-    for (;b_it < s.end() && *b_it == ' '; ++b_it) {}
-    if (b_it == e_it) return "";
-    // find new last position in string
-    for (e_it = s.end()-1; e_it >= b_it; --e_it) {
-        if (*e_it != ' ' && *e_it != '\n' && *e_it != '\r') {
-            break;
-        }
-    }
-    e_it = e_it + 1;
-    // return trimmed string
-    return std::string(b_it, e_it);
-}
-
-std::string trim_right(const std::string& s) {
-    auto b_it = s.begin();
-    auto e_it = s.end();
-    if (b_it == e_it) return "";
-    // find new last position in string
-    for (e_it = s.end()-1; e_it >= b_it; --e_it) {
-        if (*e_it != ' ' && *e_it != '\n' && *e_it != '\r') {
-            break;
-        }
-    }
-    e_it = e_it + 1;
-    // return trimmed string
-    return std::string(b_it, e_it);
-}
+namespace gwstr {
 
 std::string_view strip(std::string_view line) {
     while (!line.empty() && isspace(line.front())) {
@@ -56,6 +24,33 @@ std::string_view strip(std::string_view line) {
         line.remove_suffix(1);
     }
     return line;
+}
+
+std::string_view lstrip(std::string_view line) {
+    while (!line.empty() && isspace(line.front())) {
+        line.remove_prefix(1);
+    }
+    return line;
+}
+
+std::string_view rstrip(std::string_view line) {
+    while (!line.empty() && isspace(line.back())) {
+        line.remove_suffix(1);
+    }
+    return line;
+}
+
+std::string trim(const std::string& s)
+{
+    return std::string(strip(std::string_view(s)));
+}
+
+std::string trim_left(const std::string& s) {
+    return std::string(lstrip(std::string_view(s)));
+}
+
+std::string trim_right(const std::string& s) {
+    return std::string(rstrip(std::string_view(s)));
 }
 
 void removeblanks(char* str)
@@ -69,18 +64,9 @@ void removeblanks(char* str)
   str[0] = 0;
 }
 
-//std::string toLower(std::string s)
-//{
-//    for (size_t i = 0; i < s.size(); ++i) {
-//        s[i] = tolower(s[i]);
-//    }
-//    return s;
-//}
-
 std::string str_tolower(std::string s) {
     std::transform(s.begin(), s.end(), s.begin(),
-                // [](char c){ return std::tolower(c); }          // wrong
-                   [](unsigned char c){ return std::tolower(c); } // correct
+                   [](unsigned char c){ return std::tolower(c); } // don't work with char
                   );
     return s;
 }
@@ -92,26 +78,26 @@ std::string str_toupper(std::string s) {
     return s;
 }
 
-bool startWith(const char* source, const char* signature)
+bool starts_with(const char* source, const char* signature)
 {
-  int n = int(strlen(signature));
-  int i = 0;
-  for(i = 0; i < n; i++)
-    if(source[i] != signature[i]) break;
-  return i == n;
+    int sig_len = int(strlen(signature));
+    if (int(strlen(source)) < sig_len) return false;
+    for (int i = 0; i < sig_len; i++)
+        if (source[i] != signature[i]) return false;
+    return true;
 }
 
-bool startWith(const std::string& source, const std::string& signature) {
+bool starts_with(const std::string& source, const std::string& signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(0, signature.size(), signature) == 0;
 }
 
-bool startWith(std::string_view source, std::string_view signature) {
+bool starts_with(std::string_view source, std::string_view signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(0, signature.size(), signature) == 0;
 }
 
-bool endWith(const std::string& source, const std::string& signature) {
+bool ends_with(const std::string& source, const std::string& signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(
         source.size() - signature.size(),
@@ -119,7 +105,7 @@ bool endWith(const std::string& source, const std::string& signature) {
         signature) == 0;
 }
 
-bool endWith(std::string_view source, std::string_view signature) {
+bool ends_with(std::string_view source, std::string_view signature) {
     if (signature.size() > source.size()) return false;
     return source.compare(
         source.size() - signature.size(),
@@ -183,35 +169,21 @@ bool same_text(const std::string& s1, const std::string& s2)
     return str_tolower(s1) == str_tolower(s2);
 }
 
-void addSpacesToString(std::string& str, size_t new_length) {
-  if (str.size() < new_length) {
-    auto last_size = str.size();
-    str.resize(new_length);
-    for(size_t i = last_size; i < str.size(); i++) str[i] = ' ';
-  }
+void ljust(std::string& str, size_t new_length, char fillchar) {
+    if (str.size() < new_length) {
+        str.resize(new_length, fillchar);
+    }
 }
 
-std::vector<std::string> split_into_words(const std::string& str, char sep/*, bool is_grouped*/) {
+std::vector<std::string> split_into_words(const std::string& str, char sep) {
     std::vector<std::string> result;
-    std::string s = trim(str);
-    auto str_begin = std::begin(s);
-    const auto str_end = std::end(s);
-
-    while (true) {
-        auto it = find(str_begin, str_end, sep);
-        result.emplace_back(str_begin, it);
-
-        if (it == str_end) {
-            break;
-        } else {
-            str_begin = next(it);
-            while (str_begin != str_end && *str_begin == ' ') {
-				++str_begin;
-			}
-			if (str_begin == str_end) {
-                break;
-			}
-        }
+    std::string_view s(str);
+    std::string sep_s(1, sep);
+    while (!s.empty()) {
+        auto token = strip(readToken(s, sep_s));
+        // ignore empty tokens (appears if str has consecutive spaces)
+        if (token.empty()) continue;
+        result.emplace_back(token);
     }
     return result;
 }
@@ -278,76 +250,24 @@ std::string join_strings(const std::vector<std::string>& strings, std::string_vi
     return res;
 }
 
-void print_strings(std::ostream& out, const std::vector<std::string>& strings, char sep, char end_symbol) {
-    bool is_first = true;
-    for (const auto& s : strings) {
-        if (is_first) {
-            is_first = false;
-        } else {
-            out << sep;
-        }
-        out << s;
-    }
-    out << end_symbol;
+bool isdigit_s(std::string_view s) {
+    return std::all_of(s.begin(), s.end(), ::isdigit);
 }
 
-//int word_count(const string& s, const set<char>& delimeters)
-//{
-//    size_t i(0);
-//    int res(0);
-//    while (i < s.size()) {
-//        // delimeters before word
-//        while (i < s.size() && delimeters.find(s[i]) != delimeters.end()) ++i;
-//        // word
-//        if (i < s.size()) ++res;
-//        // word symbols
-//        while (i < s.size() && delimeters.find(s[i]) == delimeters.end()) ++i;
-//    }
-//    return res;
-//}
-//
-//int word_position(int n, const string& s, const set<char>& delimeters)
-//{
-//    int cnt(0);
-//    size_t i(0);
-//    while (i < s.size() && cnt != n) {
-//        // skip over delimeters
-//        while (i < s.size() && delimeters.find(s[i]) != delimeters.end()) ++i;
-//        // if we're not beyond end of s, we're at the start of a word
-//        if (i < s.size()) ++cnt;
-//        // if not finished, find the end of the current word
-//        if (cnt != n) {
-//            while (i < s.size() && delimeters.find(s[i]) == delimeters.end()) ++i;
-//        } else {
-//            return i;
-//        }
-//    }
-//    return -1;
-//}
-//
-//std::string extract_word(int wordNum, const std::string& s, const std::set<char>& delimeters)
-//{
-//    int i = word_position(wordNum, s, delimeters);
-//    unsigned int len(i);
-//    if (i != -1) {
-//        // find the end of current word
-//        while (len < s.size() && delimeters.find(s[len]) == delimeters.end())
-//            ++len;
-//        return s.substr(i, len-i);
-//    }
-//    return "";
-//}
-//
-//std::string extract_word(int wordNum, const std::string& s,
-//                         const std::string& delimeters)
-//{
-//    #ifdef USE_BOOST
-//    using namespace boost;
-//    vector<string> words;
-//    split(words, s, is_any_of(delimeters), token_compress_on);
-//    if (static_cast<int>(words.size()) > wordNum)
-//        return words[wordNum];
-//    else
-//    #endif // USE_BOOST
-//        return "";
-//}
+bool isalpha_s(std::string_view s) {
+    return std::all_of(s.begin(), s.end(), ::isalpha);
+}
+
+bool isalnum_s(std::string_view s) {
+    return std::all_of(s.begin(), s.end(), ::isalnum);
+}
+
+bool isupper_s(std::string_view s) {
+    return std::all_of(s.begin(), s.end(), ::isupper);
+}
+
+bool islower_s(std::string_view s) {
+    return std::all_of(s.begin(), s.end(), ::islower);
+}
+
+} // namespace gwstr

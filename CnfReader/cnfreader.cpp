@@ -32,11 +32,11 @@ void CnfReader::readFromStream(std::istream& in, std::string_view sep, char deci
         in.imbue(std::locale(std::cout.getloc(), new punct_facet<char, '.'>));
     }
     for (std::string line; std::getline(in, line); ) {
-        line = trim(line);
-        if (line.empty() || line[0] == '#' || startWith(line, "//")) {continue;}
+        line = gwstr::trim(line);
+        if (line.empty() || line[0] == '#' || gwstr::starts_with(line, "//")) {continue;}
         std::string_view data{line};
-        auto word = strip(readToken(data, sep));
-        data = strip(data);
+        auto word = gwstr::strip(gwstr::readToken(data, sep));
+        data = gwstr::strip(data);
         if (word.empty() || data.empty()) { continue;}
         data_[std::string(word)] = data;
     }
@@ -59,7 +59,7 @@ std::optional<int> CnfReader::getIntValueOpt(const std::string& par_name) const 
     const auto& par_value = getStringValue(par_name);
     if (par_value.empty()) return std::nullopt;
     int res;
-    if (tryStrToInt(par_value, res)) {
+    if (gwstr::tryStrToInt(par_value, res)) {
         return res;
     } else {
         return std::nullopt;
@@ -82,7 +82,7 @@ std::optional<double> CnfReader::getDoubleValueOpt(const std::string& par_name) 
     const auto& par_value = getStringValue(par_name);
     if (par_value.empty()) return std::nullopt;
     double res;
-    if (tryStrToFloat(par_value, res)) {
+    if (gwstr::tryStrToFloat(par_value, res)) {
         return res;
     } else {
         return std::nullopt;

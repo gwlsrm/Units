@@ -5,7 +5,7 @@
 
 int findPowerNum(double v) {
     v = fabs(v);
-    std::string s = toStringF(v);
+    std::string s = gwstr::toStringF(v);
     size_t dot_pos = s.find('.');
     if (dot_pos == std::string::npos || dot_pos > 1) {    // integer value or xyz.abc value
         if (dot_pos != std::string::npos) s.resize(dot_pos);
@@ -41,11 +41,11 @@ std::string metrologic_round(double value, double dvalue)
 {
     int n = findPowerNum(dvalue);
     value = roundTo(value, n);
-    return toStringF(value, TFloatFormat::ffGeneral, 10);
+    return gwstr::toStringF(value, gwstr::TFloatFormat::ffGeneral, 10);
 }
 
 std::string metrologic_round(double dvalue) {
     int n = findPowerNum(dvalue);
     dvalue = roundTo(dvalue, n);
-    return toStringF(dvalue, TFloatFormat::ffGeneral, 10);
+    return gwstr::toStringF(dvalue, gwstr::TFloatFormat::ffGeneral, 10);
 }

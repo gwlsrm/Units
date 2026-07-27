@@ -29,7 +29,7 @@ std::unordered_map<std::string, std::vector<std::string>> CsvReader::readColumns
 std::optional<std::vector<std::string>> CsvReader::rawReadLine() {
     std::string line;
     if (std::getline(in_, line)) {
-        return split_into_words(line, sep_);
+        return gwstr::split_into_words(line, sep_);
     } else {
         return std::nullopt;
     }

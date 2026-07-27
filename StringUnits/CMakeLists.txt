@@ -20,7 +20,7 @@ add_library(GwUnits::str_utils ALIAS str_utils)
 # tests
 if (UNITS_BUILD_TESTS)
     set(TEST_NAME test_str_utils)
-    add_executable(${TEST_NAME} tests/str_utils_boost_ut.cpp)
+    add_executable(${TEST_NAME} tests/str_utils_test.cpp)
 
     set_target_properties(${TEST_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
     target_link_libraries(${TEST_NAME} PRIVATE ${PROJECT_NAME} doctest)
