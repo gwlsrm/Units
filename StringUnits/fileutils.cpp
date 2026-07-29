@@ -5,6 +5,14 @@
 #include <windows.h>
 #endif
 
+namespace gwstr {
+
+std::string addOsSep(std::string path) {
+    if (path.empty() || path.back() == OS_SEP) {
+        return path;
+    }
+    return path + OS_SEP;
+}
 
 std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char** argv) {
 #ifndef __linux__
@@ -16,24 +24,26 @@ std::string getApplicationName([[maybe_unused]]int argc, [[maybe_unused]]char** 
 #endif
 }
 
+bool fileExists(const std::string& filePath) {
+    std::ifstream fin(filePath.c_str());
+    return fin.is_open();
+}
+
+
 std::string extractFilePath(const std::string &fname)
 {
-    auto pos = fname.rfind('\\');
+    auto pos = fname.rfind(OS_SEP);
     if (pos == 0 || pos == fname.npos) {
-        pos = fname.rfind('/');
-        if (pos == 0 || pos == fname.npos)
-            return fname;
+        return fname;
     }
 
   return fname.substr(0, pos+1);
 }
 
 std::string extractFileName(const std::string& filename) {
-    size_t pos = filename.rfind('\\');
+    size_t pos = filename.rfind(OS_SEP);
     if (pos == 0 || pos == filename.npos) {
-        pos = filename.rfind('/');
-        if (pos == 0 || pos == filename.npos)
-            return filename;
+        return filename;
     }
     if (pos != filename.size()-1) {
         return filename.substr(pos+1);
@@ -43,57 +53,62 @@ std::string extractFileName(const std::string& filename) {
 }
 
 std::string extractFileExt(const std::string& filename) {
-    size_t pos = filename.rfind('.');
-    if (pos == 0 || pos == filename.npos) return "";
+    auto fname = extractFileName(filename);
+    size_t pos = fname.rfind('.');
+    if (pos == 0 || pos == fname.npos) return "";
 
-    return filename.substr(pos);
+    return fname.substr(pos);
 }
 
-bool fileExists(const std::string& filePath) {
-    std::ifstream fin(filePath.c_str());
-    return fin.is_open();
+std::tuple<std::string, std::string> pathSplit(const std::string& filepath) {
+    auto pos = filepath.rfind(OS_SEP);
+    if (pos == 0 || pos == filepath.npos) {
+        return std::make_tuple("", filepath);
+    }
+
+    return std::make_tuple(filepath.substr(0, pos+1), filepath.substr(pos+1));
 }
 
-std::string goOneLevelUp(const std::string& path) {
+std::tuple<std::string, std::string> pathSplitExt(const std::string& filepath) {
+    auto pos = filepath.rfind('.');
+    if (pos == 0 || pos == filepath.npos) {
+        return std::make_tuple(filepath, "");
+    }
+
+    return std::make_tuple(filepath.substr(0, pos), filepath.substr(pos));
+}
+
+std::string pathJoin(const std::string& path, const std::string& filename) {
+    std::string res = path;
+    if (res.back() != OS_SEP) {
+        res += OS_SEP;
+    }
+    res += filename;
+    return res;
+}
+
+std::string parentDirectory(const std::string& path) {
     if (path.empty()) {
         return path;
     }
     // only one /
-    size_t slash_pos = path.find('\\');
-    if (slash_pos == std::string::npos) {
-        slash_pos = path.find('/');
-    }
+    size_t slash_pos = path.find(OS_SEP);
     if (slash_pos == std::string::npos || slash_pos + 1 == path.size()) {
         return path;
     }
 
     // remove last /
     std::string res(path);
-    if (res.back() == '\\' || res.back() == '/') {
+    if (res.back() == OS_SEP) {
         res.pop_back();
     }
 
     // remove last level
-    slash_pos = res.rfind('\\');
-    if (slash_pos == std::string::npos) {
-        slash_pos = res.rfind('/');
-    }
+    slash_pos = res.rfind(OS_SEP);
     if (slash_pos != std::string::npos) {
         res.resize(slash_pos + 1);
     }
     return res;
-}
-
-std::string addSlash(std::string path) {
-    if (path.empty() || path.back() == '\\' || path.back() == '/') {
-        return path;
-    }
-#ifndef __linux__
-    return path + '\\';
-#else
-    return path + '/';
-#endif
-
 }
 
 std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::string& baseDir) {
@@ -101,12 +116,12 @@ std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::
     if (fileName.find(':') != fileName.npos) {
         return fileName;
     }
-    std::string res_path = addSlash(baseDir);
+    std::string res_path = addOsSep(baseDir);
     // expand ..
     if (fileName.size() >= 3 &&
         (fileName.compare(0, 3, "..\\") == 0  ||
         fileName.compare(0, 3, "../") == 0 )) {
-        res_path = goOneLevelUp(res_path);
+        res_path = parentDirectory(res_path);
         res_path += fileName.substr(3);
     } else {
         res_path += fileName;
@@ -114,25 +129,4 @@ std::string expandFileNamesToRelBaseDir(const std::string& fileName, const std::
     return res_path;
 }
 
-std::vector<std::string> loadListFromFile(const std::string& filename) {
-    std::ifstream in;
-    if (!in) {
-        throw std::invalid_argument("Can't open file " + filename);
-    }
-    std::vector<std::string> res;
-    std::string s;
-    while (std::getline(in, s)) {
-        res.push_back(move(s));
-    }
-    return res;
-}
-
-void saveStrListToFile(const std::vector<std::string>& str_list, const std::string& filename) {
-    std::ofstream out;
-    if (!out) {
-        throw std::invalid_argument("Can't create file " + filename);
-    }
-    for (const auto& line : str_list) {
-        out << line << '\n';
-    }
-}
+} // namespace gwstr

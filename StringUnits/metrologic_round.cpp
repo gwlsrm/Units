@@ -1,7 +1,9 @@
 #include "metrologic_round.h"
+
 #include "math_lib.h"
 #include "str_utils.h"
 
+namespace gwstr {
 
 int findPowerNum(double v) {
     v = fabs(v);
@@ -40,12 +42,14 @@ int findPowerNum(double v) {
 std::string metrologic_round(double value, double dvalue)
 {
     int n = findPowerNum(dvalue);
-    value = roundTo(value, n);
-    return gwstr::toStringF(value, gwstr::TFloatFormat::ffGeneral, 10);
+    value = gwmath::roundTo(value, n);
+    return toStringF(value, TFloatFormat::ffGeneral, 10);
 }
 
 std::string metrologic_round(double dvalue) {
     int n = findPowerNum(dvalue);
-    dvalue = roundTo(dvalue, n);
-    return gwstr::toStringF(dvalue, gwstr::TFloatFormat::ffGeneral, 10);
+    dvalue = gwmath::roundTo(dvalue, n);
+    return toStringF(dvalue, TFloatFormat::ffGeneral, 10);
 }
+
+} // namespace gwstr

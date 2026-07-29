@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(str_utils)
 
-set(SRC_STR_UTILS str_utils.cpp param_str_utils.cpp fileutils.cpp)
-set(HEADER_STR_UTILS str_utils.h param_str_utils.h fileutils.h)
+set(SRC_STR_UTILS str_utils.cpp fileutils.cpp)
+set(HEADER_STR_UTILS str_utils.h fileutils.h)
 
 add_library(${PROJECT_NAME} STATIC ${SRC_STR_UTILS} ${HEADER_STR_UTILS})
 
@@ -20,7 +20,7 @@ add_library(GwUnits::str_utils ALIAS str_utils)
 # tests
 if (UNITS_BUILD_TESTS)
     set(TEST_NAME test_str_utils)
-    add_executable(${TEST_NAME} tests/str_utils_test.cpp)
+    add_executable(${TEST_NAME} tests/str_utils_test.cpp tests/fileutils_test.cpp)
 
     set_target_properties(${TEST_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
     target_link_libraries(${TEST_NAME} PRIVATE ${PROJECT_NAME} doctest)

@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "str_utils.h"
-#include "fileutils.h"
 
 using namespace std;
 using namespace gwstr;
@@ -104,44 +103,6 @@ TEST_SUITE("str_test_suite") {
             vector<string> expected = {"a1", "a2", "a3"};
             CHECK(res == expected);
         }
-    }
-
-}
-
-TEST_SUITE("file_str_test_suite") {
-
-    TEST_CASE("test_extract_file_path") {
-        CHECK(extractFilePath("C:\\lsrm\\test\\text.txt") == "C:\\lsrm\\test\\");
-    }
-
-    TEST_CASE("test_extract_file_name") {
-        CHECK(extractFileName("C:\\lsrm\\test\\text.txt") == "text.txt");
-    }
-
-    TEST_CASE("test_extract_file_ext") {
-        CHECK(extractFileExt("C:\\lsrm\\test\\test.txt") == string(".txt"));
-        CHECK(extractFileExt("C:\\lsrm\\test\\test") == string(""));
-    }
-
-    TEST_CASE("test_level_up") {
-        CHECK(goOneLevelUp("C:\\lsrm\\test\\") == "C:\\lsrm\\");
-        CHECK(goOneLevelUp("C:\\lsrm\\test") == "C:\\lsrm\\");
-        CHECK(goOneLevelUp("C:\\lsrm\\") == "C:\\");
-        CHECK(goOneLevelUp("C:\\") == "C:\\");
-    }
-
-    TEST_CASE("test_expand_file_path") {
-        // simple variants
-        CHECK(expandFileNamesToRelBaseDir("C:\\lsrm\\test\\test.txt", "C:\\") == "C:\\lsrm\\test\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("test.txt", "C:\\lsrm\\") == "C:\\lsrm\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("test.txt", "C:\\lsrm") == string("C:\\lsrm") + getSlash() + "test.txt");
-        CHECK(expandFileNamesToRelBaseDir("test\\test.txt", "C:\\lsrm\\") == "C:\\lsrm\\test\\test.txt");
-        // variants with ".."
-        CHECK(expandFileNamesToRelBaseDir("..\\test.txt", "C:\\lsrm\\test\\") == "C:\\lsrm\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("..\\test.txt", "C:\\lsrm\\test") == "C:\\lsrm\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("..\\test.txt", "C:\\lsrm\\") == "C:\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("..\\test.txt", "C:\\lsrm") == "C:\\test.txt");
-        CHECK(expandFileNamesToRelBaseDir("..\\test.txt", "C:\\") == "C:\\test.txt");
     }
 
 }
