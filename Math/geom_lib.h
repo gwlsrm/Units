@@ -6,6 +6,10 @@
     @brief Structures to work with geometry like Point2D, Point3D
 */
 
+#include <iostream>
+#include <utility>
+#include <vector>
+
 #include "gw_static_matrix.h"
 
 namespace gwmath{
@@ -13,13 +17,25 @@ namespace gwmath{
 /*--------------
  plain (2D)
 ----------------*/
-struct Point2D {
+struct Point2d {
     double x = 0;
     double y = 0;
+    static Point2d fromPair(const std::pair<double, double>& point);
+    friend Point2d operator-(const Point2d& point);
+    friend bool operator==(const Point2d& lhs, const Point2d& rhs);
+    friend std::ostream& operator<<(std::ostream& out, const Point2d& point);
 };
+using Vector2d = Point2d;
+using Polygon = std::vector<Point2d>;
+Polygon polygonFromPairs(const std::vector<std::pair<double, double>>& polygon);
 
 // get line equation coefficients a*x + b*y + c = 0 going through line segment
-void lineFromSegment(const Point2D& p1, const Point2D& p2, double& a, double& b, double& c);
+void lineFromSegment(const Point2d& p1, const Point2d& p2, double& a, double& b, double& c);
+// is polygon convex
+bool isConvexPolygon(const Polygon& vertices);
+// check if point (0, 0) in the convex polygon
+bool pointInConvexPolygonOrigin(const Polygon& v);
+
 
 /*-----------------
  stereo (3D)

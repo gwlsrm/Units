@@ -29,15 +29,21 @@ add_library(GwUnits::math_lib ALIAS math_lib)
 if (UNITS_BUILD_TESTS)
     set(TEST_MATH_LIB test_math_lib)
     set(TEST_MATRIX test_matrix)
+    set(TEST_GEOM_LIB test_geom_lib)
+
     add_executable(${TEST_MATH_LIB} tests/test_math_lib.cpp)
     add_executable(${TEST_MATRIX} tests/test_matrix_array.cpp)
+    add_executable(${TEST_GEOM_LIB} tests/test_geom_lib.cpp)
 
     set_target_properties(${TEST_MATH_LIB} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
     set_target_properties(${TEST_MATRIX} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+    set_target_properties(${TEST_GEOM_LIB} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 
     target_link_libraries(${TEST_MATH_LIB} PRIVATE math_lib doctest)
     target_link_libraries(${TEST_MATRIX} PRIVATE math_lib doctest)
+    target_link_libraries(${TEST_GEOM_LIB} PRIVATE math_lib doctest)
 
     add_test(NAME ${TEST_MATH_LIB} COMMAND ${TEST_MATH_LIB} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     add_test(NAME ${TEST_MATRIX} COMMAND ${TEST_MATRIX} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+    add_test(NAME ${TEST_GEOM_LIB} COMMAND ${TEST_GEOM_LIB} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()
