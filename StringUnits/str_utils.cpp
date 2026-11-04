@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <charconv>
 #include <cmath>
 #include <cstring>
 #include <fstream>
@@ -113,7 +114,16 @@ bool ends_with(std::string_view source, std::string_view signature) {
         signature) == 0;
 }
 
-int strToIntDef(const std::string& str, int defValue){
+int strToInt(const std::string_view& str) {
+    int value{};
+    if (std::from_chars(str.data(), str.data() + str.size(), value).ec == std::errc{}) {
+        return value;
+    } else {
+        throw std::invalid_argument(std::string("strToInt: cannot convert to int ") + std::string(str));
+    }
+}
+
+int strToIntDef(const std::string& str, int defValue) {
     try {
         int res = stol(str);
         return res;
@@ -122,11 +132,38 @@ int strToIntDef(const std::string& str, int defValue){
     }
 }
 
+int strToIntDef(const std::string_view& str, int defValue) {
+    int value{};
+    if (std::from_chars(str.data(), str.data() + str.size(), value).ec == std::errc{}) {
+        return value;
+    } else {
+        return defValue;
+    }
+}
+
+double strToFloat(const std::string_view& str) {
+    double value{};
+    if (std::from_chars(str.data(), str.data() + str.size(), value).ec == std::errc{}) {
+        return value;
+    } else {
+        throw std::invalid_argument(std::string("strToFloat: cannot convert to float ") + std::string(str));
+    }
+}
+
 double strToFloatDef(const std::string& str, double defValue) {
     try {
         double res = stod(str);
         return res;
     } catch (std::invalid_argument&) {
+        return defValue;
+    }
+}
+
+double strToFloatDef(const std::string_view& str, double defValue) {
+    double value{};
+    if (std::from_chars(str.data(), str.data() + str.size(), value).ec == std::errc{}) {
+        return value;
+    } else {
         return defValue;
     }
 }
@@ -149,7 +186,7 @@ bool tryStrToFloat(const std::string& str, double& value) {
     }
 }
 
-std::string intToStringF_need_to_test(int number, int digits) {
+std::string inttoStringF_need_to_test(int number, int digits) {
     std::stringstream ss;
     ss << std::setfill('0') << std::setw(digits);
     ss << number;

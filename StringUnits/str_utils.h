@@ -47,10 +47,16 @@ void ljust(std::string& str, std::size_t new_length, char fillchar=' ');
 
 // convert from and to string
 // from string
+/// from string to integer. throw exceptions
+int strToInt(const std::string_view& str);
 /// from string to integer with default. don't throw exceptions
 int strToIntDef(const std::string& str, int defValue);
+int strToIntDef(const std::string_view& str, int defValue);
+/// from string to double. throw exceptions
+double strToFloat(const std::string_view& str);
 /// from string to double with default. don't throw exceptions
 double strToFloatDef(const std::string& str, double defValue);
+double strToFloatDef(const std::string_view& str, double defValue);
 /// converts from string to integer value (parameter). If success returns true. Don't throw exceptions
 bool tryStrToInt(const std::string& str, int& value);
 /// converts from string to double value (parameter). If success returns true. Don't throw exceptions

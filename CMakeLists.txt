@@ -31,6 +31,7 @@ if (UNITS_BUILD_TESTS)
     enable_testing()
 endif()
 
+add_subdirectory(Contract)
 add_subdirectory(Algorithm)
 add_subdirectory(BinaryFStream)
 add_subdirectory(CnfReader)
